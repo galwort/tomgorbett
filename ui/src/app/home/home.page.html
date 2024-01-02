@@ -1,32 +1,26 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Time Tracker
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <form [formGroup]="trackerForm" (ngSubmit)="submitData()">
-    <ion-item>
-      <ion-datetime-button datetime="datetimeFrom"></ion-datetime-button>
-      <ion-modal [keepContentsMounted]="true">
-        <ng-template>
-          <ion-datetime
-            id="datetimeFrom"
-            (ionChange)="changeTimeFrom($event)"
-            minuteValues="0,15,30,45"
-          ></ion-datetime>
-        </ng-template>
-      </ion-modal>
-    </ion-item>
-    <ion-item>
-      <ion-select formControlName="activity" placeholder="Select Activity">
-        <ion-select-option *ngFor="let activity of activities" [value]="activity.id">
-          {{ activity.id }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-button type="submit" expand="full">Submit</ion-button>
-  </form>
-</ion-content>
+<div class="background">
+  <ion-content>
+    <form [formGroup]="trackerForm" (ngSubmit)="submitData()">
+      <ion-item lines="none">
+        <ion-datetime-button datetime="datetimeFrom"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="datetimeFrom"
+              (ionChange)="changeTimeFrom($event)"
+              minuteValues="0,15,30,45"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-select formControlName="activity" placeholder="Select Activity">
+          <ion-select-option *ngFor="let activity of activities" [value]="activity.id">
+            {{ activity.id }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button type="submit" expand="block">Submit</ion-button>
+    </form>
+  </ion-content>
+</div>

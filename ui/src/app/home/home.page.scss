@@ -1,6 +1,21 @@
-ion-content {
-  ion-item {
-    --padding-start: 20px;
-    --padding-end: 20px;
+.background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+
+    ion-item {
+      margin-top: 20px;
+    }
+
+    ion-button {
+      margin-top: 20px;
+    }
   }
 }
