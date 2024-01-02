@@ -31,9 +31,8 @@ export class HomePage {
   }
 
   updateDocId(datetime: string) {
-    const formattedDateTime = new Date(datetime).toISOString();
+    const formattedDateTime = this.convertToLocalTimezone(new Date(datetime));
     this.docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -7);
-    console.log('Updated docId: ', this.docId);
   }
 
   async submitData() {
@@ -46,7 +45,7 @@ export class HomePage {
       return;
     }
     
-    const formattedDateTime = new Date(datetime).toISOString();
+    const formattedDateTime = this.convertToLocalTimezone(new Date(datetime));
     const docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -7);
     const docRef = doc(db, 'tracker', docId);
   
@@ -54,10 +53,16 @@ export class HomePage {
       await setDoc(docRef, {
         activity: activity
       });
-      console.log('Document written with ID: ', docId);
       this.trackerForm.reset();
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+  }
+
+  convertToLocalTimezone(date: Date): string {
+    const offset = date.getTimezoneOffset() * 60000;
+    const clevelandOffset = -4 * 60 * 60000;
+    const localDate = new Date(date.getTime() - offset + clevelandOffset);
+    return localDate.toISOString();
   }
 }
