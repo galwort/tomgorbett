@@ -30,7 +30,6 @@ export class HomePage {
   async fetchActivities() {
     const querySnapshot = await getDocs(collection(db, "activities"));
     this.activities = querySnapshot.docs.map(doc => ({ id: doc.id}));
-    console.log(this.activities);
   }
 
   changeTimeFrom(event: any) {
