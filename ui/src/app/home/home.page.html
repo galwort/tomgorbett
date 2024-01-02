@@ -1,20 +1,25 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>
-      Blank
+      Time Tracker
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content>
+  <form [formGroup]="trackerForm" (ngSubmit)="submitData()">
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime formControlName="date" displayFormat="YYYY-MM-DD"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Time</ion-label>
+      <ion-datetime formControlName="time" displayFormat="HH:mm"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Activity</ion-label>
+      <ion-input formControlName="activity" type="text"></ion-input>
+    </ion-item>
+    <ion-button type="submit" expand="full">Submit</ion-button>
+  </form>
 </ion-content>
