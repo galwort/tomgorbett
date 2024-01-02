@@ -1,6 +1,7 @@
 <ion-content>
   <div class="centered-content">
     <form [formGroup]="trackerForm" (ngSubmit)="submitData()">
+      <ion-header>Time Tracker</ion-header>
       <ion-item lines="none">
         <ion-datetime-button datetime="datetimeFrom"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true">
