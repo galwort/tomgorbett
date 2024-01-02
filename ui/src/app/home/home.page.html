@@ -9,12 +9,16 @@
 <ion-content>
   <form [formGroup]="trackerForm" (ngSubmit)="submitData()">
     <ion-item>
-      <ion-label>Date</ion-label>
-      <ion-datetime formControlName="date" displayFormat="YYYY-MM-DD"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label>Time</ion-label>
-      <ion-datetime formControlName="time" displayFormat="HH:mm"></ion-datetime>
+      <ion-datetime-button datetime="datetimeFrom"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime
+            id="datetimeFrom"
+            (ionChange)="changeTimeFrom($event)"
+            minuteValues="0,15,30,45"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
     </ion-item>
     <ion-item>
       <ion-label>Activity</ion-label>

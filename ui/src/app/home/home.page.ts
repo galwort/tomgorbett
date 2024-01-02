@@ -14,31 +14,45 @@ export const db = getFirestore(app);
 })
 export class HomePage {
   trackerForm = new FormGroup({
-    date: new FormControl(''),
-    time: new FormControl(''),
+    datetime: new FormControl(''),
     activity: new FormControl('')
   });
 
+  docId: string = ''; 
+
   constructor() {}
+
+  changeTimeFrom(event: any) {
+    const datetime = event.detail.value;
+    if (this.trackerForm.get('datetime')) {
+      this.trackerForm.get('datetime')?.setValue(datetime);
+    }
+    this.updateDocId(datetime);
+  }
+
+  updateDocId(datetime: string) {
+    const formattedDateTime = new Date(datetime).toISOString();
+    this.docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -2);
+    console.log('Updated docId: ', this.docId);
+  }
 
   async submitData() {
     const formData = this.trackerForm.value;
-    const date = formData.date ?? '';
-    const time = formData.time?.replace(/:/g, '') ?? '';
+    const datetime = formData.datetime ?? '';
     const activity = formData.activity ?? '';
   
-    if (!date || !time) {
+    if (!datetime) {
       console.error("Date and time are required.");
       return;
     }
-  
-    const docId = date.replace(/-/g, '') + time;
+    
+    const formattedDateTime = new Date(datetime).toISOString();
+    const docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -2);
     const docRef = doc(db, 'tracker', docId);
   
     try {
       await setDoc(docRef, {
-        activity: activity,
-        timestamp: new Date(date + 'T' + time)
+        activity: activity
       });
       console.log('Document written with ID: ', docId);
       this.trackerForm.reset();
