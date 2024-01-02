@@ -32,7 +32,7 @@ export class HomePage {
 
   updateDocId(datetime: string) {
     const formattedDateTime = new Date(datetime).toISOString();
-    this.docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -2);
+    this.docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -7);
     console.log('Updated docId: ', this.docId);
   }
 
@@ -47,7 +47,7 @@ export class HomePage {
     }
     
     const formattedDateTime = new Date(datetime).toISOString();
-    const docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -2);
+    const docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -7);
     const docRef = doc(db, 'tracker', docId);
   
     try {
