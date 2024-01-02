@@ -21,7 +21,11 @@
       </ion-modal>
     </ion-item>
     <ion-item>
-      <ion-input formControlName="activity" type="text" placeholder="Activity"></ion-input>
+      <ion-select formControlName="activity" placeholder="Select Activity">
+        <ion-select-option *ngFor="let activity of activities" [value]="activity.id">
+          {{ activity.id }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-button type="submit" expand="full">Submit</ion-button>
   </form>

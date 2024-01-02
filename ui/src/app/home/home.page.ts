@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore, collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { environment } from 'src/environments/environment';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -18,9 +18,20 @@ export class HomePage {
     activity: new FormControl('')
   });
 
-  docId: string = ''; 
+  docId: string = '';
+  activities: any[] = [];
 
   constructor() {}
+
+  ngOnInit() {
+    this.fetchActivities();
+  }
+
+  async fetchActivities() {
+    const querySnapshot = await getDocs(collection(db, "activities"));
+    this.activities = querySnapshot.docs.map(doc => ({ id: doc.id}));
+    console.log(this.activities);
+  }
 
   changeTimeFrom(event: any) {
     const datetime = event.detail.value;
