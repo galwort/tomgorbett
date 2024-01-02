@@ -61,8 +61,7 @@ export class HomePage {
 
   convertToLocalTimezone(date: Date): string {
     const offset = date.getTimezoneOffset() * 60000;
-    const clevelandOffset = -4 * 60 * 60000;
-    const localDate = new Date(date.getTime() - offset + clevelandOffset);
+    const localDate = new Date(date.getTime() - offset);
     return localDate.toISOString();
   }
 }
