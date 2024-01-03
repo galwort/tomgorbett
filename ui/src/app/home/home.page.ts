@@ -25,7 +25,28 @@ export class HomePage {
 
   ngOnInit() {
     this.fetchActivities();
+    this.setRoundedDateTime();
   }
+
+  setRoundedDateTime() {
+    const currentDateTime = new Date();
+    const minutes = currentDateTime.getMinutes();
+    const roundedMinutes = Math.round(minutes / 15) * 15;
+    currentDateTime.setMinutes(roundedMinutes);
+    currentDateTime.setSeconds(0);
+    currentDateTime.setMilliseconds(0);
+  
+    const timezoneOffset = currentDateTime.getTimezoneOffset() * 60000;
+    const localISOTime = new Date(currentDateTime.getTime() - timezoneOffset).toISOString().slice(0, -1);
+  
+    const datetimeControl = this.trackerForm.get('datetime');
+    if (datetimeControl) {
+      datetimeControl.setValue(localISOTime);
+    }
+  }
+  
+  
+  
 
   async fetchActivities() {
     const querySnapshot = await getDocs(collection(db, "activities"));

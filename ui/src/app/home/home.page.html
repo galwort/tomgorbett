@@ -10,6 +10,7 @@
               id="datetimeFrom"
               (ionChange)="changeTimeFrom($event)"
               minuteValues="0,15,30,45"
+              [value]="trackerForm.value.datetime"
             ></ion-datetime>
           </ng-template>
         </ion-modal>
