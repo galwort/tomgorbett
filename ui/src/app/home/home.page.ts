@@ -3,6 +3,7 @@ import { getFirestore, collection, doc, getDocs, setDoc } from "firebase/firesto
 import { initializeApp } from "firebase/app";
 import { environment } from 'src/environments/environment';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 
 export const app = initializeApp(environment.firebase);
 export const db = getFirestore(app);
@@ -24,7 +25,7 @@ export class HomePage {
   docId: string = '';
   activities: any[] = [];
 
-  constructor() {}
+  constructor(private alertController: AlertController) {}
 
   ngOnInit() {
     this.fetchActivities();
@@ -74,8 +75,14 @@ export class HomePage {
     const datetime = formData.datetime ?? '';
     const activity = formData.activity ?? '';
   
-    if (!datetime) {
-      console.error("Date and time are required.");
+    if (!datetime || !activity) {
+      let message = "Enter a time and activity.";
+
+      const alert = await this.alertController.create({
+        message: message
+      });
+      await alert.present();
+
       return;
     }
     
