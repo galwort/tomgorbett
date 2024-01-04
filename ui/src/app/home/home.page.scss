@@ -9,6 +9,13 @@ ion-content {
     min-width: 305px;
     min-height: 395px;
 
+    ion-item {
+      --ion-item-background: transparent;
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+
     ion-header {
       font-size: 2.4rem;
       font-weight: bold;
@@ -24,6 +31,14 @@ ion-content {
       margin: 5px;
       font-weight: bold;
       font-size: 1.1rem;
+    }
+
+    ion-text {
+      font-size: 1rem;
+      font-weight: normal;
+      width: 100%;
+      text-align: center;
+      margin-top: 1px;
     }
 
     .checkbox-container {
@@ -42,13 +57,12 @@ ion-content {
         font-weight: normal;
         padding-left: 10px;
       }
-    }    
+    }
 
-    ion-item {
-      --ion-item-background: transparent;
-      margin-top: 20px;
-      font-weight: bold;
-      font-size: 1.4rem;
+    ion-select {
+      width: 100%;
+      height: fit-content;
+      align-items: center;
     }
 
     ion-button {

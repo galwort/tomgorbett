@@ -28,6 +28,35 @@
           </ng-template>
         </ion-modal>
       </ion-item>
+      <ion-item lines="none" *ngIf="trackerForm.get('rangeCheckbox')?.value">
+        <ion-text>- to -</ion-text>
+      </ion-item>
+      <ion-item lines="none" *ngIf="trackerForm.get('dateCheckbox')?.value && trackerForm.get('rangeCheckbox')?.value">
+        <ion-datetime-button datetime="datetimeFrom"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="datetimeFrom"
+              (ionChange)="changeTimeFrom($event)"
+              minuteValues="0,15,30,45"
+              [value]="trackerForm.value.datetime"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+      <ion-item lines="none" *ngIf="!trackerForm.get('dateCheckbox')?.value && trackerForm.get('rangeCheckbox')?.value">
+        <ion-datetime-button datetime="timeFrom"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="timeFrom"
+              (ionChange)="changeTimeFrom($event)"
+              minuteValues="0,15,30,45"
+              presentation="time"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
       <ion-item lines="none" class="checkbox-container">
         <ion-checkbox formControlName="dateCheckbox"></ion-checkbox>
         <ion-label>Date</ion-label>
