@@ -6,6 +6,8 @@ ion-content {
     background-color: var(--theme-card);
     border: 2px solid var(--theme-border);
     box-shadow: 10px 10px 0px black;
+    min-width: 305px;
+    min-height: 395px;
 
     ion-header {
       font-size: 2.4rem;
