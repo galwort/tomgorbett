@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { HomePage } from './home.page';
+import { TimetrackerPage } from './timetracker.page';
 
-import { HomePageRoutingModule } from './home-routing.module';
+import { TimetrackerPageRoutingModule } from './timetracker-routing.module';
 
 
 @NgModule({
@@ -12,10 +12,10 @@ import { HomePageRoutingModule } from './home-routing.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule,
+    TimetrackerPageRoutingModule,
     ReactiveFormsModule,
     FormsModule,
   ],
-  declarations: [HomePage]
+  declarations: [TimetrackerPage]
 })
-export class HomePageModule {}
+export class TimetrackerPageModule {}

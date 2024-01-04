@@ -9,11 +9,11 @@ export const app = initializeApp(environment.firebase);
 export const db = getFirestore(app);
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-timetracker',
+  templateUrl: 'timetracker.page.html',
+  styleUrls: ['timetracker.page.scss'],
 })
-export class HomePage {
+export class TimetrackerPage {
   trackerForm = new FormGroup({
     datetime: new FormControl(''),
     time: new FormControl(''),
