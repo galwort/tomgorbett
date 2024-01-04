@@ -10,7 +10,11 @@ const routes: Routes = [
     path: '',
     redirectTo: 'timetracker',
     pathMatch: 'full'
+  },  {
+    path: 'unlock',
+    loadChildren: () => import('./pages/unlock/unlock.module').then( m => m.UnlockPageModule)
   },
+
 ];
 
 @NgModule({
