@@ -15,7 +15,9 @@ export const db = getFirestore(app);
 export class HomePage {
   trackerForm = new FormGroup({
     datetime: new FormControl(''),
-    activity: new FormControl('')
+    activity: new FormControl(''),
+    dateCheckbox: new FormControl(false),
+    rangeCheckbox: new FormControl(false)
   });
 
   docId: string = '';
