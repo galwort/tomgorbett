@@ -28,6 +28,14 @@ ion-content {
 
     .checkbox-container {
       margin-left: 30px;
+      
+      ion-checkbox {
+        --border-color: var(--theme-border);
+        --border-color-checked: var(--theme-border);
+        --checkbox-background: var(--theme-card);
+        --checkbox-background-checked: var(--theme-text);
+        --checkmark-color: var(--theme-card);
+      }
     
       ion-label {
         font-size: 1rem;
