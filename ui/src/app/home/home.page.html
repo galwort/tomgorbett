@@ -2,7 +2,7 @@
   <div class="centered-content">
     <form [formGroup]="trackerForm" (ngSubmit)="submitData()">
       <ion-header>Time Tracker</ion-header>
-      <ion-item lines="none">
+      <ion-item lines="none" *ngIf="trackerForm.get('dateCheckbox')?.value">
         <ion-datetime-button datetime="datetimeFrom"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
@@ -11,6 +11,19 @@
               (ionChange)="changeTimeFrom($event)"
               minuteValues="0,15,30,45"
               [value]="trackerForm.value.datetime"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+      <ion-item lines="none" *ngIf="!trackerForm.get('dateCheckbox')?.value">
+        <ion-datetime-button datetime="timeFrom"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="timeFrom"
+              (ionChange)="changeTimeFrom($event)"
+              minuteValues="0,15,30,45"
+              presentation="time"
             ></ion-datetime>
           </ng-template>
         </ion-modal>

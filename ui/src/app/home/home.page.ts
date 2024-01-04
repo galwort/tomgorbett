@@ -15,6 +15,7 @@ export const db = getFirestore(app);
 export class HomePage {
   trackerForm = new FormGroup({
     datetime: new FormControl(''),
+    time: new FormControl(''),
     activity: new FormControl(''),
     dateCheckbox: new FormControl(false),
     rangeCheckbox: new FormControl(false)
@@ -47,20 +48,20 @@ export class HomePage {
     }
   }
   
-  
-  
-
   async fetchActivities() {
     const querySnapshot = await getDocs(collection(db, "activities"));
     this.activities = querySnapshot.docs.map(doc => ({ id: doc.id}));
   }
 
   changeTimeFrom(event: any) {
-    const datetime = event.detail.value;
+    const value = event.detail.value;
     if (this.trackerForm.get('datetime')) {
-      this.trackerForm.get('datetime')?.setValue(datetime);
+      this.trackerForm.get('datetime')?.setValue(value);
     }
-    this.updateDocId(datetime);
+    if (this.trackerForm.get('time')) {
+      this.trackerForm.get('time')?.setValue(value);
+    }
+    this.updateDocId(value);
   }
 
   updateDocId(datetime: string) {
