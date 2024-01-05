@@ -1,0 +1,12 @@
+.centered-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: var(--theme-bg);
+}
+
+ion-icon {
+    font-size: 2rem;
+    color: var(--theme-text);
+}
