@@ -1,4 +1,7 @@
 <div class="centered-content">
   <ion-icon name="lock-closed-outline"></ion-icon>
-  <input type="password" maxlength="12" onfocus="this.previousElementSibling.style.color = 'var(--theme-text)';" onblur="this.previousElementSibling.style.color = 'var(--theme-button)';">
+  <input type="password" maxlength="12" [(ngModel)]="password" 
+    onfocus="this.previousElementSibling.style.color = 'var(--theme-text)';" 
+    onblur="this.previousElementSibling.style.color = 'var(--theme-button)';"
+    (keyup.enter)="checkPassword()">
 </div>
