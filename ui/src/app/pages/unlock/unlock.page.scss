@@ -21,6 +21,7 @@
         border-radius: 5px;
         text-align: center;
         font-family: Verdana;
+        color: var(--theme-button);
         font-size: 1.5rem;
         letter-spacing: 0.125rem;
         caret-color: transparent;
@@ -29,6 +30,7 @@
 
         &:focus {
             border-color: var(--theme-border);
+            color: var(--theme-text)
         }
     }
 }
