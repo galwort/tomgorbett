@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { LoginData } from 'src/app/interfaces/login-data.interface';
 
 @Component({
   selector: 'app-unlock',
@@ -7,19 +9,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./unlock.page.scss'],
 })
 export class UnlockPage implements OnInit {
+  loginData: LoginData = { email: 'wthomasgorbett@gmail.com', password: '' };
   password: string = '';
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
   }
 
-  checkPassword() {
-    const correctPassword = 'BattyFives';
-    if (this.password === correctPassword) {
-      this.router.navigate(['/timetracker']);
-    } else {
-      console.log('Incorrect password');
-    }
+  login() {
+    this.authService
+      .login(this.loginData)
+      .then(() => this.router.navigate(['/timetracker']))
+      .catch((e) => console.error('Login failed:', e.message));
   }
 }
