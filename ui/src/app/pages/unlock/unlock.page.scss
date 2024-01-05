@@ -5,24 +5,30 @@
     justify-content: center;
     height: 100%;
     background-color: var(--theme-bg);
-}
 
-ion-icon {
-    font-size: 3rem;
-    color: var(--theme-text);
-    margin-bottom: 10px;
-}
+    ion-icon {
+        font-size: 3rem;
+        color: var(--theme-button);
+        margin-bottom: 10px;
+        transition: color 0.2s;
+    }
 
-input {
-    width: 200px;
-    height: 30px;
-    background-color: transparent;
-    border: 3px solid var(--theme-border);;
-    border-radius: 5px;
-    text-align: center;
-    font-family: Verdana;
-    font-size: 1.5rem;
-    letter-spacing: 0.125rem;
-    caret-color: transparent;
-    margin-top: 10px;
+    input {
+        width: 200px;
+        height: 30px;
+        background-color: transparent;
+        border: 3px solid var(--theme-button);
+        border-radius: 5px;
+        text-align: center;
+        font-family: Verdana;
+        font-size: 1.5rem;
+        letter-spacing: 0.125rem;
+        caret-color: transparent;
+        margin-top: 10px;
+        transition: border-color 0.3s;
+
+        &:focus {
+            border-color: var(--theme-border);
+        }
+    }
 }
