@@ -13,21 +13,16 @@ ion-icon {
     margin-bottom: 10px;
 }
 
-
-ion-item {
-    --background: transparent;
+input {
     width: 200px;
     height: 30px;
-    border-color: var(--theme-border);
-    border-style: solid;
-    border-width: 3px;
+    background-color: transparent;
+    border: 3px solid var(--theme-border);;
     border-radius: 5px;
-    margin-top: 10px;
     text-align: center;
-    font-size: 1rem;
-    padding-top: 0px;
-
-    ion-input {
-        height: 100%;
-    }
+    font-family: Verdana;
+    font-size: 1.5rem;
+    letter-spacing: 0.125rem;
+    caret-color: transparent;
+    margin-top: 10px;
 }
