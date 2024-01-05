@@ -1,5 +1,6 @@
 .centered-content {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100%;
@@ -7,6 +8,26 @@
 }
 
 ion-icon {
-    font-size: 2rem;
+    font-size: 3rem;
     color: var(--theme-text);
+    margin-bottom: 10px;
+}
+
+
+ion-item {
+    --background: transparent;
+    width: 200px;
+    height: 30px;
+    border-color: var(--theme-border);
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 1rem;
+    padding-top: 0px;
+
+    ion-input {
+        height: 100%;
+    }
 }
