@@ -43,14 +43,14 @@
         </ion-row>
         <ion-row class="ion-justify-content-center">
           <ion-item lines="none" *ngIf="trackerForm.get('dateCheckbox')?.value && trackerForm.get('rangeCheckbox')?.value">
-            <ion-datetime-button datetime="datetimeFrom"></ion-datetime-button>
+            <ion-datetime-button datetime="datetimeTo"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
                 <ion-datetime
-                  id="datetimeFrom"
-                  (ionChange)="changeTimeFrom($event)"
+                  id="datetimeTo"
+                  (ionChange)="changeTimeTo($event)"
                   minuteValues="0,15,30,45"
-                  [value]="trackerForm.value.datetime"
+                  [value]="trackerForm.value.datetimeTo"
                 ></ion-datetime>
               </ng-template>
             </ion-modal>
@@ -58,15 +58,15 @@
         </ion-row>
         <ion-row class="ion-justify-content-center">
           <ion-item lines="none" *ngIf="!trackerForm.get('dateCheckbox')?.value && trackerForm.get('rangeCheckbox')?.value">
-            <ion-datetime-button datetime="timeFrom"></ion-datetime-button>
+            <ion-datetime-button datetime="timeTo"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
                 <ion-datetime
-                  id="timeFrom"
-                  (ionChange)="changeTimeFrom($event)"
+                  id="timeTo"
+                  (ionChange)="changeTimeTo($event)"
                   minuteValues="0,15,30,45"
                   presentation="time"
-                  [value]="trackerForm.value.datetime"
+                  [value]="trackerForm.value.datetimeTo"
                 ></ion-datetime>
               </ng-template>
             </ion-modal>

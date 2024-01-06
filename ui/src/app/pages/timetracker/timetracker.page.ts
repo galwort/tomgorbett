@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { getFirestore, collection, doc, getDocs, setDoc } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
-import { environment } from 'src/environments/environment';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { environment } from 'src/environments/environment';
 
 export const app = initializeApp(environment.firebase);
 export const db = getFirestore(app);
@@ -19,7 +19,9 @@ export class TimetrackerPage {
     time: new FormControl(''),
     activity: new FormControl(''),
     dateCheckbox: new FormControl(false),
-    rangeCheckbox: new FormControl(false)
+    rangeCheckbox: new FormControl(false),
+    datetimeTo: new FormControl(''),
+    timeTo: new FormControl('')
   });
 
   docId: string = '';
@@ -39,19 +41,23 @@ export class TimetrackerPage {
     currentDateTime.setMinutes(roundedMinutes);
     currentDateTime.setSeconds(0);
     currentDateTime.setMilliseconds(0);
-  
     const timezoneOffset = currentDateTime.getTimezoneOffset() * 60000;
     const localISOTime = new Date(currentDateTime.getTime() - timezoneOffset).toISOString().slice(0, -1);
-  
     const datetimeControl = this.trackerForm.get('datetime');
+    const datetimeToControl = this.trackerForm.get('datetimeTo');
+
     if (datetimeControl) {
       datetimeControl.setValue(localISOTime);
     }
+
+    if (datetimeToControl) {
+      datetimeToControl.setValue(localISOTime);
+    }
   }
-  
+
   async fetchActivities() {
     const querySnapshot = await getDocs(collection(db, "activities"));
-    this.activities = querySnapshot.docs.map(doc => ({ id: doc.id}));
+    this.activities = querySnapshot.docs.map(doc => ({ id: doc.id }));
   }
 
   changeTimeFrom(event: any) {
@@ -65,6 +71,16 @@ export class TimetrackerPage {
     this.updateDocId(value);
   }
 
+  changeTimeTo(event: any) {
+    const value = event.detail.value;
+    if (this.trackerForm.get('datetimeTo')) {
+      this.trackerForm.get('datetimeTo')?.setValue(value);
+    }
+    if (this.trackerForm.get('timeTo')) {
+      this.trackerForm.get('timeTo')?.setValue(value);
+    }
+  }
+
   updateDocId(datetime: string) {
     const formattedDateTime = this.convertToLocalTimezone(new Date(datetime));
     this.docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -7);
@@ -72,28 +88,35 @@ export class TimetrackerPage {
 
   async submitData() {
     const formData = this.trackerForm.value;
-    const datetime = formData.datetime ?? '';
+    const isRange = this.trackerForm.get('rangeCheckbox')?.value;
     const activity = formData.activity ?? '';
-  
-    if (!datetime || !activity) {
-      let message = "Enter a time and activity.";
 
+    if (!activity) {
       const alert = await this.alertController.create({
-        message: message
+        message: "Enter a time and activity."
       });
       await alert.present();
-
       return;
     }
-    
-    const formattedDateTime = this.convertToLocalTimezone(new Date(datetime));
-    const docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -7);
-    const docRef = doc(db, 'tracker', docId);
-  
+
     try {
-      await setDoc(docRef, {
-        activity: activity
-      });
+      if (isRange) {
+        const startDateTime = formData.datetime ? new Date(formData.datetime) : new Date();
+        const endDateTime = formData.datetimeTo ? new Date(formData.datetimeTo) : new Date();
+        let current = new Date(startDateTime.getTime());
+        while (current <= endDateTime) {
+          const docId = this.formatDateForDocId(current);
+          const docRef = doc(db, 'tracker', docId);
+          await setDoc(docRef, { activity: activity });
+          current.setMinutes(current.getMinutes() + 15);
+        }
+      } else {
+        const datetime = formData.datetime ? new Date(formData.datetime) : new Date();
+        const formattedDateTime = this.convertToLocalTimezone(datetime);
+        const docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -7);
+        const docRef = doc(db, 'tracker', docId);
+        await setDoc(docRef, { activity: activity });
+      }
       this.trackerForm.reset();
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -104,5 +127,10 @@ export class TimetrackerPage {
     const offset = date.getTimezoneOffset() * 60000;
     const localDate = new Date(date.getTime() - offset);
     return localDate.toISOString();
+  }
+
+  formatDateForDocId(date: Date): string {
+    const formatted = this.convertToLocalTimezone(date);
+    return formatted.replace(/[-:T]/g, '').slice(0, -7);
   }
 }
