@@ -42,18 +42,21 @@ export class TimetrackerPage {
     currentDateTime.setSeconds(0);
     currentDateTime.setMilliseconds(0);
     const timezoneOffset = currentDateTime.getTimezoneOffset() * 60000;
+
     const localISOTime = new Date(currentDateTime.getTime() - timezoneOffset).toISOString().slice(0, -1);
     const datetimeControl = this.trackerForm.get('datetime');
-    const datetimeToControl = this.trackerForm.get('datetimeTo');
-
     if (datetimeControl) {
       datetimeControl.setValue(localISOTime);
     }
 
+    currentDateTime.setMinutes(currentDateTime.getMinutes() + 30);
+    const datetimeToISOTime = new Date(currentDateTime.getTime() - timezoneOffset).toISOString().slice(0, -1);
+    const datetimeToControl = this.trackerForm.get('datetimeTo');
     if (datetimeToControl) {
-      datetimeToControl.setValue(localISOTime);
+      datetimeToControl.setValue(datetimeToISOTime);
     }
-  }
+}
+
 
   async fetchActivities() {
     const querySnapshot = await getDocs(collection(db, "activities"));
