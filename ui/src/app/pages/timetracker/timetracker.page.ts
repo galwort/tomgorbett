@@ -93,10 +93,34 @@ export class TimetrackerPage {
     const formData = this.trackerForm.value;
     const isRange = this.trackerForm.get('rangeCheckbox')?.value;
     const activity = formData.activity ?? '';
+    const datetime = formData.datetime ?? '';
+    const datetimeTo = formData.datetimeTo ?? '';
 
     if (!activity) {
       const alert = await this.alertController.create({
-        message: "Enter a time and activity."
+        header: 'Missing Information',
+        message: 'Please select an activity.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    if (!isRange && !datetime) {
+      const alert = await this.alertController.create({
+        header: 'Missing Information',
+        message: 'Please enter a time.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    if (isRange && (!datetime || !datetimeTo)) {
+      const alert = await this.alertController.create({
+        header: 'Missing Information',
+        message: 'Please enter a time range.',
+        buttons: ['OK']
       });
       await alert.present();
       return;
@@ -107,22 +131,37 @@ export class TimetrackerPage {
         const startDateTime = formData.datetime ? new Date(formData.datetime) : new Date();
         const endDateTime = formData.datetimeTo ? new Date(formData.datetimeTo) : new Date();
         let current = new Date(startDateTime.getTime());
+    
         while (current <= endDateTime) {
           const docId = this.formatDateForDocId(current);
           const docRef = doc(db, 'tracker', docId);
-          await setDoc(docRef, { activity: activity });
+          await setDoc(docRef, { activity: activity, datetime: current.toISOString() });
           current.setMinutes(current.getMinutes() + 15);
         }
       } else {
         const datetime = formData.datetime ? new Date(formData.datetime) : new Date();
-        const formattedDateTime = this.convertToLocalTimezone(datetime);
-        const docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -7);
+        const docId = this.formatDateForDocId(datetime);
         const docRef = doc(db, 'tracker', docId);
-        await setDoc(docRef, { activity: activity });
+        await setDoc(docRef, { activity: activity, datetime: datetime.toISOString() });
       }
+    
       this.trackerForm.reset();
+    
+      const successAlert = await this.alertController.create({
+        header: 'Success',
+        message: 'Data submitted successfully!',
+        buttons: ['OK']
+      });
+      await successAlert.present();
     } catch (e) {
       console.error("Error adding document: ", e);
+    
+      const errorAlert = await this.alertController.create({
+        header: 'Error',
+        message: 'Failed to submit data. Please try again.',
+        buttons: ['OK']
+      });
+      await errorAlert.present();
     }
   }
 
