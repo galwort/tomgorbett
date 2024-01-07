@@ -16,7 +16,11 @@ const routes: Routes = [
   {
     path: 'unlock',
     loadChildren: () => import('./pages/unlock/unlock.module').then( m => m.UnlockPageModule)
+  },  {
+    path: 'moodtracker',
+    loadChildren: () => import('./pages/moodtracker/moodtracker.module').then( m => m.MoodtrackerPageModule)
   },
+
 
 ];
 
