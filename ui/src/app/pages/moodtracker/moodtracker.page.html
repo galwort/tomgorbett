@@ -1,4 +1,26 @@
 <ion-content>
   <div class="centered-content">
+    <ion-list class="centered-list">
+      <ion-item lines="none">
+        <ion-label>Diet</ion-label>
+        <ion-icon [name]="icons[dietIndex]" (click)="changeDietIcon()"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Marriage</ion-label>
+        <ion-icon [name]="icons[marriageIndex]" (click)="changeMarriageIcon()"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Parents</ion-label>
+        <ion-icon [name]="icons[parentsIndex]" (click)="changeParentsIcon()"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Productivity</ion-label>
+        <ion-icon [name]="icons[productivityIndex]" (click)="changeProductivityIcon()"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Sleep</ion-label>
+        <ion-icon [name]="icons[sleepIndex]" (click)="changeSleepIcon()"></ion-icon>
+      </ion-item>
+    </ion-list>
   </div>
 </ion-content>
