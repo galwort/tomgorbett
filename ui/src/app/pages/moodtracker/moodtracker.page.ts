@@ -19,6 +19,8 @@ export class MoodtrackerPage implements OnInit {
   parentsIndex = 2;
   productivityIndex = 2;
   sleepIndex = 2;
+  isSaving: boolean = false;
+  saveButtonText: string = 'Save';
 
   constructor() { }
 
@@ -54,6 +56,9 @@ export class MoodtrackerPage implements OnInit {
   }
 
   async submit() {
+    this.isSaving = true;
+    this.saveButtonText = 'Saving...';
+
     const mood = {
       diet: this.dietIndex,
       marriage: this.marriageIndex,
@@ -62,6 +67,15 @@ export class MoodtrackerPage implements OnInit {
       sleep: this.sleepIndex
     };
     const dateId = this.getFormattedDate();
-    const docRef = await setDoc(doc(db, 'mood', dateId), mood);
+    try {
+      const docRef = await setDoc(doc(db, 'mood', dateId), mood);
+      this.saveButtonText = 'Saved';
+    } catch (error) {
+      console.error('Error saving: ', error);
+      this.saveButtonText = 'Save Failed';
+    } finally {
+      this.isSaving = false;
+      setTimeout(() => this.saveButtonText = 'Save', 2000);
+    }
   }
 }
