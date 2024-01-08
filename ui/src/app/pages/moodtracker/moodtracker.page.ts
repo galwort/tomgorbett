@@ -45,6 +45,14 @@ export class MoodtrackerPage implements OnInit {
     this.sleepIndex = (this.sleepIndex + 1) % this.icons.length;
   }
 
+  private getFormattedDate(): string {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}${month}${day}`;
+  }
+
   async submit() {
     const mood = {
       diet: this.dietIndex,
@@ -53,6 +61,7 @@ export class MoodtrackerPage implements OnInit {
       productivity: this.productivityIndex,
       sleep: this.sleepIndex
     };
-    const docRef = await setDoc(doc(db, 'mood', 'mood'), mood);
+    const dateId = this.getFormattedDate();
+    const docRef = await setDoc(doc(db, 'mood', dateId), mood);
   }
 }
