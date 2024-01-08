@@ -4,30 +4,23 @@ import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'timetracker',
-    loadChildren: () => import('./pages/timetracker/timetracker.module').then( m => m.TimetrackerPageModule),
-    canActivate: [AuthGuard]
-  },
-  {
     path: '',
-    redirectTo: 'timetracker',
-    pathMatch: 'full'
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'unlock',
     loadChildren: () => import('./pages/unlock/unlock.module').then( m => m.UnlockPageModule)
   },
   {
+    path: 'timetracker',
+    loadChildren: () => import('./pages/timetracker/timetracker.module').then( m => m.TimetrackerPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'moodtracker',
     loadChildren: () => import('./pages/moodtracker/moodtracker.module').then( m => m.MoodtrackerPageModule),
     canActivate: [AuthGuard]
-  },  {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
-
-
-
 ];
 
 @NgModule({
