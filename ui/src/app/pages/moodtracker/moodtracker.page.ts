@@ -13,7 +13,7 @@ export const db = getFirestore(app);
 })
 export class MoodtrackerPage implements OnInit {
   icons = ['skull-outline', 'sad-outline', 'ellipse-outline', 'happy-outline', 'heart-circle-outline'];
-  colors = ['tertiary', 'primary', 'warning', 'success', 'danger'];
+  colors = ['tertiary', 'secondary', 'warning', 'success', 'danger'];
   dietIndex = 2;
   marriageIndex = 2;
   parentsIndex = 2;
