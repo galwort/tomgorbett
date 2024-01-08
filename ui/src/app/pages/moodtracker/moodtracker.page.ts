@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MoodtrackerPage implements OnInit {
   icons = ['skull', 'sad', 'ellipse', 'happy', 'heart-circle'];
+  colors = ['tertiary', 'secondary', 'warning', 'success', 'danger'];
   dietIndex = 2;
   marriageIndex = 2;
   parentsIndex = 2;
