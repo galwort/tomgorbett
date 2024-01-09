@@ -4,8 +4,8 @@
     <ion-item>
       <ion-input [(ngModel)]="gratitude"></ion-input>
     </ion-item>
+    <ion-button shape="round" size="small" [disabled]="isSaving" (click)="submit()">
+      {{ saveButtonText }}
+    </ion-button>
   </div>
-  <ion-button shape="round" size="small" [disabled]="isSaving" (click)="submit()">
-    {{ saveButtonText }}
-  </ion-button>
 </ion-content>

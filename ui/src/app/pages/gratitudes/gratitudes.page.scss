@@ -5,4 +5,44 @@
     justify-content: center;
     min-height: 100%;
     background-color: var(--theme-bg);
+
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--theme-text);
+        background: var(--theme-button);
+        border-color: var(--theme-border);
+        border-style: solid;
+        border-width: 4px;
+        border-radius: 2rem;
+        padding: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-bottom: 40px;
+    }
+
+    ion-item {
+        --background: transparent;
+        color: var(--theme-text);
+        border: var(--theme-border);
+        border-style: solid;
+        border-radius: 2.5rem;
+        border-width: 4px;
+        font-size: 2rem;
+        text-align: center;
+        padding: 10px;;
+        max-width: 280px;
+    }
+
+    ion-button {
+        margin-top: 40px;
+        --background: var(--theme-button);
+        font-weight: bold;
+        font-size: 2rem;
+        color: var(--theme-text);
+        --border-color: var(--theme-border);
+        --border-style: solid;
+        --border-width: 4px;
+        --box-shadow: none;
+    }
 }
