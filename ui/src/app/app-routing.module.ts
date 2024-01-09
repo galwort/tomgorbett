@@ -20,9 +20,11 @@ const routes: Routes = [
     path: 'moodtracker',
     loadChildren: () => import('./pages/moodtracker/moodtracker.module').then( m => m.MoodtrackerPageModule),
     canActivate: [AuthGuard]
-  },  {
+  },
+  {
     path: 'gratitudes',
-    loadChildren: () => import('./pages/gratitudes/gratitudes.module').then( m => m.GratitudesPageModule)
+    loadChildren: () => import('./pages/gratitudes/gratitudes.module').then( m => m.GratitudesPageModule),
+    canActivate: [AuthGuard]
   },
 
 ];

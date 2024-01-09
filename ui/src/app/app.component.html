@@ -19,6 +19,9 @@
       <a *ngIf="currentUrl !== '/' && currentUrl !== '/moodtracker'" routerLink="/moodtracker">
         <ion-icon name="happy"></ion-icon>
       </a>
+      <a *ngIf="currentUrl !== '/' && currentUrl !== '/gratitudes'" routerLink="/gratitudes">
+        <ion-icon name="gift"></ion-icon>
+      </a>
       <a [routerLink]="currentUrl === '/' ? '/unlock' : '/'">
         <ion-icon name="person-circle"></ion-icon>
       </a>      
