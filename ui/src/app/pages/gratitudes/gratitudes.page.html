@@ -1,9 +1,7 @@
 <ion-content>
   <div class="centered-content">
     <h1>I am grateful for</h1>
-    <ion-item>
-      <ion-input [(ngModel)]="gratitude"></ion-input>
-    </ion-item>
+    <input type="text" [(ngModel)]="gratitude">
     <ion-button shape="round" size="small" [disabled]="isSaving" (click)="submit()">
       {{ saveButtonText }}
     </ion-button>
