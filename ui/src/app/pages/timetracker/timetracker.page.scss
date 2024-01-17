@@ -2,26 +2,25 @@ ion-content {
   
   form {
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     background-color: var(--theme-card);
     border: 2px solid var(--theme-border);
     box-shadow: 10px 10px 0px black;
     min-width: 305px;
     min-height: 395px;
 
-    ion-item {
-      --ion-item-background: transparent;
-      margin-top: 20px;
-      font-weight: bold;
-      font-size: 1.4rem;
-    }
-
     ion-header {
-      font-size: 2.4rem;
+      font-size: 1.7rem;
       font-weight: bold;
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 15px;
       box-shadow: none;
+    }
+
+    ion-item {
+      --ion-item-background: transparent;
+      font-weight: bold;
+      font-size: 1rem;
     }
 
     ion-datetime-button::part(native) {
@@ -30,7 +29,7 @@ ion-content {
       padding: 10px;
       margin: 5px;
       font-weight: bold;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
     ion-text {
@@ -38,7 +37,6 @@ ion-content {
       font-weight: normal;
       width: 100%;
       text-align: center;
-      margin-top: 1px;
     }
 
     .checkbox-container {
@@ -65,10 +63,9 @@ ion-content {
     }
 
     ion-button {
-      margin-top: 40px;
       --background: var(--theme-button);
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: var(--theme-text);
       --border-color: var(--theme-border);
       --border-style: solid;
