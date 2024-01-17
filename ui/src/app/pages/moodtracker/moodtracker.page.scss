@@ -13,26 +13,26 @@ ion-list {
     ion-item {
         --background: var(--theme-bg);
         color: var(--theme-text);
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: bold;
         text-align: right;
-        padding: 10px;
+        padding: 5px;
     }
 
     ion-icon {
-        font-size: 4rem;
+        font-size: 3rem;
         padding-left: 6px;
     }
 }
 
 ion-button {
-    margin-top: 40px;
+    margin-top: 20px;
     --background: var(--theme-bg);
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: var(--theme-text);
     --border-color: #ffc409;
     --border-style: solid;
-    --border-width: 4px;
+    --border-width: 3px;
     --box-shadow: none;
 }
