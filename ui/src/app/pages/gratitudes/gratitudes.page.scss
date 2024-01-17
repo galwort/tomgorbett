@@ -21,7 +21,7 @@
         margin-bottom: 40px;
     }
 
-    input {
+    textarea {
         background: transparent;
         color: var(--theme-text);
         border: var(--theme-border);
@@ -30,8 +30,11 @@
         border-width: 4px;
         font-size: 2rem;
         text-align: center;
-        padding: 10px;;
+        padding: 10px;
         max-width: 198px;
+        height: 67.2px;
+        resize: none;
+        overflow: auto;
     }
 
     ion-button {
