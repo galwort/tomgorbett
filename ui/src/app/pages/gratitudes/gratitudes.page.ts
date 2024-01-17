@@ -23,9 +23,9 @@ export class GratitudesPage implements OnInit {
 
   adjustTextareaHeight(event: any) {
     const textarea = event.target;
-    textarea.style.height = 'auto';
-    textarea.style.height = textarea.scrollHeight + 'px';
+    textarea.style.height = (textarea.scrollHeight + 8) + 'px';
   }
+  
 
   private getFormattedDate(): string {
     const date = new Date();
