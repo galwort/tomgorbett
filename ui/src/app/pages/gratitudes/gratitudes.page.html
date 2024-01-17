@@ -1,7 +1,7 @@
 <ion-content>
   <div class="centered-content">
     <h1>I am grateful</h1>
-    <textarea [(ngModel)]="gratitude"></textarea>
+    <textarea [(ngModel)]="gratitude" (input)="adjustTextareaHeight($event)"></textarea>
     <ion-button shape="round" size="small" [disabled]="isSaving" (click)="submit()">
       {{ saveButtonText }}
     </ion-button>

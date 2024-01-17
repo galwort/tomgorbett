@@ -21,6 +21,12 @@ export class GratitudesPage implements OnInit {
   ngOnInit() {
   }
 
+  adjustTextareaHeight(event: any) {
+    const textarea = event.target;
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  }
+
   private getFormattedDate(): string {
     const date = new Date();
     const year = date.getFullYear();
