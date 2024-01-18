@@ -23,6 +23,7 @@ export class GratitudesPage implements OnInit {
 
   adjustTextareaHeight(event: any) {
     const textarea = event.target;
+    textarea.style.height = '2em';
     textarea.style.height = (textarea.scrollHeight + 8) + 'px';
   }
   
