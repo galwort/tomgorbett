@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { TimePage } from './time.page';
 
 import { TimePageRoutingModule } from './time-routing.module';
+import { TimetrackerComponent } from '../../components/timetracker/timetracker.component';
 
 
 @NgModule({
@@ -16,6 +17,6 @@ import { TimePageRoutingModule } from './time-routing.module';
     ReactiveFormsModule,
     FormsModule,
   ],
-  declarations: [TimePage]
+  declarations: [TimePage, TimetrackerComponent]
 })
 export class TimePageModule {}
