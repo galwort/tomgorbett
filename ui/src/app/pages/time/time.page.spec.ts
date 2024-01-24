@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { HomePage } from './timetracker.page';
+import { HomePage } from './time.page';
 
 describe('HomePage', () => {
   let component: HomePage;

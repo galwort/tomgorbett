@@ -11,9 +11,10 @@ import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TimetrackerComponent } from './components/timetracker/timetracker.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, TimetrackerComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

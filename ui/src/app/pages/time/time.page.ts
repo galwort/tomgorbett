@@ -9,11 +9,11 @@ export const app = initializeApp(environment.firebase);
 export const db = getFirestore(app);
 
 @Component({
-  selector: 'app-timetracker',
-  templateUrl: 'timetracker.page.html',
-  styleUrls: ['timetracker.page.scss'],
+  selector: 'app-time',
+  templateUrl: 'time.page.html',
+  styleUrls: ['time.page.scss'],
 })
-export class TimetrackerPage {
+export class TimePage {
   trackerForm = new FormGroup({
     datetime: new FormControl(''),
     time: new FormControl(''),
@@ -55,7 +55,7 @@ export class TimetrackerPage {
     if (datetimeToControl) {
       datetimeToControl.setValue(datetimeToISOTime);
     }
-}
+  }
 
 
   async fetchActivities() {

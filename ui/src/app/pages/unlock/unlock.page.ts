@@ -23,7 +23,7 @@ export class UnlockPage implements OnInit {
   login() {
     this.authService
       .login(this.loginData)
-      .then(() => this.router.navigate(['/timetracker']))
+      .then(() => this.router.navigate(['/time']))
       .catch((e) => console.error('Login failed:', e.message));
   }
 }

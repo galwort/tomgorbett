@@ -12,8 +12,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/unlock/unlock.module').then( m => m.UnlockPageModule)
   },
   {
-    path: 'timetracker',
-    loadChildren: () => import('./pages/timetracker/timetracker.module').then( m => m.TimetrackerPageModule),
+    path: 'time',
+    loadChildren: () => import('./pages/time/time.module').then( m => m.TimePageModule),
     canActivate: [AuthGuard]
   },
   {
