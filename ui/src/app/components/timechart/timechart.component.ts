@@ -46,20 +46,26 @@ export class TimechartComponent implements OnInit {
 
     for (const trackerDoc of trackerDocs.docs) {
       const data = trackerDoc.data();
-      const activityRef = doc(this.db, 'activities', data['Activity']);
-      const activityDoc = await getDoc(activityRef);
+      console.log(`Tracker Doc ID: ${trackerDoc.id}, Activity: ${data['Activity']}`);
 
-      if (activityDoc.exists()) {
-        const activityData = activityDoc.data();
-        const date = trackerDoc.id.substring(0, 8);
+      if (data['Activity']) {
+        const activityRef = doc(this.db, 'activities', data['Activity']);
+        const activityDoc = await getDoc(activityRef);
 
-        if (!dailyData[date]) {
-          dailyData[date] = { screenTime: 0, work: 0, productive: 0 };
+        if (activityDoc.exists()) {
+          const activityData = activityDoc.data();
+          const date = trackerDoc.id.substring(0, 8);
+
+          if (!dailyData[date]) {
+            dailyData[date] = { screenTime: 0, work: 0, productive: 0 };
+          }
+
+          dailyData[date].screenTime += activityData['Screen_Time'] ? 1 : 0;
+          dailyData[date].work += activityData['Work'] ? 1 : 0;
+          dailyData[date].productive += activityData['Productive'] ? 1 : 0;
         }
-
-        dailyData[date].screenTime += activityData['Screen_Time'] ? 1 : 0;
-        dailyData[date].work += activityData['Work'] ? 1 : 0;
-        dailyData[date].productive += activityData['Productive'] ? 1 : 0;
+      } else {
+        console.log(`Activity is undefined for trackerDoc ID: ${trackerDoc.id}`);
       }
     }
 
