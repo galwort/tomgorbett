@@ -1,11 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, query, getDocs, doc, getDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
 export const app = initializeApp(environment.firebase);
 export const db = getFirestore(app);
+
+interface DailyData {
+  screenTime: number;
+  work: number;
+  productive: number;
+}
+
+interface ChartData {
+  labels: string[];
+  screenTimeData: number[];
+  workData: number[];
+  productiveData: number[];
+}
 
 @Component({
   selector: 'app-timechart',
@@ -29,12 +42,7 @@ export class TimechartComponent implements OnInit {
     const trackerQuery = query(collection(this.db, 'tracker'));
     const trackerDocs = await getDocs(trackerQuery);
 
-    let chartData = {
-      labels: [],
-      screenTimeData: [],
-      workData: [],
-      productiveData: []
-    };
+    let dailyData: Record<string, DailyData> = {};
 
     for (const trackerDoc of trackerDocs.docs) {
       const data = trackerDoc.data();
@@ -43,17 +51,29 @@ export class TimechartComponent implements OnInit {
 
       if (activityDoc.exists()) {
         const activityData = activityDoc.data();
-        chartData.labels.push(doc.id);
-        chartData.screenTimeData.push(activityData['screen_time'] ? 1 : 0);
-        chartData.workData.push(activityData['work'] ? 1 : 0);
-        chartData.productiveData.push(activityData['productive'] ? 1 : 0);
+        const date = trackerDoc.id.substring(0, 8);
+
+        if (!dailyData[date]) {
+          dailyData[date] = { screenTime: 0, work: 0, productive: 0 };
+        }
+
+        dailyData[date].screenTime += activityData['Screen_Time'] ? 1 : 0;
+        dailyData[date].work += activityData['Work'] ? 1 : 0;
+        dailyData[date].productive += activityData['Productive'] ? 1 : 0;
       }
     }
+
+    let chartData = {
+      labels: Object.keys(dailyData),
+      screenTimeData: Object.values(dailyData).map(d => d.screenTime),
+      workData: Object.values(dailyData).map(d => d.work),
+      productiveData: Object.values(dailyData).map(d => d.productive)
+    };
 
     return chartData;
   }
 
-  initializeChart(chartData) {
+  initializeChart(chartData: ChartData) {
     this.chart = new Chart('myChart', {
       type: 'line',
       data: {
