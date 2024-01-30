@@ -46,7 +46,6 @@ export class TimechartComponent implements OnInit {
 
     for (const trackerDoc of trackerDocs.docs) {
       const data = trackerDoc.data();
-      console.log(`Tracker Doc ID: ${trackerDoc.id}, Activity: ${data['Activity']}`);
 
       if (data['Activity']) {
         const activityRef = doc(this.db, 'activities', data['Activity']);
