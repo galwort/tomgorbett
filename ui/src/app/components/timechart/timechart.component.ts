@@ -45,12 +45,12 @@ export class TimechartComponent implements OnInit {
     activitiesSnapshot.forEach(doc => {
       activitiesMap.set(doc.id, doc.data());
     });
-
+  
     const trackerQuery = query(collection(this.db, 'tracker'));
     const trackerSnapshot = await getDocs(trackerQuery);
-
+  
     let dailyData: Record<string, DailyData> = {};
-
+  
     trackerSnapshot.docs.forEach(trackerDoc => {
       const data = trackerDoc.data();
       if (data['Activity']) {
@@ -60,24 +60,25 @@ export class TimechartComponent implements OnInit {
           if (!dailyData[date]) {
             dailyData[date] = { screenTime: 0, work: 0, productive: 0 };
           }
-          dailyData[date].screenTime += activityData['Screen_Time'] ? 1 : 0;
-          dailyData[date].work += activityData['Work'] ? 1 : 0;
-          dailyData[date].productive += activityData['Productive'] ? 1 : 0;
+          
+          dailyData[date].screenTime += activityData['Screen_Time'] ? activityData['Screen_Time'] / 4 : 0;
+          dailyData[date].work += activityData['Work'] ? activityData['Work'] / 4 : 0;
+          dailyData[date].productive += activityData['Productive'] ? activityData['Productive'] / 4 : 0;
         }
       } else {
         console.log(`Activity is undefined for trackerDoc ID: ${trackerDoc.id}`);
       }
     });
-
+  
     let chartData: ChartData = {
       labels: Object.keys(dailyData),
       screenTimeData: Object.values(dailyData).map(d => d.screenTime),
       workData: Object.values(dailyData).map(d => d.work),
       productiveData: Object.values(dailyData).map(d => d.productive),
     };
-
+  
     return chartData;
-  }
+  }  
 
   initializeChart(chartData: ChartData) {
     this.chart = new Chart('myChart', {
@@ -104,7 +105,11 @@ export class TimechartComponent implements OnInit {
       options: {
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Hours'
+            }
           }
         }
       }
