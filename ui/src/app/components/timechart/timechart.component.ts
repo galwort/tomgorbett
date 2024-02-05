@@ -4,8 +4,8 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, query, getDocs, doc, getDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
-export const app = initializeApp(environment.firebase);
-export const db = getFirestore(app);
+const app = initializeApp(environment.firebase);
+const db = getFirestore(app);
 
 interface DailyData {
   screenTime: number;
@@ -29,7 +29,7 @@ export class TimechartComponent implements OnInit {
   chart: any;
   db = getFirestore(app);
 
-  constructor() { 
+  constructor() {
     Chart.register(...registerables);
   }
 
@@ -38,27 +38,28 @@ export class TimechartComponent implements OnInit {
     this.initializeChart(chartData);
   }
 
-  async fetchChartData() {
+  async fetchChartData(): Promise<ChartData> {
+    const activitiesQuery = query(collection(this.db, 'activities'));
+    const activitiesSnapshot = await getDocs(activitiesQuery);
+    let activitiesMap = new Map();
+    activitiesSnapshot.forEach(doc => {
+      activitiesMap.set(doc.id, doc.data());
+    });
+
     const trackerQuery = query(collection(this.db, 'tracker'));
-    const trackerDocs = await getDocs(trackerQuery);
+    const trackerSnapshot = await getDocs(trackerQuery);
 
     let dailyData: Record<string, DailyData> = {};
 
-    for (const trackerDoc of trackerDocs.docs) {
+    trackerSnapshot.docs.forEach(trackerDoc => {
       const data = trackerDoc.data();
-
       if (data['Activity']) {
-        const activityRef = doc(this.db, 'activities', data['Activity']);
-        const activityDoc = await getDoc(activityRef);
-
-        if (activityDoc.exists()) {
-          const activityData = activityDoc.data();
+        const activityData = activitiesMap.get(data['Activity']);
+        if (activityData) {
           const date = trackerDoc.id.substring(0, 8);
-
           if (!dailyData[date]) {
             dailyData[date] = { screenTime: 0, work: 0, productive: 0 };
           }
-
           dailyData[date].screenTime += activityData['Screen_Time'] ? 1 : 0;
           dailyData[date].work += activityData['Work'] ? 1 : 0;
           dailyData[date].productive += activityData['Productive'] ? 1 : 0;
@@ -66,13 +67,13 @@ export class TimechartComponent implements OnInit {
       } else {
         console.log(`Activity is undefined for trackerDoc ID: ${trackerDoc.id}`);
       }
-    }
+    });
 
-    let chartData = {
+    let chartData: ChartData = {
       labels: Object.keys(dailyData),
       screenTimeData: Object.values(dailyData).map(d => d.screenTime),
       workData: Object.values(dailyData).map(d => d.work),
-      productiveData: Object.values(dailyData).map(d => d.productive)
+      productiveData: Object.values(dailyData).map(d => d.productive),
     };
 
     return chartData;
@@ -88,19 +89,17 @@ export class TimechartComponent implements OnInit {
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
           data: chartData.screenTimeData,
-        },
-        {
+        }, {
           label: 'Work',
           backgroundColor: 'rgb(54, 162, 235)',
           borderColor: 'rgb(54, 162, 235)',
           data: chartData.workData,
-        },
-        {
+        }, {
           label: 'Productive',
           backgroundColor: 'rgb(75, 192, 192)',
           borderColor: 'rgb(75, 192, 192)',
           data: chartData.productiveData,
-        }]
+        }],
       },
       options: {
         scales: {
