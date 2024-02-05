@@ -57,13 +57,17 @@ export class TimechartComponent implements OnInit {
         const activityData = activitiesMap.get(data['Activity']);
         if (activityData) {
           const date = trackerDoc.id.substring(0, 8);
-          if (!dailyData[date]) {
-            dailyData[date] = { screenTime: 0, work: 0, productive: 0 };
+          const month = parseInt(date.substring(4, 6), 10);
+          const day = parseInt(date.substring(6, 8), 10);
+          const formattedDate = `${month}/${day}`;
+  
+          if (!dailyData[formattedDate]) {
+            dailyData[formattedDate] = { screenTime: 0, work: 0, productive: 0 };
           }
           
-          dailyData[date].screenTime += activityData['Screen_Time'] ? activityData['Screen_Time'] / 4 : 0;
-          dailyData[date].work += activityData['Work'] ? activityData['Work'] / 4 : 0;
-          dailyData[date].productive += activityData['Productive'] ? activityData['Productive'] / 4 : 0;
+          dailyData[formattedDate].screenTime += activityData['Screen_Time'] ? activityData['Screen_Time'] / 4 : 0;
+          dailyData[formattedDate].work += activityData['Work'] ? activityData['Work'] / 4 : 0;
+          dailyData[formattedDate].productive += activityData['Productive'] ? activityData['Productive'] / 4 : 0;
         }
       } else {
         console.log(`Activity is undefined for trackerDoc ID: ${trackerDoc.id}`);
@@ -71,7 +75,7 @@ export class TimechartComponent implements OnInit {
     });
   
     let chartData: ChartData = {
-      labels: Object.keys(dailyData),
+      labels: Object.keys(dailyData).sort((a, b) => new Date(a).getTime() - new Date(b).getTime()),
       screenTimeData: Object.values(dailyData).map(d => d.screenTime),
       workData: Object.values(dailyData).map(d => d.work),
       productiveData: Object.values(dailyData).map(d => d.productive),
