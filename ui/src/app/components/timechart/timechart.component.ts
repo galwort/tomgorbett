@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, query, getDocs, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, query, getDocs } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
 const app = initializeApp(environment.firebase);
