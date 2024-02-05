@@ -114,8 +114,21 @@ export class TimechartComponent implements OnInit {
               display: true,
               text: 'Hours'
             }
+          },
+          x: {
+            ticks: {
+              padding: 10
+            }
           }
-        }
+        },
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              padding: 40
+            }
+          }
+        },
       }
     });
   }
