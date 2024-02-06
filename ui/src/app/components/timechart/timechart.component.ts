@@ -38,39 +38,61 @@ export class TimechartComponent implements OnInit {
     this.initializeChart(chartData);
   }
 
+  getDefaultDateRange(): { startDate: string, endDate: string } {
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+
+    const endDate = currentDate.toISOString().split('T')[0].replace(/-/g, '');
+  
+    const startOfWeekOffset = currentDate.getDay() === 0 ? -6 : 1;
+    const startDate = new Date(currentDate);
+    startDate.setDate(currentDate.getDate() - currentDate.getDay() + startOfWeekOffset - 13);
+    startDate.setHours(0, 0, 0, 0);
+    const startDateString = `${startDate.getFullYear()}${(startDate.getMonth() + 1).toString().padStart(2, '0')}${startDate.getDate().toString().padStart(2, '0')}`;
+  
+    return { startDate: startDateString, endDate: endDate };
+  }
+  
+
   async fetchChartData(): Promise<ChartData> {
+    const { startDate, endDate } = this.getDefaultDateRange();
+  
     const activitiesQuery = query(collection(this.db, 'activities'));
     const activitiesSnapshot = await getDocs(activitiesQuery);
     let activitiesMap = new Map();
     activitiesSnapshot.forEach(doc => {
       activitiesMap.set(doc.id, doc.data());
     });
-  
+
     const trackerQuery = query(collection(this.db, 'tracker'));
     const trackerSnapshot = await getDocs(trackerQuery);
   
     let dailyData: Record<string, DailyData> = {};
   
     trackerSnapshot.docs.forEach(trackerDoc => {
-      const data = trackerDoc.data();
-      if (data['Activity']) {
-        const activityData = activitiesMap.get(data['Activity']);
-        if (activityData) {
-          const date = trackerDoc.id.substring(0, 8);
-          const month = parseInt(date.substring(4, 6), 10);
-          const day = parseInt(date.substring(6, 8), 10);
-          const formattedDate = `${month}/${day}`;
+      const docId = trackerDoc.id;
+      const docDate = docId.substring(0, 8);
   
-          if (!dailyData[formattedDate]) {
-            dailyData[formattedDate] = { screenTime: 0, work: 0, productive: 0 };
+      if (docDate >= startDate && docDate <= endDate) {
+        const data = trackerDoc.data();
+        if (data['Activity']) {
+          const activityData = activitiesMap.get(data['Activity']);
+          if (activityData) {
+            const month = parseInt(docDate.substring(4, 6), 10);
+            const day = parseInt(docDate.substring(6, 8), 10);
+            const formattedDate = `${month}/${day}`;
+  
+            if (!dailyData[formattedDate]) {
+              dailyData[formattedDate] = { screenTime: 0, work: 0, productive: 0 };
+            }
+  
+            dailyData[formattedDate].screenTime += activityData['Screen_Time'] ? activityData['Screen_Time'] / 4 : 0;
+            dailyData[formattedDate].work += activityData['Work'] ? activityData['Work'] / 4 : 0;
+            dailyData[formattedDate].productive += activityData['Productive'] ? activityData['Productive'] / 4 : 0;
           }
-          
-          dailyData[formattedDate].screenTime += activityData['Screen_Time'] ? activityData['Screen_Time'] / 4 : 0;
-          dailyData[formattedDate].work += activityData['Work'] ? activityData['Work'] / 4 : 0;
-          dailyData[formattedDate].productive += activityData['Productive'] ? activityData['Productive'] / 4 : 0;
+        } else {
+          console.log(`Activity is undefined for trackerDoc ID: ${trackerDoc.id}`);
         }
-      } else {
-        console.log(`Activity is undefined for trackerDoc ID: ${trackerDoc.id}`);
       }
     });
   
