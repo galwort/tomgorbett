@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TimePage } from './time.page';
 import { TimePageRoutingModule } from './time-routing.module';
 import { TimetrackerComponent } from '../../components/timetracker/timetracker.component';
 import { TimechartComponent } from 'src/app/components/timechart/timechart.component';
-
+import { TimepieComponent } from 'src/app/components/timepie/timepie.component';
 
 @NgModule({
   imports: [
@@ -18,6 +18,11 @@ import { TimechartComponent } from 'src/app/components/timechart/timechart.compo
     ReactiveFormsModule,
     FormsModule,
   ],
-  declarations: [TimePage, TimetrackerComponent, TimechartComponent]
+  declarations: [
+    TimePage,
+    TimetrackerComponent,
+    TimechartComponent,
+    TimepieComponent,
+  ],
 })
 export class TimePageModule {}
