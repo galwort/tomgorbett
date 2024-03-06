@@ -1,5 +1,10 @@
 <ion-content>
   <div class="centered-content">
-    <canvas id="myPie"></canvas>
+    <canvas
+      baseChart
+      [data]="pieChartData"
+      [options]="pieChartOptions"
+      [type]="pieChartType"
+    ></canvas>
   </div>
 </ion-content>
