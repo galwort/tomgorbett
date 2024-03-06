@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, query, getDocs } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
-import { Chart, ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 const app = initializeApp(environment.firebase);
