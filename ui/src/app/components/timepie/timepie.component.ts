@@ -1,6 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, query, getDocs } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  query,
+  getDocs,
+  where,
+  documentId,
+} from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
@@ -48,7 +55,14 @@ export class TimepieComponent implements OnInit {
       .slice(0, 10)
       .replace(/-/g, '');
 
-    const trackerQuery = query(collection(db, 'tracker'));
+    const startId = formattedDate;
+    const endId = formattedDate + '\uf8ff';
+
+    const trackerQuery = query(
+      collection(db, 'tracker'),
+      where(documentId(), '>=', startId),
+      where(documentId(), '<=', endId)
+    );
     const trackerSnapshot = await getDocs(trackerQuery);
 
     const activityMap = new Map<string, any>();
@@ -64,26 +78,24 @@ export class TimepieComponent implements OnInit {
     let other = 0;
 
     trackerSnapshot.forEach((doc) => {
-      const docId = doc.id;
-      if (docId.startsWith(formattedDate)) {
-        const activity = doc.data()['Activity'];
-        if (activity) {
-          const activityData = activityMap.get(activity);
-          if (activityData) {
-            if (activity === 'Sleeping') {
-              sleeping += 0.25;
-            } else if (activityData['Work']) {
-              work += 0.25;
-            } else if (activityData['Productive']) {
-              productive += 0.25;
-            } else {
-              other += 0.25;
-            }
+      const activity = doc.data()['activity'];
+      if (activity) {
+        const activityData = activityMap.get(activity);
+        if (activityData) {
+          if (activity === 'Sleeping') {
+            sleeping += 0.25;
+          } else if (activityData['Work']) {
+            work += 0.25;
+          } else if (activityData['Productive']) {
+            productive += 0.25;
+          } else {
+            other += 0.25;
           }
         }
       }
     });
 
+    console.log('Fetched data:', [sleeping, work, productive, other]);
     return [sleeping, work, productive, other];
   }
 
