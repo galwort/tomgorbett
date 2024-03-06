@@ -10,7 +10,7 @@ import { TimetrackerComponent } from '../../components/timetracker/timetracker.c
 import { TimechartComponent } from 'src/app/components/timechart/timechart.component';
 import { TimepieComponent } from 'src/app/components/timepie/timepie.component';
 
-import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -20,6 +20,7 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
     TimePageRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    NgChartsModule,
   ],
   declarations: [
     TimePage,
@@ -27,6 +28,5 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
     TimechartComponent,
     TimepieComponent,
   ],
-  providers: [provideCharts(withDefaultRegisterables())],
 })
 export class TimePageModule {}
