@@ -66,7 +66,7 @@ export class TimepieComponent implements OnInit {
     trackerSnapshot.forEach((doc) => {
       const docId = doc.id;
       if (docId.startsWith(formattedDate)) {
-        const activity = doc.data()['activity'];
+        const activity = doc.data()['Activity'];
         if (activity) {
           const activityData = activityMap.get(activity);
           if (activityData) {
