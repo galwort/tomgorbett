@@ -1,3 +1,24 @@
 <ion-content>
-  <app-timepie></app-timepie>
+  <div class="centered-content">
+    <div class="component-container">
+      <ng-container *ngIf="selectedComponent === 'timepie'">
+        <app-timepie></app-timepie>
+      </ng-container>
+      <ng-container *ngIf="selectedComponent === 'timechart'">
+        <app-timechart></app-timechart>
+      </ng-container>
+      <ng-container *ngIf="selectedComponent === 'timetracker'">
+        <app-timetracker></app-timetracker>
+      </ng-container>
+    </div>
+    <div class="select-container">
+      <ion-item>
+        <ion-select [(ngModel)]="selectedComponent">
+          <ion-select-option value="timepie">Pie Chart</ion-select-option>
+          <ion-select-option value="timechart">Line Chart</ion-select-option>
+          <ion-select-option value="timetracker">Log Time</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+  </div>
 </ion-content>
