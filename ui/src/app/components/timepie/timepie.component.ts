@@ -78,6 +78,8 @@ export class TimepieComponent implements OnInit {
     let productive = 0;
     let other = 0;
 
+    const loggedActivities = new Set<string>();
+
     trackerSnapshot.forEach((doc) => {
       const activity = doc.data()['Activity'];
       if (activity) {
@@ -93,7 +95,10 @@ export class TimepieComponent implements OnInit {
             other += 0.25;
           }
         } else {
-          console.log('Activity data not found for:', activity);
+          if (!loggedActivities.has(activity)) {
+            console.log('Activity data not found for:', activity);
+            loggedActivities.add(activity);
+          }
         }
       }
     });
@@ -102,7 +107,6 @@ export class TimepieComponent implements OnInit {
   }
 
   updateChartData(data: number[]) {
-    console.log('Updating chart with data:', data);
     this.pieChartData.datasets[0].data = data;
     if (this.chart) {
       this.chart.update();
