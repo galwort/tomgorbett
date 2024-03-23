@@ -63,6 +63,7 @@ export class TimepieComponent implements OnInit {
       where(documentId(), '>=', startId),
       where(documentId(), '<=', endId)
     );
+
     const trackerSnapshot = await getDocs(trackerQuery);
 
     const activityMap = new Map<string, any>();
@@ -78,7 +79,7 @@ export class TimepieComponent implements OnInit {
     let other = 0;
 
     trackerSnapshot.forEach((doc) => {
-      const activity = doc.data()['activity'];
+      const activity = doc.data()['Activity'];
       if (activity) {
         const activityData = activityMap.get(activity);
         if (activityData) {
@@ -91,16 +92,22 @@ export class TimepieComponent implements OnInit {
           } else {
             other += 0.25;
           }
+        } else {
+          console.log('Activity data not found for:', activity);
         }
       }
     });
 
-    console.log('Fetched data:', [sleeping, work, productive, other]);
     return [sleeping, work, productive, other];
   }
 
   updateChartData(data: number[]) {
+    console.log('Updating chart with data:', data);
     this.pieChartData.datasets[0].data = data;
-    this.chart?.update();
+    if (this.chart) {
+      this.chart.update();
+    } else {
+      console.warn('Chart reference is not available.');
+    }
   }
 }
