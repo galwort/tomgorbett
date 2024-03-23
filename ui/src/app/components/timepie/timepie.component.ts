@@ -34,7 +34,7 @@ export class TimepieComponent implements OnInit {
   };
 
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: ['Sleeping', 'Work', 'Productive', 'Other'],
+    labels: ['Other', 'Sleeping', 'Work', 'Productive'],
     datasets: [{ data: [] }],
   };
 
@@ -103,7 +103,7 @@ export class TimepieComponent implements OnInit {
       }
     });
 
-    return [sleeping, work, productive, other];
+    return [other, sleeping, work, productive];
   }
 
   updateChartData(data: number[]) {
