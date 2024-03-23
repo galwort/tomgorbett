@@ -1,16 +1,18 @@
 <ion-content>
   <div class="centered-content">
-    <div class="chart-values">
-      <div>{{ productiveHours }} productive hours</div>
-      <div>{{ workHours }} hours spent working</div>
-      <div>{{ sleepingHours }} hours spent sleeping</div>
-      <div>{{ otherHours }} hours spent on other activites</div>
+    <div class="chart-container">
+      <canvas
+        baseChart
+        [data]="pieChartData"
+        [options]="pieChartOptions"
+        [type]="pieChartType"
+      ></canvas>
+      <div class="chart-values">
+        <div>{{ productiveHours }} productive hours</div>
+        <div>{{ workHours }} hours spent working</div>
+        <div>{{ sleepingHours }} hours spent sleeping</div>
+        <div>{{ otherHours }} hours spent elsewhere</div>
+      </div>
     </div>
-    <canvas
-      baseChart
-      [data]="pieChartData"
-      [options]="pieChartOptions"
-      [type]="pieChartType"
-    ></canvas>
   </div>
 </ion-content>
