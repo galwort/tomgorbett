@@ -26,10 +26,7 @@ export class TimepieComponent implements OnInit {
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
-      legend: {
-        display: true,
-        position: 'top',
-      },
+      legend: { display: false },
     },
   };
 
@@ -44,6 +41,11 @@ export class TimepieComponent implements OnInit {
   };
 
   public pieChartType: ChartType = 'pie';
+
+  public otherHours = 0;
+  public sleepingHours = 0;
+  public workHours = 0;
+  public productiveHours = 0;
 
   constructor() {}
 
@@ -113,6 +115,12 @@ export class TimepieComponent implements OnInit {
 
   updateChartData(data: number[]) {
     this.pieChartData.datasets[0].data = data;
+    [
+      this.otherHours,
+      this.sleepingHours,
+      this.workHours,
+      this.productiveHours,
+    ] = data;
     if (this.chart) {
       this.chart.update();
     } else {
