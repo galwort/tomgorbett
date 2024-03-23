@@ -35,7 +35,12 @@ export class TimepieComponent implements OnInit {
 
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
     labels: ['Other', 'Sleeping', 'Work', 'Productive'],
-    datasets: [{ data: [] }],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: ['#222222', '#0A2463', '#2E8B57', '#6FFF00'],
+      },
+    ],
   };
 
   public pieChartType: ChartType = 'pie';
