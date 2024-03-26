@@ -30,7 +30,7 @@ export class TimePage {
     timeTo: new FormControl(''),
   });
 
-  selectedComponent: string = 'timepie';
+  selectedComponent: string = 'timetracker';
   docId: string = '';
   activities: any[] = [];
 
