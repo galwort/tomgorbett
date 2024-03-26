@@ -2,7 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+} from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
 export const app = initializeApp(environment.firebase);
@@ -13,7 +19,7 @@ export const db = getFirestore(app);
   templateUrl: './timetracker.component.html',
   styleUrls: ['./timetracker.component.scss'],
 })
-export class TimetrackerComponent  implements OnInit {
+export class TimetrackerComponent implements OnInit {
   trackerForm = new FormGroup({
     datetime: new FormControl(''),
     time: new FormControl(''),
@@ -21,7 +27,7 @@ export class TimetrackerComponent  implements OnInit {
     dateCheckbox: new FormControl(false),
     rangeCheckbox: new FormControl(false),
     datetimeTo: new FormControl(''),
-    timeTo: new FormControl('')
+    timeTo: new FormControl(''),
   });
 
   docId: string = '';
@@ -43,14 +49,20 @@ export class TimetrackerComponent  implements OnInit {
     currentDateTime.setMilliseconds(0);
     const timezoneOffset = currentDateTime.getTimezoneOffset() * 60000;
 
-    const localISOTime = new Date(currentDateTime.getTime() - timezoneOffset).toISOString().slice(0, -1);
+    const localISOTime = new Date(currentDateTime.getTime() - timezoneOffset)
+      .toISOString()
+      .slice(0, -1);
     const datetimeControl = this.trackerForm.get('datetime');
     if (datetimeControl) {
       datetimeControl.setValue(localISOTime);
     }
 
     currentDateTime.setMinutes(currentDateTime.getMinutes() + 30);
-    const datetimeToISOTime = new Date(currentDateTime.getTime() - timezoneOffset).toISOString().slice(0, -1);
+    const datetimeToISOTime = new Date(
+      currentDateTime.getTime() - timezoneOffset
+    )
+      .toISOString()
+      .slice(0, -1);
     const datetimeToControl = this.trackerForm.get('datetimeTo');
     if (datetimeToControl) {
       datetimeToControl.setValue(datetimeToISOTime);
@@ -58,8 +70,8 @@ export class TimetrackerComponent  implements OnInit {
   }
 
   async fetchActivities() {
-    const querySnapshot = await getDocs(collection(db, "activities"));
-    this.activities = querySnapshot.docs.map(doc => ({ id: doc.id }));
+    const querySnapshot = await getDocs(collection(db, 'activities'));
+    this.activities = querySnapshot.docs.map((doc) => ({ id: doc.id }));
   }
 
   changeTimeFrom(event: any) {
@@ -99,7 +111,7 @@ export class TimetrackerComponent  implements OnInit {
       const alert = await this.alertController.create({
         header: 'Missing Information',
         message: 'Please select an activity.',
-        buttons: ['OK']
+        buttons: ['OK'],
       });
       await alert.present();
       return;
@@ -109,7 +121,7 @@ export class TimetrackerComponent  implements OnInit {
       const alert = await this.alertController.create({
         header: 'Missing Information',
         message: 'Please enter a time.',
-        buttons: ['OK']
+        buttons: ['OK'],
       });
       await alert.present();
       return;
@@ -119,7 +131,7 @@ export class TimetrackerComponent  implements OnInit {
       const alert = await this.alertController.create({
         header: 'Missing Information',
         message: 'Please enter a time range.',
-        buttons: ['OK']
+        buttons: ['OK'],
       });
       await alert.present();
       return;
@@ -127,38 +139,46 @@ export class TimetrackerComponent  implements OnInit {
 
     try {
       if (isRange) {
-        const startDateTime = formData.datetime ? new Date(formData.datetime) : new Date();
-        const endDateTime = formData.datetimeTo ? new Date(formData.datetimeTo) : new Date();
+        const startDateTime = formData.datetime
+          ? new Date(formData.datetime)
+          : new Date();
+        const endDateTime = formData.datetimeTo
+          ? new Date(formData.datetimeTo)
+          : new Date();
         let current = new Date(startDateTime.getTime());
-    
+
         while (current <= endDateTime) {
           const docId = this.formatDateForDocId(current);
           const docRef = doc(db, 'tracker', docId);
-          await setDoc(docRef, { activity: activity, datetime: current.toISOString() });
+          await setDoc(docRef, { Activity: activity });
           current.setMinutes(current.getMinutes() + 15);
         }
       } else {
-        const datetime = formData.datetime ? new Date(formData.datetime) : new Date();
+        const datetime = formData.datetime
+          ? new Date(formData.datetime)
+          : new Date();
         const docId = this.formatDateForDocId(datetime);
         const docRef = doc(db, 'tracker', docId);
-        await setDoc(docRef, { activity: activity, datetime: datetime.toISOString() });
+        await setDoc(docRef, {
+          Activity: activity,
+        });
       }
-    
+
       this.trackerForm.reset();
-    
+
       const successAlert = await this.alertController.create({
         header: 'Success',
         message: 'Data submitted successfully!',
-        buttons: ['OK']
+        buttons: ['OK'],
       });
       await successAlert.present();
     } catch (e) {
-      console.error("Error adding document: ", e);
-    
+      console.error('Error adding document: ', e);
+
       const errorAlert = await this.alertController.create({
         header: 'Error',
         message: 'Failed to submit data. Please try again.',
-        buttons: ['OK']
+        buttons: ['OK'],
       });
       await errorAlert.present();
     }
