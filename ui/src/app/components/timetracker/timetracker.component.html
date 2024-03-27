@@ -115,7 +115,7 @@
           </ion-item>
         </ion-row>
         <ion-row class="ion-justify-content-center" *ngIf="lastUpdatedDateTime">
-          <ion-text>Updated {{ lastUpdatedDateTime }}</ion-text>
+          <ion-text>Updated {{ formatDateTime(lastUpdatedDateTime) }}</ion-text>
         </ion-row>
       </ion-grid>
       <ion-row class="ion-justify-content-center">

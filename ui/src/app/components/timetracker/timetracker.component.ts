@@ -208,6 +208,19 @@ export class TimetrackerComponent implements OnInit {
     }
   }
 
+  formatDateTime(dateTimeString: string): string {
+    const dateTime = new Date(dateTimeString);
+    const formattedDate = dateTime.toLocaleDateString('en-US', {
+      month: 'numeric',
+      day: 'numeric',
+    });
+    const formattedTime = dateTime.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+    return `${formattedDate}, ${formattedTime}`;
+  }
+
   convertToLocalTimezone(date: Date): string {
     const offset = date.getTimezoneOffset() * 60000;
     const localDate = new Date(date.getTime() - offset);
