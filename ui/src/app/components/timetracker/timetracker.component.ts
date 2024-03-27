@@ -41,33 +41,30 @@ export class TimetrackerComponent implements OnInit {
 
   ngOnInit() {
     this.fetchActivities();
-    this.setRoundedDateTime();
     this.fetchLastUpdatedDateTime();
   }
 
-  setRoundedDateTime() {
-    const currentDateTime = new Date();
-    const minutes = currentDateTime.getMinutes();
-    const roundedMinutes = Math.round(minutes / 15) * 15;
-    currentDateTime.setMinutes(roundedMinutes);
-    currentDateTime.setSeconds(0);
-    currentDateTime.setMilliseconds(0);
-    const timezoneOffset = currentDateTime.getTimezoneOffset() * 60000;
+  setDateTimeElements() {
+    const lastUpdatedTime = new Date(this.lastUpdatedDateTime);
+    lastUpdatedTime.setMinutes(lastUpdatedTime.getMinutes() + 15);
 
-    const localISOTime = new Date(currentDateTime.getTime() - timezoneOffset)
+    const timezoneOffset = lastUpdatedTime.getTimezoneOffset() * 60000;
+    const localISOTime = new Date(lastUpdatedTime.getTime() - timezoneOffset)
       .toISOString()
       .slice(0, -1);
+
     const datetimeControl = this.trackerForm.get('datetime');
     if (datetimeControl) {
       datetimeControl.setValue(localISOTime);
     }
 
-    currentDateTime.setMinutes(currentDateTime.getMinutes() + 30);
+    lastUpdatedTime.setMinutes(lastUpdatedTime.getMinutes() + 30);
     const datetimeToISOTime = new Date(
-      currentDateTime.getTime() - timezoneOffset
+      lastUpdatedTime.getTime() - timezoneOffset
     )
       .toISOString()
       .slice(0, -1);
+
     const datetimeToControl = this.trackerForm.get('datetimeTo');
     if (datetimeToControl) {
       datetimeToControl.setValue(datetimeToISOTime);
@@ -116,14 +113,14 @@ export class TimetrackerComponent implements OnInit {
       const day = parseInt(lastDocId.slice(6, 8), 10);
       const hour = parseInt(lastDocId.slice(8, 10), 10);
       const minute = parseInt(lastDocId.slice(10, 12), 10);
-      const lastUpdatedDate = new Date(year, month - 1, day, hour, minute);
-      this.lastUpdatedDateTime = lastUpdatedDate.toLocaleString('en-US', {
-        month: 'numeric',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true,
-      });
+      this.lastUpdatedDateTime = new Date(
+        year,
+        month - 1,
+        day,
+        hour,
+        minute
+      ).toISOString();
+      this.setDateTimeElements();
     }
   }
 
