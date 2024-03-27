@@ -171,7 +171,7 @@ export class TimetrackerComponent implements OnInit {
           : new Date();
         let current = new Date(startDateTime.getTime());
 
-        while (current <= endDateTime) {
+        while (current < endDateTime) {
           const docId = this.formatDateForDocId(current);
           const docRef = doc(db, 'tracker', docId);
           await setDoc(docRef, { Activity: activity });
