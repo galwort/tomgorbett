@@ -186,12 +186,12 @@ export class TimetrackerComponent implements OnInit {
           : new Date();
         const docId = this.formatDateForDocId(datetime);
         const docRef = doc(db, 'tracker', docId);
-        await setDoc(docRef, {
-          Activity: activity,
-        });
+        await setDoc(docRef, { Activity: activity });
       }
 
       this.trackerForm.reset();
+
+      await this.fetchLastUpdatedDateTime();
 
       const successAlert = await this.alertController.create({
         header: 'Success',
