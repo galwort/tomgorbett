@@ -8,6 +8,9 @@ import {
   doc,
   getDocs,
   setDoc,
+  query,
+  orderBy,
+  limit,
 } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
@@ -32,12 +35,14 @@ export class TimetrackerComponent implements OnInit {
 
   docId: string = '';
   activities: any[] = [];
+  lastUpdatedDateTime: string = '';
 
   constructor(private alertController: AlertController) {}
 
   ngOnInit() {
     this.fetchActivities();
     this.setRoundedDateTime();
+    this.fetchLastUpdatedDateTime();
   }
 
   setRoundedDateTime() {
@@ -98,6 +103,29 @@ export class TimetrackerComponent implements OnInit {
   updateDocId(datetime: string) {
     const formattedDateTime = this.convertToLocalTimezone(new Date(datetime));
     this.docId = formattedDateTime.replace(/[-:T]/g, '').slice(0, -7);
+  }
+
+  async fetchLastUpdatedDateTime() {
+    const querySnapshot = await getDocs(
+      query(collection(db, 'tracker'), orderBy('__name__', 'desc'), limit(1))
+    );
+    if (!querySnapshot.empty) {
+      const lastDocId = querySnapshot.docs[0].id;
+      const year = parseInt(lastDocId.slice(0, 4), 10);
+      const month = parseInt(lastDocId.slice(4, 6), 10) - 1;
+      const day = parseInt(lastDocId.slice(6, 8), 10);
+      const hour = parseInt(lastDocId.slice(8, 10), 10);
+      const minute = parseInt(lastDocId.slice(10, 12), 10);
+      const lastUpdatedDate = new Date(year, month, day, hour, minute);
+      this.lastUpdatedDateTime = lastUpdatedDate.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+      });
+    }
   }
 
   async submitData() {

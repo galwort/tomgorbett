@@ -21,7 +21,10 @@
           </ion-item>
         </ion-row>
         <ion-row class="ion-justify-content-center">
-          <ion-item lines="none" *ngIf="!trackerForm.get('dateCheckbox')?.value">
+          <ion-item
+            lines="none"
+            *ngIf="!trackerForm.get('dateCheckbox')?.value"
+          >
             <ion-datetime-button datetime="timeFrom"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
@@ -37,12 +40,21 @@
           </ion-item>
         </ion-row>
         <ion-row class="ion-justify-content-center">
-          <ion-item lines="none" *ngIf="trackerForm.get('rangeCheckbox')?.value">
+          <ion-item
+            lines="none"
+            *ngIf="trackerForm.get('rangeCheckbox')?.value"
+          >
             <ion-text>- to -</ion-text>
           </ion-item>
         </ion-row>
         <ion-row class="ion-justify-content-center">
-          <ion-item lines="none" *ngIf="trackerForm.get('dateCheckbox')?.value && trackerForm.get('rangeCheckbox')?.value">
+          <ion-item
+            lines="none"
+            *ngIf="
+              trackerForm.get('dateCheckbox')?.value &&
+              trackerForm.get('rangeCheckbox')?.value
+            "
+          >
             <ion-datetime-button datetime="datetimeTo"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
@@ -57,7 +69,13 @@
           </ion-item>
         </ion-row>
         <ion-row class="ion-justify-content-center">
-          <ion-item lines="none" *ngIf="!trackerForm.get('dateCheckbox')?.value && trackerForm.get('rangeCheckbox')?.value">
+          <ion-item
+            lines="none"
+            *ngIf="
+              !trackerForm.get('dateCheckbox')?.value &&
+              trackerForm.get('rangeCheckbox')?.value
+            "
+          >
             <ion-datetime-button datetime="timeTo"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
@@ -76,23 +94,34 @@
           <ion-item lines="none" class="checkbox-container">
             <ion-checkbox formControlName="dateCheckbox"></ion-checkbox>
             <ion-label>Date</ion-label>
-            <ion-item style="width: 25px;"></ion-item>
+            <ion-item style="width: 25px"></ion-item>
             <ion-checkbox formControlName="rangeCheckbox"></ion-checkbox>
             <ion-label>Range</ion-label>
           </ion-item>
         </ion-row>
         <ion-row class="ion-justify-content-center">
           <ion-item lines="none">
-            <ion-select formControlName="activity" placeholder="Select Activity">
-              <ion-select-option *ngFor="let activity of activities" [value]="activity.id">
+            <ion-select
+              formControlName="activity"
+              placeholder="Select Activity"
+            >
+              <ion-select-option
+                *ngFor="let activity of activities"
+                [value]="activity.id"
+              >
                 {{ activity.id }}
               </ion-select-option>
             </ion-select>
           </ion-item>
         </ion-row>
+        <ion-row class="ion-justify-content-center" *ngIf="lastUpdatedDateTime">
+          <ion-text>Last Updated: {{ lastUpdatedDateTime }}</ion-text>
+        </ion-row>
       </ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-button type="submit" expand="block" shape="round">Submit</ion-button>
+        <ion-button type="submit" expand="block" shape="round"
+          >Submit</ion-button
+        >
       </ion-row>
     </form>
   </div>
