@@ -112,14 +112,13 @@ export class TimetrackerComponent implements OnInit {
     if (!querySnapshot.empty) {
       const lastDocId = querySnapshot.docs[0].id;
       const year = parseInt(lastDocId.slice(0, 4), 10);
-      const month = parseInt(lastDocId.slice(4, 6), 10) - 1;
+      const month = parseInt(lastDocId.slice(4, 6), 10);
       const day = parseInt(lastDocId.slice(6, 8), 10);
       const hour = parseInt(lastDocId.slice(8, 10), 10);
       const minute = parseInt(lastDocId.slice(10, 12), 10);
-      const lastUpdatedDate = new Date(year, month, day, hour, minute);
+      const lastUpdatedDate = new Date(year, month - 1, day, hour, minute);
       this.lastUpdatedDateTime = lastUpdatedDate.toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'long',
+        month: 'numeric',
         day: 'numeric',
         hour: 'numeric',
         minute: 'numeric',

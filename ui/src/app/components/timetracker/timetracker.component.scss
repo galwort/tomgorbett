@@ -31,8 +31,11 @@ ion-content {
     ion-text {
       font-size: 1rem;
       font-weight: normal;
+      font-style: italic;
       width: 100%;
       text-align: center;
+      color: gray;
+      margin-bottom: 10px;
     }
 
     .checkbox-container {
