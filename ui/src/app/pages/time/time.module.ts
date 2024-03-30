@@ -6,9 +6,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TimePage } from './time.page';
 import { TimePageRoutingModule } from './time-routing.module';
 
-import { TimetrackerComponent } from '../../components/timetracker/timetracker.component';
+import { TimetrackerComponent } from 'src/app/components/timetracker/timetracker.component';
 import { TimechartComponent } from 'src/app/components/timechart/timechart.component';
 import { TimepieComponent } from 'src/app/components/timepie/timepie.component';
+import { TimebarComponent } from 'src/app/components/timebar/timebar.component';
 
 import { NgChartsModule } from 'ng2-charts';
 
@@ -27,6 +28,7 @@ import { NgChartsModule } from 'ng2-charts';
     TimetrackerComponent,
     TimechartComponent,
     TimepieComponent,
+    TimebarComponent,
   ],
 })
 export class TimePageModule {}
