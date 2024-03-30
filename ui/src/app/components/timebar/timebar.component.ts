@@ -25,6 +25,7 @@ export class TimebarComponent implements OnInit {
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    indexAxis: 'y',
     scales: {
       x: { stacked: true },
       y: { stacked: true },
@@ -98,9 +99,9 @@ export class TimebarComponent implements OnInit {
       }
     });
 
-    const sortedActivities = Array.from(activityTimes.entries()).sort(
-      (a, b) => b[1] - a[1]
-    );
+    const sortedActivities = Array.from(activityTimes.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10);
 
     const labels = sortedActivities.map(([activity]) => activity);
     const data = sortedActivities.map(([, time]) => time);
