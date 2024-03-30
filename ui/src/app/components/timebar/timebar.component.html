@@ -1,3 +1,12 @@
-<p>
-  timebar works!
-</p>
+<ion-content>
+  <div class="centered-content">
+    <div class="chart-container">
+      <canvas
+        baseChart
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [type]="barChartType"
+      ></canvas>
+    </div>
+  </div>
+</ion-content>
