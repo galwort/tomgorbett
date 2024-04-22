@@ -1,6 +1,8 @@
 ion-content {
+  --background: transparent;
+
   form {
-    ion-item {
+    ion-list {
       --ion-item-background: transparent;
     }
 
@@ -17,8 +19,6 @@ ion-content {
 
 .centered-content {
   display: flex;
-  align-items: center;
-  justify-content: center;
   height: 100%;
   background-color: transparent;
 }
