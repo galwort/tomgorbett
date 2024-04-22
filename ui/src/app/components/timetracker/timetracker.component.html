@@ -45,10 +45,14 @@
           </ion-select>
         </ion-item>
         <ion-item lines="none" *ngIf="lastUpdatedDateTime">
-          <ion-text>Updated {{ formatDateTime(lastUpdatedDateTime) }}</ion-text>
+          <ion-text style="color: #898989"
+            >Updated {{ formatDateTime(lastUpdatedDateTime) }}</ion-text
+          >
         </ion-item>
+        <ion-button type="submit" expand="block" shape="round"
+          >Submit</ion-button
+        >
       </ion-list>
-      <ion-button type="submit" expand="block" shape="round">Submit</ion-button>
     </form>
   </div>
 </ion-content>
