@@ -9,6 +9,7 @@ import {
   getDocs,
   setDoc,
   query,
+  where,
   orderBy,
   limit,
 } from 'firebase/firestore';
@@ -68,7 +69,9 @@ export class TimetrackerComponent implements OnInit {
   }
 
   async fetchActivities() {
-    const querySnapshot = await getDocs(collection(db, 'activities'));
+    const querySnapshot = await getDocs(
+      query(collection(db, 'activities'), where('Active', '==', true))
+    );
     this.activities = querySnapshot.docs.map((doc) => ({ id: doc.id }));
   }
 
