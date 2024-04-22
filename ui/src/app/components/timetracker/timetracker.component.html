@@ -3,9 +3,6 @@
     <form [formGroup]="trackerForm" (ngSubmit)="submitData()">
       <ion-grid>
         <ion-row class="ion-justify-content-center">
-          <ion-header>Time Tracker</ion-header>
-        </ion-row>
-        <ion-row class="ion-justify-content-center">
           <ion-item lines="none" *ngIf="trackerForm.get('dateCheckbox')?.value">
             <ion-datetime-button datetime="datetimeFrom"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
