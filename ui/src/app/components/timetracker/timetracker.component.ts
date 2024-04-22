@@ -25,12 +25,8 @@ export const db = getFirestore(app);
 export class TimetrackerComponent implements OnInit {
   trackerForm = new FormGroup({
     datetime: new FormControl(''),
-    time: new FormControl(''),
     activity: new FormControl(''),
-    dateCheckbox: new FormControl(false),
-    rangeCheckbox: new FormControl(false),
     datetimeTo: new FormControl(''),
-    timeTo: new FormControl(''),
   });
 
   docId: string = '';
@@ -81,9 +77,6 @@ export class TimetrackerComponent implements OnInit {
     if (this.trackerForm.get('datetime')) {
       this.trackerForm.get('datetime')?.setValue(value);
     }
-    if (this.trackerForm.get('time')) {
-      this.trackerForm.get('time')?.setValue(value);
-    }
     this.updateDocId(value);
   }
 
@@ -91,9 +84,6 @@ export class TimetrackerComponent implements OnInit {
     const value = event.detail.value;
     if (this.trackerForm.get('datetimeTo')) {
       this.trackerForm.get('datetimeTo')?.setValue(value);
-    }
-    if (this.trackerForm.get('timeTo')) {
-      this.trackerForm.get('timeTo')?.setValue(value);
     }
   }
 
@@ -126,7 +116,6 @@ export class TimetrackerComponent implements OnInit {
 
   async submitData() {
     const formData = this.trackerForm.value;
-    const isRange = this.trackerForm.get('rangeCheckbox')?.value;
     const activity = formData.activity ?? '';
     const datetime = formData.datetime ?? '';
     const datetimeTo = formData.datetimeTo ?? '';
@@ -141,17 +130,7 @@ export class TimetrackerComponent implements OnInit {
       return;
     }
 
-    if (!isRange && !datetime) {
-      const alert = await this.alertController.create({
-        header: 'Missing Information',
-        message: 'Please enter a time.',
-        buttons: ['OK'],
-      });
-      await alert.present();
-      return;
-    }
-
-    if (isRange && (!datetime || !datetimeTo)) {
+    if (!datetime || !datetimeTo) {
       const alert = await this.alertController.create({
         header: 'Missing Information',
         message: 'Please enter a time range.',
@@ -162,28 +141,15 @@ export class TimetrackerComponent implements OnInit {
     }
 
     try {
-      if (isRange) {
-        const startDateTime = formData.datetime
-          ? new Date(formData.datetime)
-          : new Date();
-        const endDateTime = formData.datetimeTo
-          ? new Date(formData.datetimeTo)
-          : new Date();
-        let current = new Date(startDateTime.getTime());
+      const startDateTime = new Date(formData.datetime ?? '');
+      const endDateTime = new Date(formData.datetimeTo ?? '');
+      let current = new Date(startDateTime.getTime());
 
-        while (current < endDateTime) {
-          const docId = this.formatDateForDocId(current);
-          const docRef = doc(db, 'tracker', docId);
-          await setDoc(docRef, { Activity: activity });
-          current.setMinutes(current.getMinutes() + 15);
-        }
-      } else {
-        const datetime = formData.datetime
-          ? new Date(formData.datetime)
-          : new Date();
-        const docId = this.formatDateForDocId(datetime);
+      while (current < endDateTime) {
+        const docId = this.formatDateForDocId(current);
         const docRef = doc(db, 'tracker', docId);
         await setDoc(docRef, { Activity: activity });
+        current.setMinutes(current.getMinutes() + 15);
       }
 
       this.trackerForm.reset();
