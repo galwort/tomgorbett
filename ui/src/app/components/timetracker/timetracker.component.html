@@ -3,6 +3,7 @@
     <form [formGroup]="trackerForm" (ngSubmit)="submitData()">
       <ion-list>
         <ion-item lines="none">
+          <ion-label>Start time:</ion-label>
           <ion-datetime-button datetime="datetimeFrom"></ion-datetime-button>
           <ion-modal [keepContentsMounted]="true">
             <ng-template>
@@ -16,9 +17,7 @@
           </ion-modal>
         </ion-item>
         <ion-item lines="none">
-          <ion-text>- to -</ion-text>
-        </ion-item>
-        <ion-item lines="none">
+          <ion-label>End time:</ion-label>
           <ion-datetime-button datetime="datetimeTo"></ion-datetime-button>
           <ion-modal [keepContentsMounted]="true">
             <ng-template>
@@ -34,7 +33,7 @@
         <ion-item lines="none">
           <ion-select
             formControlName="activity"
-            placeholder="Select Activity"
+            placeholder="Select activity"
             interface="action-sheet"
           >
             <ion-select-option
