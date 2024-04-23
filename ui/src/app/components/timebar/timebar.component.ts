@@ -15,6 +15,13 @@ import { BaseChartDirective } from 'ng2-charts';
 const app = initializeApp(environment.firebase);
 const db = getFirestore(app);
 
+const categoryColors = {
+  Other: '#222222',
+  Sleeping: '#0A2463',
+  Work: '#1E5631',
+  Productive: '#3CB371',
+};
+
 @Component({
   selector: 'app-timebar',
   templateUrl: './timebar.component.html',
@@ -53,7 +60,7 @@ export class TimebarComponent implements OnInit {
     datasets: [
       {
         data: [],
-        backgroundColor: '#6FFF00',
+        backgroundColor: [],
       },
     ],
   };
@@ -67,7 +74,11 @@ export class TimebarComponent implements OnInit {
     this.updateChartData(chartData);
   }
 
-  async fetchChartData(): Promise<{ labels: string[]; data: number[] }> {
+  async fetchChartData(): Promise<{
+    labels: string[];
+    data: number[];
+    colors: string[];
+  }> {
     const currentDate = new Date();
     const startDate = new Date(currentDate);
     startDate.setDate(startDate.getDate() - 7);
@@ -99,32 +110,54 @@ export class TimebarComponent implements OnInit {
       activityMap.set(doc.id, doc.data());
     });
 
-    const activityTimes = new Map<string, number>();
+    const activityTimes = new Map<string, { time: number; color: string }>();
 
     trackerSnapshot.forEach((doc) => {
       const activity = doc.data()['Activity'];
       if (activity) {
         const activityData = activityMap.get(activity);
         if (activityData) {
-          const currentTime = activityTimes.get(activity) || 0;
-          activityTimes.set(activity, currentTime + 0.25);
+          const currentData = activityTimes.get(activity) || {
+            time: 0,
+            color: categoryColors.Other,
+          };
+
+          let color = categoryColors.Other;
+          if (activity === 'Sleeping') {
+            color = categoryColors.Sleeping;
+          } else if (activityData['Work']) {
+            color = categoryColors.Work;
+          } else if (activityData['Productive']) {
+            color = categoryColors.Productive;
+          }
+
+          activityTimes.set(activity, {
+            time: currentData.time + 0.25,
+            color: color,
+          });
         }
       }
     });
 
     const sortedActivities = Array.from(activityTimes.entries())
-      .sort((a, b) => b[1] - a[1])
+      .sort((a, b) => b[1].time - a[1].time)
       .slice(0, 10);
 
     const labels = sortedActivities.map(([activity]) => activity);
-    const data = sortedActivities.map(([, time]) => time);
+    const data = sortedActivities.map(([, { time }]) => time);
+    const colors = sortedActivities.map(([, { color }]) => color);
 
-    return { labels, data };
+    return { labels, data, colors };
   }
 
-  updateChartData(chartData: { labels: string[]; data: number[] }) {
+  updateChartData(chartData: {
+    labels: string[];
+    data: number[];
+    colors: string[];
+  }) {
     this.barChartData.labels = chartData.labels;
     this.barChartData.datasets[0].data = chartData.data;
+    this.barChartData.datasets[0].backgroundColor = chartData.colors;
     if (this.chart) {
       this.chart.update();
     } else {
