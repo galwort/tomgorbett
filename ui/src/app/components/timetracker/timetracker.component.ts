@@ -55,7 +55,7 @@ export class TimetrackerComponent implements OnInit {
       datetimeControl.setValue(localISOTime);
     }
 
-    lastUpdatedTime.setMinutes(lastUpdatedTime.getMinutes() + 30);
+    lastUpdatedTime.setMinutes(lastUpdatedTime.getMinutes() + 15);
     const datetimeToISOTime = new Date(
       lastUpdatedTime.getTime() - timezoneOffset
     )
