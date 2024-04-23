@@ -16,12 +16,22 @@ ion-content {
 
       canvas {
         width: 100%;
-        height: 100%;
+        height: 80%;
       }
     }
 
     .filter-container {
       margin-top: 20px;
+
+      ion-item {
+        --background: transparent;
+
+        ion-datetime-button::part(native) {
+          background-color: transparent;
+          font-size: 1.2em;
+          font-weight: bold;
+        }
+      }
     }
   }
 }
