@@ -75,6 +75,9 @@ export class TimepieComponent implements OnInit {
           },
         },
         displayColors: false,
+        bodyFont: {
+          size: 24,
+        },
       },
     },
   };
