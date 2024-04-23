@@ -11,6 +11,7 @@ import {
 import { environment } from 'src/environments/environment';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import plugins from 'chartjs-plugin-datalabels';
 
 const app = initializeApp(environment.firebase);
 const db = getFirestore(app);
@@ -28,10 +29,7 @@ export class TimebarComponent implements OnInit {
     indexAxis: 'y',
     scales: {
       x: { stacked: true },
-      y: { stacked: true },
-    },
-    plugins: {
-      legend: { display: false },
+      y: { ticks: { mirror: true } },
     },
   };
 
