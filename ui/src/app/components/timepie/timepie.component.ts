@@ -9,8 +9,17 @@ import {
   documentId,
 } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import {
+  ChartConfiguration,
+  ChartData,
+  ChartType,
+  Chart,
+  registerables,
+} from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+Chart.register(...registerables, ChartDataLabels);
 
 const app = initializeApp(environment.firebase);
 const db = getFirestore(app);
@@ -28,6 +37,22 @@ export class TimepieComponent implements OnInit {
     maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
+      datalabels: {
+        formatter: (value, ctx) => {
+          let sum = 0;
+          let dataArr = ctx.chart.data.datasets[0].data;
+          dataArr.map((data) => {
+            if (typeof data === 'number') {
+              sum += data;
+            } else {
+              console.warn('Unexpected data type encountered:', data);
+            }
+          });
+          let percentage = ((value * 100) / sum).toFixed(2) + '%';
+          return percentage;
+        },
+        color: '#fff',
+      },
     },
   };
 
