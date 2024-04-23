@@ -63,6 +63,17 @@ export class TimepieComponent implements OnInit {
           };
         },
       },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            let label = context.parsed + ' hours';
+            return label;
+          },
+          title: function () {
+            return '';
+          },
+        },
+      },
     },
   };
 
