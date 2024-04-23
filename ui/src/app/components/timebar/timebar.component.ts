@@ -88,6 +88,9 @@ export class TimebarComponent implements OnInit, OnDestroy {
       {
         data: [],
         backgroundColor: [],
+        datalabels: {
+          display: false,
+        },
       },
     ],
   };
