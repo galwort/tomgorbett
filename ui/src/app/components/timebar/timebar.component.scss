@@ -1,4 +1,6 @@
 ion-content {
+  --ion-background-color: transparent;
+
   .centered-content {
     display: flex;
     flex-direction: column;
@@ -7,7 +9,6 @@ ion-content {
     height: 100%;
     padding: 50px;
     box-sizing: border-box;
-    background-color: var(--theme-bg);
 
     .chart-container {
       width: 100%;
