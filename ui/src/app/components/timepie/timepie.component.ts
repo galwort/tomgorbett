@@ -51,7 +51,11 @@ export class TimepieComponent implements OnInit {
           let percentage = ((value * 100) / sum).toFixed(2) + '%';
           return percentage;
         },
-        color: '#fff',
+        color: 'white',
+        font: {
+          weight: 'bold',
+          size: 16,
+        },
       },
     },
   };
