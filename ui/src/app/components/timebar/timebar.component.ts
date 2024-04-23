@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -27,7 +27,7 @@ const categoryColors = {
   templateUrl: './timebar.component.html',
   styleUrls: ['./timebar.component.scss'],
 })
-export class TimebarComponent implements OnInit {
+export class TimebarComponent implements OnInit, OnDestroy {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -45,7 +45,18 @@ export class TimebarComponent implements OnInit {
         ticks: {
           mirror: true,
           z: 1,
-          color: 'white',
+          color: 'rgba(255, 255, 255, 0.9)',
+          font: (context) => {
+            const chart = context.chart;
+            const chartHeight = chart.height;
+            const scale = chart.scales['y'];
+            let barHeight = chartHeight / scale.ticks.length / 2;
+            barHeight = Math.min(Math.max(barHeight, 20), 40);
+            return {
+              size: barHeight,
+              weight: 'bold',
+            };
+          },
         },
       },
     },
@@ -70,9 +81,22 @@ export class TimebarComponent implements OnInit {
 
   constructor() {}
 
-  async ngOnInit() {
-    const chartData = await this.fetchChartData();
-    this.updateChartData(chartData);
+  ngOnInit() {
+    this.fetchChartData().then((chartData) => {
+      this.updateChartData(chartData);
+    });
+
+    window.addEventListener('resize', this.onResize.bind(this));
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.onResize.bind(this));
+  }
+
+  onResize() {
+    if (this.chart) {
+      this.chart.update();
+    }
   }
 
   async fetchChartData(): Promise<{
