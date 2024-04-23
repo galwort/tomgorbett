@@ -30,7 +30,11 @@ export class TimebarComponent implements OnInit {
       x: { stacked: true },
       y: { ticks: { mirror: true } },
     },
-    backgroundColor: 'transparent',
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
   };
 
   public barChartData: ChartData<'bar'> = {
