@@ -18,6 +18,7 @@ import {
 } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { NONE_TYPE } from '@angular/compiler';
 
 Chart.register(...registerables, ChartDataLabels);
 
@@ -73,6 +74,7 @@ export class TimepieComponent implements OnInit {
             return '';
           },
         },
+        displayColors: false,
       },
     },
   };
