@@ -98,23 +98,26 @@ export class TimepieComponent implements OnInit {
   public workHours = 0;
   public productiveHours = 0;
 
-  constructor() {}
+  public startDate: string;
+  public endDate: string;
 
-  async ngOnInit() {
-    const chartData = await this.fetchChartData();
-    this.updateChartData(chartData);
+  constructor() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    this.startDate = yesterday.toISOString();
+    this.endDate = yesterday.toISOString();
   }
 
-  async fetchChartData(): Promise<number[]> {
-    const currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() - 1);
-    const formattedDate = currentDate
-      .toISOString()
-      .slice(0, 10)
-      .replace(/-/g, '');
+  async ngOnInit() {
+    await this.fetchChartData();
+  }
 
-    const startId = formattedDate;
-    const endId = formattedDate + '\uf8ff';
+  async fetchChartData() {
+    const startTimestamp = new Date(this.startDate).setHours(0, 0, 0, 0);
+    const endTimestamp = new Date(this.endDate).setHours(23, 45, 0, 0);
+
+    const startId = this.formatDate(new Date(startTimestamp));
+    const endId = this.formatDate(new Date(endTimestamp)) + '\uf8ff';
 
     const trackerQuery = query(
       collection(db, 'tracker'),
@@ -161,7 +164,7 @@ export class TimepieComponent implements OnInit {
       }
     });
 
-    return [other, sleeping, work, productive];
+    this.updateChartData([other, sleeping, work, productive]);
   }
 
   updateChartData(data: number[]) {
@@ -177,5 +180,13 @@ export class TimepieComponent implements OnInit {
     } else {
       console.warn('Chart reference is not available.');
     }
+  }
+
+  formatDate(date: Date): string {
+    return date.toISOString().slice(0, 10).replace(/-/g, '');
+  }
+
+  onDateChange() {
+    this.fetchChartData();
   }
 }
