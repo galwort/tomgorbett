@@ -27,8 +27,19 @@ export class TimebarComponent implements OnInit {
     responsive: true,
     indexAxis: 'y',
     scales: {
-      x: { stacked: true },
-      y: { ticks: { mirror: true } },
+      x: {
+        stacked: true,
+        ticks: {
+          color: 'white',
+        },
+      },
+      y: {
+        ticks: {
+          mirror: true,
+          z: 1,
+          color: 'white',
+        },
+      },
     },
     plugins: {
       legend: {
