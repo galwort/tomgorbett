@@ -86,7 +86,7 @@ export class TimepieComponent implements OnInit {
     datasets: [
       {
         data: [],
-        backgroundColor: ['#222222', '#0A2463', '#2E8B57', '#6FFF00'],
+        backgroundColor: ['transparent', '#0A2463', '#2E8B57', '#6FFF00'],
       },
     ],
   };
