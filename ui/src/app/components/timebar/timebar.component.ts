@@ -32,6 +32,7 @@ export class TimebarComponent implements OnInit {
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    maintainAspectRatio: false,
     indexAxis: 'y',
     scales: {
       x: {
