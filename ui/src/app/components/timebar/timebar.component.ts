@@ -64,6 +64,21 @@ export class TimebarComponent implements OnInit, OnDestroy {
       legend: {
         display: false,
       },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            let label = context.parsed.x + ' hours';
+            return label;
+          },
+          title: function () {
+            return '';
+          },
+        },
+        displayColors: false,
+        bodyFont: {
+          size: 24,
+        },
+      },
     },
   };
 
