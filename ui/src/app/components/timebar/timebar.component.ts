@@ -19,7 +19,7 @@ const categoryColors = {
   Other: '#222222',
   Sleeping: '#0A2463',
   Work: '#1E5631',
-  Productive: '#3CB371',
+  Productive: '#6A0DAD',
 };
 
 @Component({
