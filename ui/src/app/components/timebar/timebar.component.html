@@ -15,10 +15,10 @@
         <ion-datetime-button datetime="endDateTime"></ion-datetime-button>
       </ion-item>
       <ion-item lines="none">
-        <ion-label>Categories</ion-label>
         <ion-select
           [(ngModel)]="selectedCategories"
           multiple="true"
+          selectedText="Categories"
           (ionChange)="onCategoryChange()"
         >
           <ion-select-option value="Sleeping">Sleep</ion-select-option>
