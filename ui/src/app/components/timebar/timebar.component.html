@@ -8,5 +8,34 @@
         [type]="barChartType"
       ></canvas>
     </div>
+    <div class="filter-container">
+      <ion-item lines="none">
+        <ion-datetime-button datetime="startDateTime"></ion-datetime-button>
+        <ion-text>-</ion-text>
+        <ion-datetime-button datetime="endDateTime"></ion-datetime-button>
+      </ion-item>
+    </div>
   </div>
 </ion-content>
+
+<ion-modal [keepContentsMounted]="true">
+  <ng-template>
+    <ion-datetime
+      id="startDateTime"
+      presentation="date"
+      [(ngModel)]="startDate"
+      (ionChange)="onDateChange()"
+    ></ion-datetime>
+  </ng-template>
+</ion-modal>
+
+<ion-modal [keepContentsMounted]="true">
+  <ng-template>
+    <ion-datetime
+      id="endDateTime"
+      presentation="date"
+      [(ngModel)]="endDate"
+      (ionChange)="onDateChange()"
+    ></ion-datetime>
+  </ng-template>
+</ion-modal>

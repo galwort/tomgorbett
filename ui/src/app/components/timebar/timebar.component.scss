@@ -18,5 +18,19 @@ ion-content {
         height: 100%;
       }
     }
+
+    .filter-container {
+      margin-top: 20px;
+
+      ion-item {
+        --background: transparent;
+
+        ion-datetime-button::part(native) {
+          background-color: transparent;
+          font-size: 1.2em;
+          font-weight: bold;
+        }
+      }
+    }
   }
 }

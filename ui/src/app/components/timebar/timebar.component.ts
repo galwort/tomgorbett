@@ -97,7 +97,15 @@ export class TimebarComponent implements OnInit, OnDestroy {
 
   public barChartType: ChartType = 'bar';
 
-  constructor() {}
+  public startDate: string;
+  public endDate: string;
+
+  constructor() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    this.startDate = yesterday.toISOString();
+    this.endDate = yesterday.toISOString();
+  }
 
   ngOnInit() {
     this.fetchChartData().then((chartData) => {
@@ -122,6 +130,12 @@ export class TimebarComponent implements OnInit, OnDestroy {
     data: number[];
     colors: string[];
   }> {
+    const startTimestamp = new Date(this.startDate).setHours(0, 0, 0, 0);
+    const endTimestamp = new Date(this.endDate).setHours(23, 45, 0, 0);
+
+    const startId = this.formatDate(new Date(startTimestamp));
+    const endId = this.formatDate(new Date(endTimestamp)) + '\uf8ff';
+
     const currentDate = new Date();
     const startDate = new Date(currentDate);
     startDate.setDate(startDate.getDate() - 7);
@@ -134,9 +148,6 @@ export class TimebarComponent implements OnInit, OnDestroy {
       .toISOString()
       .slice(0, 10)
       .replace(/-/g, '');
-
-    const startId = formattedStartDate;
-    const endId = formattedEndDate + '\uf8ff';
 
     const trackerQuery = query(
       collection(db, 'tracker'),
@@ -206,5 +217,15 @@ export class TimebarComponent implements OnInit, OnDestroy {
     } else {
       console.warn('Chart reference is not available.');
     }
+  }
+
+  formatDate(date: Date): string {
+    return date.toISOString().slice(0, 10).replace(/-/g, '');
+  }
+
+  onDateChange() {
+    this.fetchChartData().then((chartData) => {
+      this.updateChartData(chartData);
+    });
   }
 }
