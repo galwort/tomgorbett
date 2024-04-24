@@ -100,12 +100,7 @@ export class TimebarComponent implements OnInit, OnDestroy {
   public startDate: string;
   public endDate: string;
 
-  public selectedCategories: string[] = [
-    'Sleeping',
-    'Work',
-    'Productive',
-    'Other',
-  ];
+  public selectedCategories: string[] = ['Work', 'Productive', 'Other'];
 
   constructor() {
     const yesterday = new Date();
