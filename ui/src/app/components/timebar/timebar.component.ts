@@ -103,10 +103,9 @@ export class TimebarComponent implements OnInit, OnDestroy {
   public selectedCategories: string[] = ['Work', 'Productive', 'Other'];
 
   constructor() {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    this.startDate = yesterday.toISOString();
-    this.endDate = yesterday.toISOString();
+    const today = new Date();
+    this.startDate = today.toISOString();
+    this.endDate = today.toISOString();
   }
 
   ngOnInit() {
