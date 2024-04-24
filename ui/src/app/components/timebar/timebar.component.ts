@@ -100,6 +100,13 @@ export class TimebarComponent implements OnInit, OnDestroy {
   public startDate: string;
   public endDate: string;
 
+  public selectedCategories: string[] = [
+    'Sleeping',
+    'Work',
+    'Productive',
+    'Other',
+  ];
+
   constructor() {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
@@ -197,9 +204,16 @@ export class TimebarComponent implements OnInit, OnDestroy {
       .sort((a, b) => b[1].time - a[1].time)
       .slice(0, 10);
 
-    const labels = sortedActivities.map(([activity]) => activity);
-    const data = sortedActivities.map(([, { time }]) => time);
-    const colors = sortedActivities.map(([, { color }]) => color);
+    const filteredActivities = Array.from(activityTimes.entries())
+      .filter(([activity, { color }]) =>
+        this.selectedCategories.includes(this.getCategoryFromColor(color))
+      )
+      .sort((a, b) => b[1].time - a[1].time)
+      .slice(0, 10);
+
+    const labels = filteredActivities.map(([activity]) => activity);
+    const data = filteredActivities.map(([, { time }]) => time);
+    const colors = filteredActivities.map(([, { color }]) => color);
 
     return { labels, data, colors };
   }
@@ -224,6 +238,25 @@ export class TimebarComponent implements OnInit, OnDestroy {
   }
 
   onDateChange() {
+    this.fetchChartData().then((chartData) => {
+      this.updateChartData(chartData);
+    });
+  }
+
+  getCategoryFromColor(color: string): string {
+    switch (color) {
+      case categoryColors.Sleeping:
+        return 'Sleeping';
+      case categoryColors.Work:
+        return 'Work';
+      case categoryColors.Productive:
+        return 'Productive';
+      default:
+        return 'Other';
+    }
+  }
+
+  onCategoryChange() {
     this.fetchChartData().then((chartData) => {
       this.updateChartData(chartData);
     });

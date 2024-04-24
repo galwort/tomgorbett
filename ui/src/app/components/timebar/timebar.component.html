@@ -14,6 +14,19 @@
         <ion-text>-</ion-text>
         <ion-datetime-button datetime="endDateTime"></ion-datetime-button>
       </ion-item>
+      <ion-item>
+        <ion-label>Categories</ion-label>
+        <ion-select
+          [(ngModel)]="selectedCategories"
+          multiple="true"
+          (ionChange)="onCategoryChange()"
+        >
+          <ion-select-option value="Sleeping">Sleep</ion-select-option>
+          <ion-select-option value="Work">Work</ion-select-option>
+          <ion-select-option value="Productive">Productive</ion-select-option>
+          <ion-select-option value="Other">Other</ion-select-option>
+        </ion-select>
+      </ion-item>
     </div>
   </div>
 </ion-content>
