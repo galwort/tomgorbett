@@ -114,6 +114,12 @@ export class TimebarComponent implements OnInit, OnDestroy {
     });
 
     window.addEventListener('resize', this.onResize.bind(this));
+
+    setTimeout(() => {
+      if (this.chart) {
+        this.chart.update();
+      }
+    }, 100);
   }
 
   ngOnDestroy() {
