@@ -200,10 +200,6 @@ export class TimebarComponent implements OnInit, OnDestroy {
       }
     });
 
-    const sortedActivities = Array.from(activityTimes.entries())
-      .sort((a, b) => b[1].time - a[1].time)
-      .slice(0, 10);
-
     const filteredActivities = Array.from(activityTimes.entries())
       .filter(([activity, { color }]) =>
         this.selectedCategories.includes(this.getCategoryFromColor(color))
