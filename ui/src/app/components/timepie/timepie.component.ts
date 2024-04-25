@@ -163,16 +163,16 @@ export class TimepieComponent implements OnInit {
       }
     });
 
-    this.updateChartData([other, sleeping, work, productive]);
+    this.updateChartData([work, productive, other, sleeping]);
   }
 
   updateChartData(data: number[]) {
     this.pieChartData.datasets[0].data = data;
     [
-      this.otherHours,
-      this.sleepingHours,
       this.workHours,
       this.productiveHours,
+      this.otherHours,
+      this.sleepingHours,
     ] = data;
     if (this.chart) {
       this.chart.update();
