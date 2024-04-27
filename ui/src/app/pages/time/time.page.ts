@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['time.page.scss'],
 })
 export class TimePage {
-  selectedComponent: string = 'timebar';
+  selectedComponent: string = 'timepie';
 
   constructor() {}
 }

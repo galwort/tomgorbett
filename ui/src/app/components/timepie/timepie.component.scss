@@ -28,8 +28,9 @@ ion-content {
 
         ion-datetime-button::part(native) {
           background-color: transparent;
-          font-size: 1.2em;
+          font-size: min(3.5vw, 1.2em);
           font-weight: bold;
+          padding: 5px;
         }
       }
     }
