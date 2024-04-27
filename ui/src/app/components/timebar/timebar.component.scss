@@ -26,17 +26,19 @@ ion-content {
 
       ion-item {
         --background: transparent;
+        --inner-padding-end: 0px;
 
         ion-select {
           color: white;
-          font-size: 1.2em;
+          font-size: min(3.5vw, 1.2em);
           font-weight: bold;
         }
 
         ion-datetime-button::part(native) {
           background-color: transparent;
-          font-size: 1.2em;
+          font-size: min(3.5vw, 1.2em);
           font-weight: bold;
+          padding: 5px;
         }
       }
     }
