@@ -6,6 +6,7 @@
           <ion-select-option value="timetracker">Log Time</ion-select-option>
           <ion-select-option value="timepie">Pie Chart</ion-select-option>
           <ion-select-option value="timebar">Bar Chart</ion-select-option>
+          <ion-select-option value="timeline">Timeline</ion-select-option>
           <!-- <ion-select-option value="timechart">Line Chart</ion-select-option> -->
         </ion-select>
       </ion-item>
@@ -19,6 +20,9 @@
       </ng-container>
       <ng-container *ngIf="selectedComponent === 'timebar'">
         <app-timebar></app-timebar>
+      </ng-container>
+      <ng-container *ngIf="selectedComponent === 'timeline'">
+        <app-timeline></app-timeline>
       </ng-container>
       <!-- <ng-container *ngIf="selectedComponent === 'timechart'">
         <app-timechart></app-timechart>

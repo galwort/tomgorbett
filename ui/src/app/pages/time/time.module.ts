@@ -10,6 +10,7 @@ import { TimetrackerComponent } from 'src/app/components/timetracker/timetracker
 import { TimechartComponent } from 'src/app/components/timechart/timechart.component';
 import { TimepieComponent } from 'src/app/components/timepie/timepie.component';
 import { TimebarComponent } from 'src/app/components/timebar/timebar.component';
+import { TimelineComponent } from 'src/app/components/timeline/timeline.component';
 
 import { NgChartsModule } from 'ng2-charts';
 
@@ -29,6 +30,7 @@ import { NgChartsModule } from 'ng2-charts';
     TimechartComponent,
     TimepieComponent,
     TimebarComponent,
+    TimelineComponent,
   ],
 })
 export class TimePageModule {}
