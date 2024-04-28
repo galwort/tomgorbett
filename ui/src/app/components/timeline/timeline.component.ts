@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -37,7 +37,7 @@ interface TimelineDay {
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
 })
-export class TimelineComponent implements OnInit, OnDestroy {
+export class TimelineComponent implements OnInit {
   public timelineData: TimelineDay[] = [];
 
   public startDate: string;
@@ -53,10 +53,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.updateTimelineData();
-  }
-
-  ngOnDestroy() {
-    // Perform any necessary cleanup
   }
 
   async fetchTimelineData(): Promise<TimelineDay[]> {
