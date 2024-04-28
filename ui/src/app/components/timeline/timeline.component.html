@@ -2,7 +2,6 @@
   <div class="centered-content">
     <div class="timeline-container">
       <div *ngFor="let day of timelineData" class="timeline-day">
-        <div class="timeline-date">{{ day.date | date : "MMM d" }}</div>
         <div class="timeline-activities">
           <div
             *ngFor="let activity of day.activities"
