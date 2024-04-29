@@ -14,6 +14,7 @@ import { TimelineComponent } from 'src/app/components/timeline/timeline.componen
 import { ActivitiesComponent } from 'src/app/components/activities/activities.component';
 
 import { NgChartsModule } from 'ng2-charts';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
   imports: [
@@ -34,5 +35,6 @@ import { NgChartsModule } from 'ng2-charts';
     TimelineComponent,
     ActivitiesComponent,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TimePageModule {}
