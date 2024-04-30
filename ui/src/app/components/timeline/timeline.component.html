@@ -10,9 +10,21 @@
           rotate: false,
         }"
       >
-        <swiper-slide>Slide 1</swiper-slide>
-        <swiper-slide>Slide 2</swiper-slide>
-        <swiper-slide>Slide 3</swiper-slide>
+        <ng-container *ngFor="let day of timelineData">
+          <swiper-slide *ngFor="let activity of day.activities">
+            <div
+              [ngStyle]="{
+                'background-color': activity.color,
+                padding: '20px'
+              }"
+            >
+              <h2>{{ activity.name }}</h2>
+              <p>Date: {{ day.date | date : "mediumDate" }}</p>
+              <p>Start Time: {{ activity.startPercent.toFixed(2) }}%</p>
+              <p>Duration: {{ activity.durationPercent.toFixed(2) }}%</p>
+            </div>
+          </swiper-slide>
+        </ng-container>
       </swiper-container>
     </div>
     <div class="filter-container">
@@ -25,7 +37,8 @@
               presentation="date"
               [(ngModel)]="startDate"
               (ionChange)="onDateChange()"
-            ></ion-datetime>
+            >
+            </ion-datetime>
           </ng-template>
         </ion-modal>
       </ion-item>
