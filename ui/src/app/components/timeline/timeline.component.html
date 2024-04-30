@@ -12,7 +12,7 @@
         }"
       >
         <ng-container *ngFor="let day of timelineData">
-          <swiper-slide *ngFor="let activity of day.activities.reverse()">
+          <swiper-slide *ngFor="let activity of day.activities">
             <div
               [ngStyle]="{
                 display: 'flex',

@@ -6,6 +6,7 @@ import {
   query,
   getDocs,
   where,
+  orderBy,
   documentId,
 } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
@@ -64,7 +65,8 @@ export class TimelineComponent implements OnInit {
     const trackerQuery = query(
       collection(db, 'tracker'),
       where(documentId(), '>=', startId),
-      where(documentId(), '<=', endId)
+      where(documentId(), '<=', endId),
+      orderBy(documentId(), 'desc')
     );
 
     const trackerSnapshot = await getDocs(trackerQuery);
