@@ -10,7 +10,7 @@ ion-content {
 
     .timeline-container {
       flex-grow: 1;
-      overflow-y: auto;
+      overflow-y: hidden;
       padding: 30px;
 
       swiper-container {
