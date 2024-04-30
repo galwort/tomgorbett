@@ -15,6 +15,16 @@ ion-content {
 
       swiper-container {
         height: 100%;
+
+        h2 {
+          font-size: min(5vh, 2.5em);
+          margin: 0;
+        }
+
+        p {
+          font-size: min(3vh, 1.5em);
+          margin: 0;
+        }
       }
     }
 
