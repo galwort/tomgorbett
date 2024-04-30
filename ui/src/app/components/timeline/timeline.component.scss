@@ -13,34 +13,19 @@ ion-content {
       overflow-y: auto;
       padding: 30px;
 
-      .timeline-date {
-        font-weight: bold;
-        margin-bottom: 30px;
-        font-size: 20px;
+      swiper-container {
+        height: 100%;
       }
 
-      .timeline-activities {
-        position: relative;
-        min-height: 400px;
-        padding-bottom: 40px;
-
-        .timeline-activity {
-          position: absolute;
-          left: 0;
-          right: 0;
-          border-radius: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 20px;
-          box-sizing: border-box;
-
-          .timeline-activity-name {
-            text-align: center;
-            font-size: 18px;
-            color: white;
-          }
-        }
+      swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: purple;
+        border-radius: 10px;
+        margin: 5%;
+        height: 100%;
+        width: 90%;
       }
     }
 
