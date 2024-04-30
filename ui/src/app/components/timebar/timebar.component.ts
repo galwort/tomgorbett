@@ -39,6 +39,7 @@ export class TimebarComponent implements OnInit, OnDestroy {
         stacked: true,
         ticks: {
           color: 'white',
+          stepSize: 0.5,
         },
       },
       y: {
