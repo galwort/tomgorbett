@@ -83,7 +83,10 @@ export class TimelineComponent implements OnInit {
       const date = new Date(
         parseInt(activityId.slice(0, 4)),
         parseInt(activityId.slice(4, 6)) - 1,
-        parseInt(activityId.slice(6, 8))
+        parseInt(activityId.slice(6, 8)),
+        parseInt(activityId.slice(8, 10)),
+        parseInt(activityId.slice(10, 12)),
+        0
       );
 
       const activity = doc.data()['Activity'];
