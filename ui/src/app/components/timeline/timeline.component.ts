@@ -25,8 +25,6 @@ const categoryColors = {
 
 interface TimelineActivity {
   name: string;
-  startPercent: number;
-  durationPercent: number;
   color: string;
 }
 
@@ -45,8 +43,6 @@ export class TimelineComponent implements OnInit {
 
   public startDate: string;
   public endDate: string;
-
-  public selectedCategories: string[] = ['Work', 'Productive', 'Other'];
 
   constructor() {
     const today = new Date();
@@ -89,8 +85,6 @@ export class TimelineComponent implements OnInit {
         parseInt(activityId.slice(4, 6)) - 1,
         parseInt(activityId.slice(6, 8))
       );
-      const hours = parseInt(activityId.slice(8, 10));
-      const minutes = parseInt(activityId.slice(10, 12));
 
       const activity = doc.data()['Activity'];
       if (activity) {
@@ -105,13 +99,8 @@ export class TimelineComponent implements OnInit {
             color = categoryColors.Productive;
           }
 
-          const startPercent = ((hours * 60 + minutes) / (24 * 60)) * 100;
-          const durationPercent = (0.25 / 24) * 100;
-
           const timelineActivity: TimelineActivity = {
             name: activity,
-            startPercent,
-            durationPercent,
             color,
           };
 
