@@ -1,19 +1,16 @@
 <ion-content>
   <div class="centered-content">
     <div class="timeline-container">
-      <div *ngFor="let day of timelineData" class="timeline-day">
-        <div class="timeline-activities">
-          <div
-            *ngFor="let activity of day.activities"
-            class="timeline-activity"
-            [style.top.%]="activity.startPercent"
-            [style.height.%]="activity.durationPercent"
-            [style.backgroundColor]="activity.color"
-          >
-            <div class="timeline-activity-name">{{ activity.name }}</div>
-          </div>
-        </div>
-      </div>
+      <swiper-container
+        slides-per-view="3"
+        speed="500"
+        loop="true"
+        css-mode="true"
+      >
+        <swiper-slide>Slide 1</swiper-slide>
+        <swiper-slide>Slide 2</swiper-slide>
+        <swiper-slide>Slide 3</swiper-slide>
+      </swiper-container>
     </div>
     <div class="filter-container">
       <ion-item lines="none">

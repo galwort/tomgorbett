@@ -9,6 +9,9 @@ import {
   documentId,
 } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 const app = initializeApp(environment.firebase);
 const db = getFirestore(app);
