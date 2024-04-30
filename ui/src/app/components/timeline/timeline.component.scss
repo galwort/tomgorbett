@@ -14,7 +14,8 @@ ion-content {
       padding: 30px;
 
       swiper-container {
-        height: 100%;
+        height: 80%;
+        margin-top: 10%;
 
         h2 {
           font-size: min(5vh, 2.5em);
@@ -29,7 +30,6 @@ ion-content {
     }
 
     .filter-container {
-      margin-top: 40px;
       display: flex;
       flex-direction: row;
 
