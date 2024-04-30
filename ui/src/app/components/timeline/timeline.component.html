@@ -1,7 +1,15 @@
 <ion-content>
   <div class="centered-content">
     <div class="timeline-container">
-      <swiper-container direction="vertical" [slidesPerView]="1.5">
+      <swiper-container
+        direction="vertical"
+        [slidesPerView]="1.5"
+        [effect]="'cards'"
+        [cardsEffect]="{
+          perSlideOffset: 20,
+          rotate: false,
+        }"
+      >
         <swiper-slide>Slide 1</swiper-slide>
         <swiper-slide>Slide 2</swiper-slide>
         <swiper-slide>Slide 3</swiper-slide>
