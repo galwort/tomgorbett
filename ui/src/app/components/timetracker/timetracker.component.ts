@@ -34,6 +34,9 @@ export class TimetrackerComponent implements OnInit {
   activities: any[] = [];
   lastUpdatedDateTime: string = '';
 
+  isSubmitting: boolean = false;
+  submitButtonText: string = 'Submit';
+
   constructor(private alertController: AlertController) {}
 
   ngOnInit() {
@@ -118,6 +121,9 @@ export class TimetrackerComponent implements OnInit {
   }
 
   async submitData() {
+    this.isSubmitting = true;
+    this.submitButtonText = 'Submitting...';
+
     const formData = this.trackerForm.value;
     const activity = formData.activity ?? '';
     const datetime = formData.datetime ?? '';
@@ -159,12 +165,7 @@ export class TimetrackerComponent implements OnInit {
 
       await this.fetchLastUpdatedDateTime();
 
-      const successAlert = await this.alertController.create({
-        header: 'Success',
-        message: 'Data submitted successfully!',
-        buttons: ['OK'],
-      });
-      await successAlert.present();
+      this.submitButtonText = 'Submitted';
     } catch (e) {
       console.error('Error adding document: ', e);
 
@@ -174,6 +175,9 @@ export class TimetrackerComponent implements OnInit {
         buttons: ['OK'],
       });
       await errorAlert.present();
+    } finally {
+      this.isSubmitting = false;
+      setTimeout(() => (this.submitButtonText = 'Submit'), 2000);
     }
   }
 

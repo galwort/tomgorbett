@@ -49,9 +49,9 @@
             >Updated {{ formatDateTime(lastUpdatedDateTime) }}</ion-text
           >
         </ion-item>
-        <ion-button type="submit" expand="block" shape="round"
-          >Submit</ion-button
-        >
+        <ion-button type="submit" shape="round" [disabled]="isSubmitting">{{
+          submitButtonText
+        }}</ion-button>
       </ion-list>
     </form>
   </div>
