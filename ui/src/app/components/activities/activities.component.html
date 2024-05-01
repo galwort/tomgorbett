@@ -20,6 +20,22 @@
         <ion-item lines="none">
           <ion-text>{{ selectedDescription }}</ion-text>
         </ion-item>
+        <ion-item lines="none">
+          <ion-label>Active</ion-label>
+          <ion-toggle color="success" [checked]="true"></ion-toggle>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Productive</ion-label>
+          <ion-toggle color="success" [checked]="true"></ion-toggle>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Work</ion-label>
+          <ion-toggle color="success" [checked]="true"></ion-toggle>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Screen Time</ion-label>
+          <ion-toggle color="success" [checked]="true"></ion-toggle>
+        </ion-item>
         <ion-button type="submit" shape="round" [disabled]="isUpdating">{{
           updateButtonText
         }}</ion-button>
