@@ -12,12 +12,12 @@ export class UnlockPage implements OnInit {
   loginData: LoginData = { email: 'wthomasgorbett@gmail.com', password: '' };
   password: string = '';
 
-  constructor(
-    private router: Router,
-    private authService: AuthService
-  ) { }
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/time']);
+    }
   }
 
   login() {
