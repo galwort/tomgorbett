@@ -1,0 +1,31 @@
+ion-content {
+  --background: transparent;
+
+  form {
+    ion-list {
+      --ion-item-background: transparent;
+    }
+
+    ion-label {
+      width: fit-content;
+      padding-right: 5px;
+    }
+
+    ion-button {
+      --background: #595959;
+      margin-top: 10px;
+      width: fit-content;
+      padding-left: 12px;
+    }
+  }
+}
+
+.centered-content {
+  display: flex;
+  height: 100%;
+  background-color: transparent;
+}
+
+ion-alert {
+  text-align: center;
+}

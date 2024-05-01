@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
-import {
-  getFirestore,
-  collection,
-  doc,
-  getDocs,
-  setDoc,
-} from 'firebase/firestore';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
 export const app = initializeApp(environment.firebase);
@@ -20,8 +14,12 @@ export const db = getFirestore(app);
 })
 export class ActivitiesComponent implements OnInit {
   activityForm = new FormGroup({
-    name: new FormControl(''),
+    activity: new FormControl(''),
   });
+
+  activities: any[] = [];
+  isUpdating: boolean = false;
+  updateButtonText: string = 'Submit';
 
   constructor() {}
 
@@ -31,5 +29,6 @@ export class ActivitiesComponent implements OnInit {
 
   async fetchActivities() {
     const querySnapshot = await getDocs(collection(db, 'activities'));
+    this.activities = querySnapshot.docs.map((doc) => ({ id: doc.id }));
   }
 }
