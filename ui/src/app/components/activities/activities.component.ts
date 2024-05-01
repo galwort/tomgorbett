@@ -19,7 +19,7 @@ export class ActivitiesComponent implements OnInit {
 
   activities: any[] = [];
   isSelectedActivity = false;
-  selectedDescription: string = '';
+  selectedActivity: any = null;
   isUpdating: boolean = false;
   updateButtonText: string = 'Update';
 
@@ -45,11 +45,8 @@ export class ActivitiesComponent implements OnInit {
 
   onActivityChange(event: any) {
     const selectedActivityId = event.detail.value;
-    const selectedActivity = this.activities.find(
+    this.selectedActivity = this.activities.find(
       (activity) => activity.id === selectedActivityId
     );
-    this.selectedDescription = selectedActivity
-      ? selectedActivity.Description
-      : '';
   }
 }

@@ -19,23 +19,35 @@
         </ion-item>
         <div *ngIf="isSelectedActivity">
           <ion-item lines="none">
-            <ion-text>{{ selectedDescription }}</ion-text>
+            <ion-text>{{ selectedActivity?.Description }}</ion-text>
           </ion-item>
           <ion-item lines="none">
             <ion-label>Active</ion-label>
-            <ion-toggle color="success" [checked]="true"></ion-toggle>
+            <ion-toggle
+              color="success"
+              [checked]="selectedActivity?.Active"
+            ></ion-toggle>
           </ion-item>
           <ion-item lines="none">
             <ion-label>Productive</ion-label>
-            <ion-toggle color="success" [checked]="true"></ion-toggle>
+            <ion-toggle
+              color="success"
+              [checked]="selectedActivity?.Productive"
+            ></ion-toggle>
           </ion-item>
           <ion-item lines="none">
             <ion-label>Work</ion-label>
-            <ion-toggle color="success" [checked]="true"></ion-toggle>
+            <ion-toggle
+              color="success"
+              [checked]="selectedActivity?.Work"
+            ></ion-toggle>
           </ion-item>
           <ion-item lines="none">
             <ion-label>Screen Time</ion-label>
-            <ion-toggle color="success" [checked]="true"></ion-toggle>
+            <ion-toggle
+              color="success"
+              [checked]="selectedActivity?.Screen_Time"
+            ></ion-toggle>
           </ion-item>
           <ion-button type="submit" shape="round" [disabled]="isUpdating">
             {{ updateButtonText }}
