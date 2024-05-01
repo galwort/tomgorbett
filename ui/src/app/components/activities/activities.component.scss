@@ -6,9 +6,19 @@ ion-content {
       --ion-item-background: transparent;
     }
 
-    ion-label {
-      width: fit-content;
-      padding-right: 5px;
+    ion-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      ion-label {
+        flex: 0 0 auto;
+        padding-right: 16px;
+      }
+
+      ion-toggle {
+        flex: 0 0 auto;
+      }
     }
 
     ion-select {
