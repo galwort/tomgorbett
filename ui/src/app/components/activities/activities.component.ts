@@ -18,6 +18,7 @@ export class ActivitiesComponent implements OnInit {
   });
 
   activities: any[] = [];
+  isSelectedActivity = false;
   selectedDescription: string = '';
   isUpdating: boolean = false;
   updateButtonText: string = 'Update';
@@ -26,6 +27,12 @@ export class ActivitiesComponent implements OnInit {
 
   ngOnInit() {
     this.fetchActivities();
+    const activityControl = this.activityForm.get('activity');
+    if (activityControl) {
+      activityControl.valueChanges.subscribe((value) => {
+        this.isSelectedActivity = !!value;
+      });
+    }
   }
 
   async fetchActivities() {
