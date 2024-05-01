@@ -20,7 +20,7 @@ export class ActivitiesComponent implements OnInit {
   activities: any[] = [];
   isSelectedActivity = false;
   selectedActivity: any = null;
-  isUpdating: boolean = false;
+  updateDisabled: boolean = true;
   updateButtonText: string = 'Update';
 
   constructor() {}
