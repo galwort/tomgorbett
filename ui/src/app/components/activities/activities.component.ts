@@ -18,6 +18,7 @@ export class ActivitiesComponent implements OnInit {
   });
 
   activities: any[] = [];
+  selectedDescription: string = '';
   isUpdating: boolean = false;
   updateButtonText: string = 'Update';
 
@@ -29,6 +30,19 @@ export class ActivitiesComponent implements OnInit {
 
   async fetchActivities() {
     const querySnapshot = await getDocs(collection(db, 'activities'));
-    this.activities = querySnapshot.docs.map((doc) => ({ id: doc.id }));
+    this.activities = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  }
+
+  onActivityChange(event: any) {
+    const selectedActivityId = event.detail.value;
+    const selectedActivity = this.activities.find(
+      (activity) => activity.id === selectedActivityId
+    );
+    this.selectedDescription = selectedActivity
+      ? selectedActivity.Description
+      : '';
   }
 }

@@ -7,6 +7,7 @@
             formControlName="activity"
             placeholder="Select activity"
             interface="action-sheet"
+            (ionChange)="onActivityChange($event)"
           >
             <ion-select-option
               *ngFor="let activity of activities"
@@ -15,6 +16,9 @@
               {{ activity.id }}
             </ion-select-option>
           </ion-select>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-text>{{ selectedDescription }}</ion-text>
         </ion-item>
         <ion-button type="submit" shape="round" [disabled]="isUpdating">{{
           updateButtonText
