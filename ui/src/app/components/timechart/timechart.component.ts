@@ -186,10 +186,7 @@ export class TimechartComponent implements OnInit {
         },
         plugins: {
           legend: {
-            position: 'bottom',
-            labels: {
-              padding: 40,
-            },
+            display: false,
           },
         },
       },
