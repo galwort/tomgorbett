@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -39,7 +39,7 @@ interface TimelineDay {
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
 })
-export class TimelineComponent implements OnInit {
+export class TimelineComponent implements OnInit, AfterViewInit {
   public timelineData: TimelineDay[] = [];
 
   public startDate: string;
@@ -53,6 +53,13 @@ export class TimelineComponent implements OnInit {
 
   ngOnInit() {
     this.updateTimelineData();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      const swiper = document.querySelector('swiper-container')?.swiper;
+      swiper?.update();
+    }, 100);
   }
 
   async fetchTimelineData(): Promise<TimelineDay[]> {
@@ -131,6 +138,11 @@ export class TimelineComponent implements OnInit {
 
   async updateTimelineData() {
     this.timelineData = await this.fetchTimelineData();
+
+    setTimeout(() => {
+      const swiper = document.querySelector('swiper-container')?.swiper;
+      swiper?.update();
+    }, 100);
   }
 
   formatDate(date: Date): string {
