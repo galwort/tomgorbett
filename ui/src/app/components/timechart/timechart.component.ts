@@ -145,6 +145,8 @@ export class TimechartComponent implements OnInit {
             borderWidth: 5,
             data: chartData.workData,
             fill: false,
+            pointRadius: 0,
+            pointHoverRadius: 0,
           },
           {
             label: 'Productive',
@@ -152,6 +154,8 @@ export class TimechartComponent implements OnInit {
             borderWidth: 5,
             data: chartData.productiveData,
             fill: false,
+            pointRadius: 0,
+            pointHoverRadius: 0,
           },
           {
             label: 'Other',
@@ -159,6 +163,8 @@ export class TimechartComponent implements OnInit {
             borderWidth: 5,
             data: chartData.otherData,
             fill: false,
+            pointRadius: 0,
+            pointHoverRadius: 0,
           },
           {
             label: 'Sleeping',
@@ -166,6 +172,8 @@ export class TimechartComponent implements OnInit {
             borderWidth: 5,
             data: chartData.sleepData,
             fill: false,
+            pointRadius: 0,
+            pointHoverRadius: 0,
           },
         ],
       },
@@ -197,6 +205,9 @@ export class TimechartComponent implements OnInit {
             bodyFont: {
               size: 24,
             },
+          },
+          datalabels: {
+            display: false,
           },
         },
       },
