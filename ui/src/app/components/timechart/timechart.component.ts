@@ -8,7 +8,6 @@ const app = initializeApp(environment.firebase);
 const db = getFirestore(app);
 
 interface DailyData {
-  screenTime: number;
   work: number;
   productive: number;
   sleep: number;
@@ -17,7 +16,6 @@ interface DailyData {
 
 interface ChartData {
   labels: string[];
-  screenTimeData: number[];
   workData: number[];
   productiveData: number[];
   sleepData: number[];
@@ -85,7 +83,9 @@ export class TimechartComponent implements OnInit {
       if (docDate >= startDate && docDate <= endDate) {
         const data = trackerDoc.data();
         if (data['Activity']) {
-          const activityData = activitiesMap.get(data['Activity']);
+          const activity = data['Activity'];
+          const activityData = activitiesMap.get(activity);
+
           if (activityData) {
             const weekNumber = this.getWeekNumber(
               new Date(
@@ -97,7 +97,6 @@ export class TimechartComponent implements OnInit {
 
             if (!weeklyData[weekNumber]) {
               weeklyData[weekNumber] = {
-                screenTime: 0,
                 work: 0,
                 productive: 0,
                 sleep: 0,
@@ -105,21 +104,17 @@ export class TimechartComponent implements OnInit {
               };
             }
 
-            weeklyData[weekNumber].screenTime += activityData['Screen_Time']
-              ? activityData['Screen_Time'] / 4
-              : 0;
-            weeklyData[weekNumber].work += activityData['Work']
-              ? activityData['Work'] / 4
-              : 0;
-            weeklyData[weekNumber].productive += activityData['Productive']
-              ? activityData['Productive'] / 4
-              : 0;
-            weeklyData[weekNumber].sleep += activityData['Sleep']
-              ? activityData['Sleep'] / 4
-              : 0;
-            weeklyData[weekNumber].other += activityData['Other']
-              ? activityData['Other'] / 4
-              : 0;
+            if (activity === 'Sleeping') {
+              weeklyData[weekNumber].sleep += 0.25;
+            } else if (activityData['Work']) {
+              weeklyData[weekNumber].work += 0.25;
+            } else if (activityData['Productive']) {
+              weeklyData[weekNumber].productive += 0.25;
+            } else {
+              weeklyData[weekNumber].other += 0.25;
+            }
+          } else {
+            console.log('Activity data not found for:', activity);
           }
         }
       }
@@ -127,7 +122,6 @@ export class TimechartComponent implements OnInit {
 
     let chartData: ChartData = {
       labels: Object.keys(weeklyData).sort(),
-      screenTimeData: Object.values(weeklyData).map((d) => d.screenTime),
       workData: Object.values(weeklyData).map((d) => d.work),
       productiveData: Object.values(weeklyData).map((d) => d.productive),
       sleepData: Object.values(weeklyData).map((d) => d.sleep),
@@ -145,13 +139,6 @@ export class TimechartComponent implements OnInit {
       data: {
         labels: chartData.labels,
         datasets: [
-          {
-            label: 'Screen Time',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: chartData.screenTimeData,
-            fill: true,
-          },
           {
             label: 'Work',
             backgroundColor: 'rgba(54, 162, 235, 0.5)',
