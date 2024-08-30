@@ -145,8 +145,9 @@ export class TimechartComponent implements OnInit {
             borderWidth: 5,
             data: chartData.workData,
             fill: false,
-            pointRadius: 0,
-            pointHoverRadius: 0,
+            pointRadius: 5,
+            pointBackgroundColor: 'transparent',
+            pointBorderColor: 'transparent',
           },
           {
             label: 'Productive',
@@ -154,8 +155,9 @@ export class TimechartComponent implements OnInit {
             borderWidth: 5,
             data: chartData.productiveData,
             fill: false,
-            pointRadius: 0,
-            pointHoverRadius: 0,
+            pointRadius: 5,
+            pointBackgroundColor: 'transparent',
+            pointBorderColor: 'transparent',
           },
           {
             label: 'Other',
@@ -163,8 +165,9 @@ export class TimechartComponent implements OnInit {
             borderWidth: 5,
             data: chartData.otherData,
             fill: false,
-            pointRadius: 0,
-            pointHoverRadius: 0,
+            pointRadius: 5,
+            pointBackgroundColor: 'transparent',
+            pointBorderColor: 'transparent',
           },
           {
             label: 'Sleeping',
@@ -172,8 +175,9 @@ export class TimechartComponent implements OnInit {
             borderWidth: 5,
             data: chartData.sleepData,
             fill: false,
-            pointRadius: 0,
-            pointHoverRadius: 0,
+            pointRadius: 5,
+            pointBackgroundColor: 'transparent',
+            pointBorderColor: 'transparent',
           },
         ],
       },
@@ -181,9 +185,13 @@ export class TimechartComponent implements OnInit {
         scales: {
           y: {
             beginAtZero: true,
-            title: {
+            ticks: {
+              display: false,
+              stepSize: 10,
+            },
+            grid: {
               display: true,
-              text: 'Hours',
+              color: 'rgba(255, 255, 255, 0.2)',
             },
           },
           x: {
