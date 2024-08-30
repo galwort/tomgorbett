@@ -188,6 +188,16 @@ export class TimechartComponent implements OnInit {
           legend: {
             display: false,
           },
+          tooltip: {
+            callbacks: {
+              label: (context) => `${context.parsed.y} hours`,
+              title: () => '',
+            },
+            displayColors: false,
+            bodyFont: {
+              size: 24,
+            },
+          },
         },
       },
     });
