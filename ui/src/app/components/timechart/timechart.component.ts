@@ -38,9 +38,7 @@ export class TimechartComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log('Component initialized. Fetching chart data...');
     const chartData = await this.fetchChartData();
-    console.log('Chart data fetched:', chartData);
     this.initializeChart(chartData);
   }
 
@@ -62,22 +60,11 @@ export class TimechartComponent implements OnInit {
       .toString()
       .padStart(2, '0')}${startDate.getDate().toString().padStart(2, '0')}`;
 
-    console.log('Default date range:', {
-      startDate: startDateString,
-      endDate: endDate,
-    });
     return { startDate: startDateString, endDate: endDate };
   }
 
   async fetchChartData(): Promise<ChartData> {
     const { startDate, endDate } = this.getDefaultDateRange();
-
-    console.log(
-      'Fetching data from Firestore between',
-      startDate,
-      'and',
-      endDate
-    );
 
     const activitiesQuery = query(collection(this.db, 'activities'));
     const activitiesSnapshot = await getDocs(activitiesQuery);
@@ -85,8 +72,6 @@ export class TimechartComponent implements OnInit {
     activitiesSnapshot.forEach((doc) => {
       activitiesMap.set(doc.id, doc.data());
     });
-
-    console.log('Activities data fetched:', activitiesMap);
 
     const trackerQuery = query(collection(this.db, 'tracker'));
     const trackerSnapshot = await getDocs(trackerQuery);
@@ -140,8 +125,6 @@ export class TimechartComponent implements OnInit {
       }
     });
 
-    console.log('Weekly data processed:', weeklyData);
-
     let chartData: ChartData = {
       labels: Object.keys(weeklyData).sort(),
       screenTimeData: Object.values(weeklyData).map((d) => d.screenTime),
@@ -151,20 +134,11 @@ export class TimechartComponent implements OnInit {
       otherData: Object.values(weeklyData).map((d) => d.other),
     };
 
-    console.log('Final chart data prepared:', chartData);
-
     return chartData;
   }
 
   initializeChart(chartData: ChartData) {
-    console.log('Initializing chart with data:', chartData);
     const canvas = document.getElementById('myChart') as HTMLCanvasElement;
-    console.log('Canvas element:', canvas);
-
-    if (!canvas) {
-      console.error('Canvas element not found');
-      return;
-    }
 
     this.chart = new Chart(canvas, {
       type: 'line',
@@ -234,8 +208,6 @@ export class TimechartComponent implements OnInit {
         },
       },
     });
-
-    console.log('Chart initialized:', this.chart);
   }
 
   getWeekNumber(date: Date): string {
