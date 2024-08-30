@@ -48,9 +48,7 @@ export class TimechartComponent implements OnInit {
 
     const startOfWeekOffset = currentDate.getDay() === 0 ? -6 : 1;
     const startDate = new Date(currentDate);
-    startDate.setDate(
-      currentDate.getDate() - currentDate.getDay() + startOfWeekOffset - 13
-    );
+    startDate.setMonth(currentDate.getMonth() - 2);
     startDate.setHours(0, 0, 0, 0);
     const startDateString = `${startDate.getFullYear()}${(
       startDate.getMonth() + 1
