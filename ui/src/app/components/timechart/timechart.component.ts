@@ -44,19 +44,25 @@ export class TimechartComponent implements OnInit {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
 
-    const endDate = currentDate.toISOString().split('T')[0].replace(/-/g, '');
+    const endDate = new Date(currentDate);
+    const dayOfWeek = endDate.getDay();
+    const daysToSubtract = dayOfWeek === 0 ? 7 : dayOfWeek;
+    endDate.setDate(endDate.getDate() - daysToSubtract);
+    const endDateString = endDate.toISOString().split('T')[0].replace(/-/g, '');
 
-    const startOfWeekOffset = currentDate.getDay() === 0 ? -6 : 1;
-    const startDate = new Date(currentDate);
-    startDate.setMonth(currentDate.getMonth() - 2);
-    startDate.setHours(0, 0, 0, 0);
+    const startDate = new Date(endDate);
+    startDate.setMonth(endDate.getMonth() - 2);
+
+    const startDayOfWeek = startDate.getDay();
+    const daysToAdd = startDayOfWeek === 0 ? 1 : 8 - startDayOfWeek;
+    startDate.setDate(startDate.getDate() + daysToAdd);
     const startDateString = `${startDate.getFullYear()}${(
       startDate.getMonth() + 1
     )
       .toString()
       .padStart(2, '0')}${startDate.getDate().toString().padStart(2, '0')}`;
 
-    return { startDate: startDateString, endDate: endDate };
+    return { startDate: startDateString, endDate: endDateString };
   }
 
   async fetchChartData(): Promise<ChartData> {
