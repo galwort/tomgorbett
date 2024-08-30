@@ -87,7 +87,7 @@ export class TimechartComponent implements OnInit {
           const activityData = activitiesMap.get(activity);
 
           if (activityData) {
-            const weekNumber = this.getWeekNumber(
+            const mondayDate = this.getMondayDate(
               new Date(
                 parseInt(docDate.substring(0, 4)),
                 parseInt(docDate.substring(4, 6)) - 1,
@@ -95,8 +95,15 @@ export class TimechartComponent implements OnInit {
               )
             );
 
-            if (!weeklyData[weekNumber]) {
-              weeklyData[weekNumber] = {
+            const formattedDate = `${(mondayDate.getMonth() + 1)
+              .toString()
+              .padStart(2, '0')}/${mondayDate
+              .getDate()
+              .toString()
+              .padStart(2, '0')}`;
+
+            if (!weeklyData[formattedDate]) {
+              weeklyData[formattedDate] = {
                 work: 0,
                 productive: 0,
                 sleep: 0,
@@ -105,13 +112,13 @@ export class TimechartComponent implements OnInit {
             }
 
             if (activity === 'Sleeping') {
-              weeklyData[weekNumber].sleep += 0.25;
+              weeklyData[formattedDate].sleep += 0.25;
             } else if (activityData['Work']) {
-              weeklyData[weekNumber].work += 0.25;
+              weeklyData[formattedDate].work += 0.25;
             } else if (activityData['Productive']) {
-              weeklyData[weekNumber].productive += 0.25;
+              weeklyData[formattedDate].productive += 0.25;
             } else {
-              weeklyData[weekNumber].other += 0.25;
+              weeklyData[formattedDate].other += 0.25;
             }
           } else {
             console.log('Activity data not found for:', activity);
@@ -129,6 +136,12 @@ export class TimechartComponent implements OnInit {
     };
 
     return chartData;
+  }
+
+  getMondayDate(date: Date): Date {
+    const day = date.getDay();
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(date.setDate(diff));
   }
 
   initializeChart(chartData: ChartData) {
