@@ -141,31 +141,31 @@ export class TimechartComponent implements OnInit {
         datasets: [
           {
             label: 'Work',
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-            borderColor: 'rgb(54, 162, 235)',
+            borderColor: '#2E8B57',
+            borderWidth: 5,
             data: chartData.workData,
-            fill: true,
+            fill: false,
           },
           {
             label: 'Productive',
-            backgroundColor: 'rgba(75, 192, 192, 0.5)',
-            borderColor: 'rgb(75, 192, 192)',
+            borderColor: '#6A0DAD',
+            borderWidth: 5,
             data: chartData.productiveData,
-            fill: true,
-          },
-          {
-            label: 'Sleep',
-            backgroundColor: 'rgba(153, 102, 255, 0.5)',
-            borderColor: 'rgb(153, 102, 255)',
-            data: chartData.sleepData,
-            fill: true,
+            fill: false,
           },
           {
             label: 'Other',
-            backgroundColor: 'rgba(255, 159, 64, 0.5)',
-            borderColor: 'rgb(255, 159, 64)',
+            borderColor: '#222222',
+            borderWidth: 5,
             data: chartData.otherData,
-            fill: true,
+            fill: false,
+          },
+          {
+            label: 'Sleeping',
+            borderColor: '#0A2463',
+            borderWidth: 5,
+            data: chartData.sleepData,
+            fill: false,
           },
         ],
       },
@@ -173,7 +173,6 @@ export class TimechartComponent implements OnInit {
         scales: {
           y: {
             beginAtZero: true,
-            stacked: true,
             title: {
               display: true,
               text: 'Hours',
