@@ -3,12 +3,12 @@
     <div class="timeline-container">
       <swiper-container
         direction="vertical"
-        [slidesPerView]="1.5"
+        [slidesPerView]="4"
         [effect]="'cards'"
         [cardsEffect]="{
           perSlideOffset: 30,
           rotate: false,
-          slideShadows: false,
+          slideShadows: true,
         }"
       >
         <ng-container *ngFor="let day of timelineData">
@@ -17,12 +17,11 @@
               [ngStyle]="{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
                 alignItems: 'center',
                 'background-color': activity.color,
                 padding: '20px',
                 'border-radius': '10px',
-                boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+                boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.5)',
               }"
             >
               <h2>{{ activity.name }}</h2>

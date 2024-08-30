@@ -14,16 +14,15 @@ ion-content {
       padding: 30px;
 
       swiper-container {
-        height: 80%;
-        margin-top: 10%;
+        height: 100%;
 
         h2 {
-          font-size: min(5vh, 2.5em);
+          font-size: min(4vh, 2em);
           margin: 0;
         }
 
         p {
-          font-size: min(3vh, 1.5em);
+          font-size: min(2vh, 1em);
           margin: 0;
         }
       }
