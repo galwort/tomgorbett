@@ -45,6 +45,21 @@ export class HomePage implements OnInit {
     this.points.push([0, 0], [this.width, 0], [0, this.height], [this.width, this.height]);
   }
 
+  private isTriangleInTargetArea(points: number[][]): boolean {
+    const centroidX = (points[0][0] + points[1][0] + points[2][0]) / 3;
+    const centroidY = (points[0][1] + points[1][1] + points[2][1]) / 3;
+    
+    const targetX = this.width * 0.5;
+    const targetY = this.height * 0.5;
+    const targetWidth = this.width * 0.4;
+    const targetHeight = this.height * 0.4;
+    
+    return centroidX > targetX && 
+           centroidX < targetX + targetWidth && 
+           centroidY > targetY && 
+           centroidY < targetY + targetHeight;
+  }
+
   private drawTriangles() {
     const coordinates = this.points.reduce((acc, point) => acc.concat(point), []);
     const delaunay = new Delaunator(coordinates);
@@ -52,6 +67,11 @@ export class HomePage implements OnInit {
     
     this.generateRandomBaseColor();
     
+    // Create a map to store edge counts
+    const edgeMap = new Map<string, number>();
+    const edgeToPoints = new Map<string, [number[], number[]]>();
+
+    // First pass: draw all triangles and count edges
     for (let i = 0; i < triangles.length; i += 3) {
       const points = [
         [coordinates[triangles[i] * 2], coordinates[triangles[i] * 2 + 1]],
@@ -60,7 +80,41 @@ export class HomePage implements OnInit {
       ];
       
       this.drawTriangle(points);
+      
+      if (this.isTriangleInTargetArea(points)) {
+        // For each edge in the triangle
+        for (let j = 0; j < 3; j++) {
+          const p1 = points[j];
+          const p2 = points[(j + 1) % 3];
+          
+          // Create a unique key for this edge
+          const edgeKey = [
+            Math.min(p1[0], p2[0]),
+            Math.min(p1[1], p2[1]),
+            Math.max(p1[0], p2[0]),
+            Math.max(p1[1], p2[1])
+          ].join(',');
+          
+          edgeMap.set(edgeKey, (edgeMap.get(edgeKey) || 0) + 1);
+          edgeToPoints.set(edgeKey, [p1, p2]);
+        }
+      }
     }
+    
+    // Draw only edges that appear once (boundary edges)
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+    this.ctx.lineWidth = 2;
+    
+    edgeMap.forEach((count, edge) => {
+      if (count === 1) {
+        const [p1, p2] = edgeToPoints.get(edge)!;
+        this.ctx.moveTo(p1[0], p1[1]);
+        this.ctx.lineTo(p2[0], p2[1]);
+      }
+    });
+    
+    this.ctx.stroke();
   }
 
   private generateRandomBaseColor() {
