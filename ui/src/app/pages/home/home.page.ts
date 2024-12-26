@@ -67,11 +67,9 @@ export class HomePage implements OnInit {
     
     this.generateRandomBaseColor();
     
-    // Create a map to store edge counts
     const edgeMap = new Map<string, number>();
     const edgeToPoints = new Map<string, [number[], number[]]>();
 
-    // First pass: draw all triangles and count edges
     for (let i = 0; i < triangles.length; i += 3) {
       const points = [
         [coordinates[triangles[i] * 2], coordinates[triangles[i] * 2 + 1]],
@@ -82,12 +80,10 @@ export class HomePage implements OnInit {
       this.drawTriangle(points);
       
       if (this.isTriangleInTargetArea(points)) {
-        // For each edge in the triangle
         for (let j = 0; j < 3; j++) {
           const p1 = points[j];
           const p2 = points[(j + 1) % 3];
           
-          // Create a unique key for this edge
           const edgeKey = [
             Math.min(p1[0], p2[0]),
             Math.min(p1[1], p2[1]),
@@ -101,7 +97,6 @@ export class HomePage implements OnInit {
       }
     }
     
-    // Draw only edges that appear once (boundary edges)
     this.ctx.beginPath();
     this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
     this.ctx.lineWidth = 2;
@@ -156,7 +151,11 @@ export class HomePage implements OnInit {
   }
 
   private drawTriangle(points: number[][]) {
-    const shade = 0.3 + Math.random() * 0.3;
+    const isInTarget = this.isTriangleInTargetArea(points);
+    const shade = isInTarget 
+      ? 0.7 + Math.random() * 0.3  
+      : 0.3 + Math.random() * 0.3;
+    
     const color = this.baseColor.map(c => Math.round(c * shade));
     
     this.ctx.beginPath();
