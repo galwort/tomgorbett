@@ -46,7 +46,7 @@ export class HomePage implements OnInit {
   }
 
   private drawTriangles() {
-    const coordinates = this.points.flat();
+    const coordinates = this.points.reduce((acc, point) => acc.concat(point), []);
     const delaunay = new Delaunator(coordinates);
     const triangles = delaunay.triangles;
     
@@ -66,7 +66,7 @@ export class HomePage implements OnInit {
   private generateRandomBaseColor() {
     const hue = Math.random() * 360;
     const saturation = 70;
-    const lightness = 15;
+    const lightness = 8;
     
     const hslToRgb = (h: number, s: number, l: number): [number, number, number] => {
       h /= 360;
@@ -102,7 +102,7 @@ export class HomePage implements OnInit {
   }
 
   private drawTriangle(points: number[][]) {
-    const shade = 0.7 + Math.random() * 0.3;
+    const shade = 0.3 + Math.random() * 0.3;
     const color = this.baseColor.map(c => Math.round(c * shade));
     
     this.ctx.beginPath();
