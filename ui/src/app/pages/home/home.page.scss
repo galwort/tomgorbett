@@ -1,19 +1,79 @@
 ion-content {
-    position: relative;
-    
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
+  --background: black;
+
+  #animation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    z-index: 1000;
+    animation: fadeOut 1s ease forwards;
+    animation-delay: 3s;
+    padding: 150px;
+  }
+
+  .logo-animation path {
+    stroke-dasharray: 1000;
+  }
+
+  .path-1,
+  .path-2,
+  .path-3 {
+    stroke-dashoffset: 1000;
+  }
+
+  .path-1 {
+    animation: drawForward 3s ease forwards 0s;
+  }
+
+  .path-2 {
+    animation: drawForward 3s ease forwards 0.4s;
+  }
+
+  .path-3 {
+    animation: drawForward 3s ease forwards 1s;
+  }
+
+  .path-4 {
+    stroke-dashoffset: -1000;
+    animation: drawBackward 1s ease forwards 0.4s;
+  }
+
+  #main-content {
+    display: none;
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
     }
-    
-    .content-container {
-      position: relative;
-      z-index: 1;
-      height: 100%;
-      width: 100%;
+    to {
+      opacity: 0;
+      visibility: hidden;
     }
   }
+
+  @keyframes drawForward {
+    from {
+      stroke-dashoffset: 1000;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes drawBackward {
+    from {
+      stroke-dashoffset: -1000;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
