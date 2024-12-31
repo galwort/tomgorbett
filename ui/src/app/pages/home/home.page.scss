@@ -49,6 +49,10 @@ ion-content {
     padding: 150px;
   }
 
+  .logo-animation {
+    animation: shrinkOut 0.3s ease forwards 2.2s;
+  }
+
   .logo-animation path {
     stroke-dasharray: 1000;
   }
@@ -80,6 +84,7 @@ ion-content {
     color: white;
     text-align: center;
     margin-top: 1rem;
+    animation: shrinkOut 1s ease forwards 3s;
   }
 
   #main-content {
@@ -101,6 +106,17 @@ ion-content {
     }
     to {
       stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes shrinkOut {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0);
+      opacity: 0;
     }
   }
 }
