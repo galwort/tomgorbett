@@ -1,4 +1,10 @@
 ion-content {
+  --background: linear-gradient(
+    to bottom right,
+    var(--random-bg),
+    var(--random-bg-shade)
+  );
+
   #start-overlay {
     position: fixed;
     top: 0;
@@ -18,15 +24,15 @@ ion-content {
     border: none;
     cursor: pointer;
     transition: transform 0.3s ease, color 0.3s ease;
-    color: var(--primary-color);
-  }
 
-  #start-button i {
-    transition: transform 0.3s ease, color 0.3s ease;
-  }
+    i {
+      transition: transform 0.3s ease, color 0.3s ease;
 
-  #start-button:hover i {
-    transform: scale(1.1);
+      &:hover {
+        color: var(--random-primary);
+        transform: scale(1.1);
+      }
+    }
   }
 
   #animation-overlay {
@@ -115,7 +121,7 @@ ion-content {
       cursor: pointer;
 
       &:hover {
-        color: var(--primary-color);
+        color: var(--random-primary);
       }
     }
   }

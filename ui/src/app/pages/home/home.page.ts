@@ -14,13 +14,18 @@ export class HomePage implements OnInit {
     while (randomPrimaryHue === randomBgHue) {
       randomPrimaryHue = Math.floor(Math.random() * 360);
     }
-    const backgroundColor = this.hsvToHex(randomBgHue, 79, 18);
+
+    const backgroundColor = this.hsvToHex(randomBgHue, 79, 15);
+    const backgroundShade = this.hsvToHex(randomBgHue, 79, 30);
     const primaryColor = this.hsvToHex(randomPrimaryHue, 61, 100);
+
     const ionContent = document.querySelector('ion-content') as HTMLElement;
     if (ionContent) {
-      ionContent.style.setProperty('--background', backgroundColor);
-      ionContent.style.setProperty('--primary-color', primaryColor);
+      ionContent.style.setProperty('--random-bg', backgroundColor);
+      ionContent.style.setProperty('--random-bg-shade', backgroundShade);
+      ionContent.style.setProperty('--random-primary', primaryColor);
     }
+
     const startButton = document.getElementById('start-button') as HTMLElement;
     const audio = document.getElementById('logo-audio') as HTMLAudioElement;
 
