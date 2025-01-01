@@ -125,3 +125,12 @@ ion-content {
     }
   }
 }
+
+@media (max-width: 768px) {
+  ion-content #main-content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
