@@ -76,6 +76,25 @@ ion-content {
 
   #main-content {
     display: none;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+
+    h1 {
+      font-size: 3rem;
+      font-family: "Montserrat";
+      font-weight: 1000;
+      color: #fff;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-family: "Montserrat";
+      font-weight: 700;
+      color: #ddd;
+      margin-top: 12px;
+    }
   }
 
   @keyframes drawForward {
