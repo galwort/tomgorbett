@@ -80,19 +80,18 @@ ion-content {
     padding-bottom: 4rem;
     padding-left: 3rem;
     padding-right: 3rem;
+    font-family: "Inter";
 
     h1 {
-      font-size: 3rem;
-      font-family: "Montserrat";
-      font-weight: 1000;
+      font-size: min(3rem, 10vw);
+      font-weight: 700;
       color: #fff;
     }
 
     h2 {
-      font-size: 1.5rem;
-      font-family: "Montserrat";
-      font-weight: 700;
-      color: #ddd;
+      font-size: min(1.5rem, 5vw);
+      font-weight: 600;
+      color: #ccc;
       margin-top: 12px;
     }
   }
