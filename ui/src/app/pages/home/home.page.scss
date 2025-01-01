@@ -18,6 +18,7 @@ ion-content {
     border: none;
     cursor: pointer;
     transition: transform 0.3s ease, color 0.3s ease;
+    color: var(--primary-color);
   }
 
   #start-button i {
@@ -114,7 +115,7 @@ ion-content {
       cursor: pointer;
 
       &:hover {
-        color: red;
+        color: var(--primary-color);
       }
     }
   }

@@ -19,12 +19,11 @@ export class HomePage implements OnInit {
     const ionContent = document.querySelector('ion-content') as HTMLElement;
     if (ionContent) {
       ionContent.style.setProperty('--background', backgroundColor);
+      ionContent.style.setProperty('--primary-color', primaryColor);
     }
     const startButton = document.getElementById('start-button') as HTMLElement;
     const audio = document.getElementById('logo-audio') as HTMLAudioElement;
-    if (startButton) {
-      startButton.style.color = primaryColor;
-    }
+
     startButton?.addEventListener('click', () => {
       const startOverlay = document.getElementById('start-overlay');
       if (startOverlay) {
