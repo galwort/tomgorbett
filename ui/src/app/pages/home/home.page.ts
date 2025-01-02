@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  activeLink: string = 'about';
+
   constructor() {}
 
   ngOnInit() {
@@ -55,6 +57,10 @@ export class HomePage implements OnInit {
         }
       }, 4000);
     });
+  }
+
+  toggleActiveLink(section: string) {
+    this.activeLink = section;
   }
 
   hsvToHex(h: number, s: number, v: number): string {

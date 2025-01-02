@@ -69,28 +69,52 @@
     <p>
       I build AI tools that bridge the gap between the left and right brain.
     </p>
+
     <div id="nav-menu">
+      <!-- 
+        * Note the (click)="toggleActiveLink('about')" 
+        * so we can toggle the active link in the TypeScript 
+      -->
       <ul>
-        <li>
-          <a href="#about">About</a>
+        <li
+          [class.active]="activeLink === 'about'"
+          (click)="toggleActiveLink('about')"
+        >
+          <a href="#about">ABOUT</a>
         </li>
-        <li>
-          <a href="#experience">Experience</a>
+        <li
+          [class.active]="activeLink === 'experience'"
+          (click)="toggleActiveLink('experience')"
+        >
+          <a href="#experience">EXPERIENCE</a>
         </li>
-        <li>
-          <a href="#projects">Projects</a>
+        <li
+          [class.active]="activeLink === 'projects'"
+          (click)="toggleActiveLink('projects')"
+        >
+          <a href="#projects">PROJECTS</a>
         </li>
-        <li>
-          <a href="#blog">Blog</a>
+        <li
+          [class.active]="activeLink === 'blog'"
+          (click)="toggleActiveLink('blog')"
+        >
+          <a href="#blog">BLOG</a>
         </li>
-        <li>
-          <a href="#research">Research</a>
+        <li
+          [class.active]="activeLink === 'research'"
+          (click)="toggleActiveLink('research')"
+        >
+          <a href="#research">RESEARCH</a>
         </li>
-        <li>
-          <a href="#quotes">Quotes</a>
+        <li
+          [class.active]="activeLink === 'quotes'"
+          (click)="toggleActiveLink('quotes')"
+        >
+          <a href="#quotes">QUOTES</a>
         </li>
       </ul>
     </div>
+
     <div id="social-links">
       <i class="fa-brands fa-github"></i>
       <i class="fa-brands fa-linkedin"></i>
