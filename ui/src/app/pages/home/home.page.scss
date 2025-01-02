@@ -77,7 +77,6 @@ ion-content {
     animation: drawBackward 1s ease forwards 0.4s;
   }
   #main-content {
-    /* Ensures the content is hidden until after the animation */
     display: none;
     min-height: 100vh;
     align-items: flex-start;
@@ -215,6 +214,28 @@ ion-content {
       opacity: 0;
     }
   }
+}
+#cat-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-gap: 1rem;
+  margin-top: 1rem;
+}
+.cat-item {
+  position: relative;
+}
+.cat-item img,
+.cat-item video {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+.cat-item img:hover,
+.cat-item video:hover {
+  transform: scale(1.05);
 }
 @media (max-width: 768px) {
   ion-content #main-content {
