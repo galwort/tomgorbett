@@ -1,0 +1,49 @@
+<svg
+   width="100.8018mm"
+   height="118.51586mm"
+   viewBox="0 0 100.80179 118.51586"
+   xmlns="http://www.w3.org/2000/svg">
+  <style>
+    :root {
+      --stroke-t: #000;
+      --stroke-g: #333;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --stroke-t: #fff;
+        --stroke-g: #ccc;
+      }
+    }
+
+    .t {
+      fill: none;
+      stroke: var(--stroke-t);
+      stroke-width: 15;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .G {
+      fill: none;
+      stroke: var(--stroke-g);
+      stroke-width: 15;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+  <g transform="translate(-40.81389,-76.461465)">
+    <path
+       class="G"
+       d="m 108.49561,145.35069 h 25.20665" />
+    <path
+       class="G"
+       d="m 117.93181,187.10234 c 15.70848,-40.18451 15.70848,-40.18451 15.70848,-40.18451" />
+    <path
+       class="t"
+       d="m 107.14744,84.51144 c -93.960113,104.59873 9.39541,103.55479 9.73387,102.29643" />
+    <path
+       class="t"
+       d="m 48.723716,109.65584 c 83.656784,0 83.656784,0 83.656784,0" />
+  </g>
+</svg>
