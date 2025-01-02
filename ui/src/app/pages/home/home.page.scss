@@ -151,13 +151,13 @@ ion-content {
     }
   }
 
-  /****** Custom Nav Styles ******/
   #nav-menu {
     ul {
-      /* Removes default bullet and indentation */
       list-style-type: none;
       padding-left: 0;
       margin: 0;
+      font-size: 12px;
+      letter-spacing: 0.15rem;
     }
 
     li {
@@ -166,7 +166,6 @@ ion-content {
       margin: 0.5rem 0;
       cursor: pointer;
 
-      /* Use a dash by default before each list item */
       &::before {
         content: "-";
         position: absolute;
@@ -174,7 +173,6 @@ ion-content {
         transition: transform 0.3s ease, content 0.3s ease;
       }
 
-      /* When this li is active, show ">" instead of "-" */
       &.active::before {
         content: ">";
         transform: translateX(0.1rem);
@@ -184,7 +182,7 @@ ion-content {
       a {
         text-decoration: none;
         color: #ccc;
-        font-weight: 500;
+        font-weight: 600;
         transition: color 0.3s ease;
 
         &:hover {
@@ -194,12 +192,10 @@ ion-content {
     }
   }
 
-  /* Highlight the link inside the active li */
   #nav-menu li.active a {
     color: var(--random-primary);
   }
 
-  /* Animations */
   @keyframes fadeInUp {
     from {
       opacity: 0;

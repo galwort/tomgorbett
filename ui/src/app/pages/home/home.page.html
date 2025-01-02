@@ -112,6 +112,12 @@
         >
           <a href="#quotes">QUOTES</a>
         </li>
+        <li
+          [class.active]="activeLink === 'cat'"
+          (click)="toggleActiveLink('cat')"
+        >
+          <a href="#cat">PICTURES OF MY CAT</a>
+        </li>
       </ul>
     </div>
 
@@ -120,7 +126,6 @@
       <i class="fa-brands fa-linkedin"></i>
       <i class="fa-brands fa-x-twitter"></i>
       <i class="fa-solid fa-envelope"></i>
-      <i class="fa-solid fa-lock"></i>
     </div>
   </div>
 </ion-content>
