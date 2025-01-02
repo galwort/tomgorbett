@@ -5,6 +5,16 @@ ion-content {
     var(--random-bg-shade)
   );
 
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+
+  ::selection {
+    color: var(--random-bg);
+    background-color: var(--random-primary);
+  }
+
   #start-overlay {
     position: fixed;
     top: 0;
