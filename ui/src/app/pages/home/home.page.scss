@@ -12,7 +12,6 @@ ion-content {
     color: var(--random-bg);
     background-color: var(--random-primary);
   }
-
   #start-overlay {
     position: fixed;
     top: 0;
@@ -140,13 +139,38 @@ ion-content {
   }
   #right-col {
     width: 65%;
+    section {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.5s ease forwards;
+    }
+    section:nth-of-type(1) {
+      animation-delay: 1.3s;
+    }
+    section:nth-of-type(2) {
+      animation-delay: 1.5s;
+    }
+    section:nth-of-type(3) {
+      animation-delay: 1.7s;
+    }
+    section:nth-of-type(4) {
+      animation-delay: 1.9s;
+    }
+    section:nth-of-type(5) {
+      animation-delay: 2.1s;
+    }
+    section:nth-of-type(6) {
+      animation-delay: 2.3s;
+    }
+    section:nth-of-type(7) {
+      animation-delay: 2.5s;
+    }
     a {
       color: var(--random-primary);
       text-decoration: none;
       font-weight: 700;
       transition: color 0.3s ease;
     }
-
     a:hover {
       color: var(--random-primary);
     }
