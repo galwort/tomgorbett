@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, AfterViewInit {
   activeLink: string = 'about';
+  private observer?: IntersectionObserver;
+
   constructor() {}
+
   ngOnInit() {
     const randomBgHue = Math.floor(Math.random() * 360);
     let randomPrimaryHue = Math.floor(Math.random() * 360);
@@ -52,9 +55,34 @@ export class HomePage implements OnInit {
       }, 4000);
     });
   }
+
+  ngAfterViewInit() {
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.activeLink = entry.target.id;
+          }
+        });
+      },
+      {
+        threshold: 0.6,
+      }
+    );
+
+    const sections = document.querySelectorAll('section');
+    sections.forEach((section) => {
+      if (this.observer) {
+        this.observer.observe(section);
+      }
+    });
+  }
+
   toggleActiveLink(section: string) {
     this.activeLink = section;
+    document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
   }
+
   hsvToHex(h: number, s: number, v: number): string {
     s /= 100;
     v /= 100;
