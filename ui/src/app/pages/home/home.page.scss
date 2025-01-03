@@ -274,6 +274,10 @@ ion-content {
 .cat-item video:hover {
   transform: scale(1.5);
 }
+
+.cat-item video {
+  transform: none !important;
+}
 @media (max-width: 768px) {
   ion-content #main-content {
     padding-top: 2rem;
