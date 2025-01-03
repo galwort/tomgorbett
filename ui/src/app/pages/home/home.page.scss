@@ -8,10 +8,12 @@ ion-content {
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
+
   ::selection {
     color: var(--random-bg);
     background-color: var(--random-primary);
   }
+
   #start-overlay {
     position: fixed;
     top: 0;
@@ -24,12 +26,14 @@ ion-content {
     background: transparent;
     z-index: 1000;
   }
+
   #start-button {
     font-size: 3rem;
     background-color: transparent;
     border: none;
     cursor: pointer;
     transition: transform 0.3s ease, color 0.3s ease;
+
     i {
       transition: transform 0.3s ease, color 0.3s ease;
       &:hover {
@@ -38,6 +42,7 @@ ion-content {
       }
     }
   }
+
   #animation-overlay {
     position: fixed;
     top: 0;
@@ -52,36 +57,45 @@ ion-content {
     z-index: 1000;
     padding: 150px;
   }
+
   .logo-animation {
     animation: shrinkOut 0.3s ease forwards 2.2s;
   }
+
   .logo-animation path {
     stroke-dasharray: 1000;
   }
+
   .path-1,
   .path-2,
   .path-3 {
     stroke-dashoffset: 1000;
   }
+
   .path-1 {
     animation: drawForward 3s ease forwards 0s;
   }
+
   .path-2 {
     animation: drawForward 3s ease forwards 0.4s;
   }
+
   .path-3 {
     animation: drawForward 3s ease forwards 1s;
   }
+
   .path-4 {
     stroke-dashoffset: -1000;
     animation: drawBackward 1s ease forwards 0.4s;
   }
+
   #main-content {
     display: none;
     min-height: 100vh;
     align-items: flex-start;
     padding: 4rem 3rem;
     font-family: "Inter";
+
     h1,
     h2,
     p,
@@ -91,12 +105,14 @@ ion-content {
       transform: translateY(20px);
       animation: fadeInUp 0.5s ease forwards;
     }
+
     h1 {
       animation-delay: 0s;
       font-size: min(3rem, 10vw);
       font-weight: 700;
       color: #fff;
     }
+
     h2 {
       animation-delay: 0.2s;
       font-size: min(1.5rem, 5vw);
@@ -104,20 +120,24 @@ ion-content {
       color: #fff;
       margin-top: 12px;
     }
+
     p {
       animation-delay: 0.4s;
       font-size: min(1rem, 3vw);
       color: #ccc;
       margin-top: 16px;
     }
+
     ul li {
       animation-delay: 0.6s;
     }
+
     #social-links {
       display: flex;
       justify-content: flex-start;
       margin-top: 24px;
     }
+
     #social-links i {
       font-size: min(1rem, 3vw);
       color: #ccc;
@@ -129,21 +149,25 @@ ion-content {
       }
     }
   }
+
   #left-col {
     width: 35%;
     margin-right: 2rem;
-    position: -webkit-sticky;
-    position: sticky;
+    margin-top: 48px;
+    position: fixed;
     top: 0;
     align-self: flex-start;
   }
+
   #right-col {
-    width: 65%;
+    width: 55%;
+    margin-left: 45%;
     section {
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 0.5s ease forwards;
     }
+
     section:nth-of-type(1) {
       animation-delay: 1.3s;
     }
@@ -165,16 +189,19 @@ ion-content {
     section:nth-of-type(7) {
       animation-delay: 2.5s;
     }
+
     a {
       color: var(--random-primary);
       text-decoration: none;
       font-weight: 700;
       transition: color 0.3s ease;
     }
+
     a:hover {
       color: var(--random-primary);
     }
   }
+
   #nav-menu {
     ul {
       list-style-type: none;
@@ -188,17 +215,20 @@ ion-content {
       padding-left: 1.5rem;
       margin: 0.5rem 0;
       cursor: pointer;
+
       &::before {
         content: "-";
         position: absolute;
         left: 0;
         transition: transform 0.3s ease, content 0.3s ease;
       }
+
       &.active::before {
         content: ">";
         transform: translateX(0.1rem);
         color: var(--random-primary);
       }
+
       a {
         text-decoration: none;
         color: #ccc;
@@ -210,9 +240,11 @@ ion-content {
       }
     }
   }
+
   #nav-menu li.active a {
     color: var(--random-primary);
   }
+
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -223,6 +255,7 @@ ion-content {
       transform: translateY(0);
     }
   }
+
   @keyframes drawForward {
     from {
       stroke-dashoffset: 1000;
@@ -231,6 +264,7 @@ ion-content {
       stroke-dashoffset: 0;
     }
   }
+
   @keyframes drawBackward {
     from {
       stroke-dashoffset: -1000;
@@ -239,6 +273,7 @@ ion-content {
       stroke-dashoffset: 0;
     }
   }
+
   @keyframes shrinkOut {
     0% {
       transform: scale(1);
@@ -250,17 +285,20 @@ ion-content {
     }
   }
 }
+
 #cat-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   grid-gap: 1rem;
   margin-top: 1rem;
 }
+
 .cat-item {
   position: relative;
   aspect-ratio: 1/1;
   overflow: hidden;
 }
+
 .cat-item img,
 .cat-item video {
   width: 100%;
@@ -270,6 +308,7 @@ ion-content {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   transition: transform 0.5s ease;
 }
+
 .cat-item img:hover,
 .cat-item video:hover {
   transform: scale(1.5);
@@ -278,6 +317,7 @@ ion-content {
 .cat-item video {
   transform: none !important;
 }
+
 @media (max-width: 768px) {
   ion-content #main-content {
     padding-top: 2rem;
@@ -286,13 +326,16 @@ ion-content {
     padding-right: 1rem;
     flex-direction: column;
   }
+
   #left-col {
     width: 100%;
     margin-right: 0;
     margin-bottom: 2rem;
     position: static;
   }
+
   #right-col {
     width: 100%;
+    margin-left: 0;
   }
 }
