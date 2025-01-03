@@ -104,6 +104,13 @@ export class HomePage implements OnInit, AfterViewInit {
     document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
   }
 
+  downloadResume() {
+    const link = document.createElement('a');
+    link.href = 'assets/Tom Gorbett Resume.pdf';
+    link.download = 'Tom Gorbett Resume.pdf';
+    link.click();
+  }
+
   hsvToHex(h: number, s: number, v: number): string {
     s /= 100;
     v /= 100;

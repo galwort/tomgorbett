@@ -307,6 +307,24 @@ ion-content {
   }
 }
 
+button {
+  background-color: transparent;
+  color: #ccc;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: 3px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+
+  &:hover {
+    color: var(--random-primary);
+    border-color: var(--random-primary);
+  }
+}
+
 #cat-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
