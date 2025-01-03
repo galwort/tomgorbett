@@ -195,6 +195,9 @@ ion-content {
     section:nth-of-type(7) {
       animation-delay: 2.5s;
     }
+    section:nth-of-type(8) {
+      animation-delay: 2.5s;
+    }
 
     a {
       color: var(--random-primary);
@@ -289,6 +292,18 @@ ion-content {
       transform: scale(0);
       opacity: 0;
     }
+  }
+}
+
+#skill-item {
+  display: flex;
+
+  i {
+    display: flex;
+    align-items: center;
+    font-size: 2.5rem;
+    color: var(--random-primary);
+    margin-right: 1.5rem;
   }
 }
 
