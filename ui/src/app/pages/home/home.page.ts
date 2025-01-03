@@ -69,12 +69,33 @@ export class HomePage implements OnInit, AfterViewInit {
         threshold: 0.6,
       }
     );
-
     const sections = document.querySelectorAll('section');
     sections.forEach((section) => {
       if (this.observer) {
         this.observer.observe(section);
       }
+    });
+    const navItems = document.querySelectorAll('#nav-menu li');
+    navItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        const audio = document.getElementById(
+          'downbeat-audio'
+        ) as HTMLAudioElement;
+        audio.currentTime = 0;
+        audio.play();
+      });
+    });
+    const externalLinks = document.querySelectorAll(
+      '#social-links a, #right-col a[href]'
+    );
+    externalLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        const audio = document.getElementById(
+          'upbeat-audio'
+        ) as HTMLAudioElement;
+        audio.currentTime = 0;
+        audio.play();
+      });
     });
   }
 
