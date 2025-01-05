@@ -326,6 +326,44 @@ button {
   }
 }
 
+#quotes {
+  h3 {
+    font-weight: 700;
+    color: var(--random-primary);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  span {
+    font-size: 1rem;
+    color: #bbb;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .quote-item {
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+
+    p {
+      font-size: 1rem;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .author {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--random-primary);
+      text-align: right;
+      margin-top: 1rem;
+    }
+  }
+}
+
 #cat-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
