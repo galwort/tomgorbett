@@ -359,23 +359,27 @@ button {
 }
 
 @media (max-width: 768px) {
-  ion-content #main-content {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    flex-direction: column;
+  #main-content {
+    flex-direction: column !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  #nav-menu {
+    display: none !important;
+  }
+
+  #left-col,
+  #right-col {
+    position: static !important;
+    width: 100% !important;
+    margin: 0 !important;
+    display: block !important;
   }
 
   #left-col {
-    width: 100%;
-    margin-right: 0;
-    margin-bottom: 2rem;
-    position: static;
-  }
-
-  #right-col {
-    width: 100%;
-    margin-left: 0;
+    margin-bottom: 2rem !important;
   }
 }
