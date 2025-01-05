@@ -12,20 +12,28 @@ export class HomePage implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit() {
-    const randomBgHue = Math.floor(Math.random() * 360);
+    function generateHueExcludingRange(min: number, max: number): number {
+      const random = Math.random() * (360 - (max - min));
+      return random < min ? random : random + (max - min);
+    }
+
+    const randomBgHue = Math.floor(generateHueExcludingRange(20, 70));
     let randomPrimaryHue = Math.floor(Math.random() * 360);
     while (randomPrimaryHue === randomBgHue) {
       randomPrimaryHue = Math.floor(Math.random() * 360);
     }
-    const backgroundColor = this.hsvToHex(randomBgHue, 79, 15);
-    const backgroundShade = this.hsvToHex(randomBgHue, 79, 30);
-    const primaryColor = this.hsvToHex(randomPrimaryHue, 61, 100);
+
+    const backgroundColor = this.hsvToHex(randomBgHue, 80, 10);
+    const backgroundShade = this.hsvToHex(randomBgHue, 80, 25);
+    const primaryColor = this.hsvToHex(randomPrimaryHue, 35, 100);
+
     const ionContent = document.querySelector('ion-content') as HTMLElement;
     if (ionContent) {
       ionContent.style.setProperty('--random-bg', backgroundColor);
       ionContent.style.setProperty('--random-bg-shade', backgroundShade);
       ionContent.style.setProperty('--random-primary', primaryColor);
     }
+
     const startButton = document.getElementById('start-button') as HTMLElement;
     const audio = document.getElementById('logo-audio') as HTMLAudioElement;
     startButton?.addEventListener('click', () => {
@@ -75,6 +83,7 @@ export class HomePage implements OnInit, AfterViewInit {
         this.observer.observe(section);
       }
     });
+
     const navItems = document.querySelectorAll('#nav-menu li');
     navItems.forEach((item) => {
       item.addEventListener('click', () => {
@@ -85,6 +94,7 @@ export class HomePage implements OnInit, AfterViewInit {
         audio.play();
       });
     });
+
     const externalLinks = document.querySelectorAll(
       '#social-links a, #right-col a[href]'
     );
