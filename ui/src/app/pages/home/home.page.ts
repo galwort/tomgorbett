@@ -1,4 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +10,24 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 export class HomePage implements OnInit, AfterViewInit {
   activeLink: string = 'about';
   private observer?: IntersectionObserver;
+  private clickCount: number = 0;
+  private clickTimeout: any;
 
-  constructor() {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
+    this.setupThemeColors();
+    this.setupStartButton();
+    this.setupTripleClick();
+  }
+
+  ngAfterViewInit() {
+    this.setupIntersectionObserver();
+    this.setupNavMenuAudio();
+    this.setupExternalLinksAudio();
+  }
+
+  private setupThemeColors() {
     function generateHueExcludingRange(min: number, max: number): number {
       const random = Math.random() * (360 - (max - min));
       return random < min ? random : random + (max - min);
@@ -33,29 +49,29 @@ export class HomePage implements OnInit, AfterViewInit {
       ionContent.style.setProperty('--random-bg-shade', backgroundShade);
       ionContent.style.setProperty('--random-primary', primaryColor);
     }
+  }
 
+  private setupStartButton() {
     const startButton = document.getElementById('start-button') as HTMLElement;
     const audio = document.getElementById('logo-audio') as HTMLAudioElement;
+
     startButton?.addEventListener('click', () => {
       const startOverlay = document.getElementById('start-overlay');
-      if (startOverlay) {
-        startOverlay.style.display = 'none';
-      }
       const animationOverlay = document.getElementById('animation-overlay');
-      if (animationOverlay) {
-        animationOverlay.style.display = 'flex';
-      }
+      const mainContent = document.getElementById('main-content');
+
+      if (startOverlay) startOverlay.style.display = 'none';
+      if (animationOverlay) animationOverlay.style.display = 'flex';
+
       if (audio) {
-        audio.play().catch((error) => console.error(error));
+        audio
+          .play()
+          .catch((error) => console.error('Audio play error:', error));
       }
+
       setTimeout(() => {
-        if (animationOverlay) {
-          animationOverlay.style.display = 'none';
-        }
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-          mainContent.style.display = 'flex';
-        }
+        if (animationOverlay) animationOverlay.style.display = 'none';
+        if (mainContent) mainContent.style.display = 'flex';
         if (audio) {
           audio.pause();
           audio.currentTime = 0;
@@ -64,7 +80,34 @@ export class HomePage implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
+  private setupTripleClick() {
+    const startOverlay = document.getElementById('start-overlay');
+    if (startOverlay) {
+      startOverlay.addEventListener('click', this.handleTripleClick.bind(this));
+    }
+  }
+
+  private handleTripleClick() {
+    this.clickCount++;
+
+    if (this.clickTimeout) {
+      clearTimeout(this.clickTimeout);
+    }
+
+    this.clickTimeout = setTimeout(() => {
+      this.clickCount = 0; // Reset after 1.5 seconds
+    }, 1500);
+
+    if (this.clickCount === 3) {
+      if (this.authService.isAuthenticated()) {
+        this.router.navigate(['/time']);
+      } else {
+        this.router.navigate(['/unlock']);
+      }
+    }
+  }
+
+  private setupIntersectionObserver() {
     this.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -77,13 +120,16 @@ export class HomePage implements OnInit, AfterViewInit {
         threshold: 0.6,
       }
     );
+
     const sections = document.querySelectorAll('section');
     sections.forEach((section) => {
       if (this.observer) {
         this.observer.observe(section);
       }
     });
+  }
 
+  private setupNavMenuAudio() {
     const navItems = document.querySelectorAll('#nav-menu li');
     navItems.forEach((item) => {
       item.addEventListener('click', () => {
@@ -94,7 +140,9 @@ export class HomePage implements OnInit, AfterViewInit {
         audio.play();
       });
     });
+  }
 
+  private setupExternalLinksAudio() {
     const externalLinks = document.querySelectorAll(
       '#social-links a, #right-col a[href]'
     );
