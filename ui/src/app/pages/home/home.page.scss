@@ -142,16 +142,16 @@ ion-content {
       display: flex;
       justify-content: flex-start;
       margin-top: 24px;
-    }
 
-    #social-links i {
-      font-size: min(1rem, 3vw);
-      color: #ccc;
-      margin-right: 16px;
-      cursor: pointer;
-      animation-delay: 0.8s;
-      &:hover {
-        color: var(--random-primary);
+      i {
+        font-size: min(1rem, 3vw);
+        color: #ccc;
+        margin-right: 16px;
+        cursor: pointer;
+        animation-delay: 0.8s;
+        &:hover {
+          color: var(--random-primary);
+        }
       }
     }
   }
@@ -396,6 +396,14 @@ button {
     padding-bottom: 2rem !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
+
+    #social-links {
+      margin-top: 0 !important;
+
+      i {
+        font-size: min(1.5rem, 5vw) !important;
+      }
+    }
   }
 
   #nav-menu {
