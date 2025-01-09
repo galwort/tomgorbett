@@ -108,14 +108,14 @@ ion-content {
 
     h1 {
       animation-delay: 0s;
-      font-size: min(3rem, 10vw);
+      font-size: min(3rem, 12vw);
       font-weight: 700;
       color: #fff;
     }
 
     h2 {
       animation-delay: 0.2s;
-      font-size: min(1.5rem, 5vw);
+      font-size: min(1.5rem, 8vw);
       font-weight: 600;
       color: #fff;
       margin-top: 12px;
@@ -124,11 +124,12 @@ ion-content {
     h3 {
       font-weight: 600;
       letter-spacing: 0.15rem;
+      font-size: min(1.375rem, 5vw);
     }
 
     p {
       animation-delay: 0.4s;
-      font-size: min(1rem, 3vw);
+      font-size: min(1rem, 6vw);
       color: #ccc;
       margin-top: 16px;
       line-height: 1.5rem;
@@ -396,6 +397,10 @@ button {
     padding-bottom: 2rem !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
+
+    h2 {
+      margin-top: 0 !important;
+    }
 
     #social-links {
       margin-top: 0 !important;
