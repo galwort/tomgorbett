@@ -398,16 +398,15 @@ button {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
 
-    h2 {
+    h1,
+    h2,
+    p,
+    #social-links {
       margin-top: 0 !important;
     }
 
-    #social-links {
-      margin-top: 0 !important;
-
-      i {
-        font-size: min(1.5rem, 5vw) !important;
-      }
+    #social-links i {
+      font-size: min(1.5rem, 5vw) !important;
     }
   }
 
