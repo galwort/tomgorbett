@@ -19,14 +19,6 @@ const routes: Routes = [
       import('./pages/log/log.module').then((m) => m.LogPageModule),
     canActivate: [AuthGuard],
   },
-  {
-    path: 'moodtracker',
-    loadChildren: () =>
-      import('./pages/moodtracker/moodtracker.module').then(
-        (m) => m.MoodtrackerPageModule
-      ),
-    canActivate: [AuthGuard],
-  },
 ];
 
 @NgModule({

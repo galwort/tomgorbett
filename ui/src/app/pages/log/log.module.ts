@@ -13,6 +13,7 @@ import { TimebarComponent } from 'src/app/components/timebar/timebar.component';
 import { TimelineComponent } from 'src/app/components/timeline/timeline.component';
 import { ActivitiesComponent } from 'src/app/components/activities/activities.component';
 import { GratitudesComponent } from 'src/app/components/gratitudes/gratitudes.component';
+import { MoodComponent } from 'src/app/components/mood/mood.component';
 
 import { NgChartsModule } from 'ng2-charts';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -36,6 +37,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     TimelineComponent,
     ActivitiesComponent,
     GratitudesComponent,
+    MoodComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

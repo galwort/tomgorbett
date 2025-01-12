@@ -12,6 +12,7 @@
             >Activity Admin</ion-select-option
           >
           <ion-select-option value="gratitudes">Gratitudes</ion-select-option>
+          <ion-select-option value="mood">Mood</ion-select-option>
         </ion-select>
       </ion-item>
     </div>
@@ -36,6 +37,9 @@
       </ng-container>
       <ng-container *ngIf="selectedComponent === 'gratitudes'">
         <app-gratitudes></app-gratitudes>
+      </ng-container>
+      <ng-container *ngIf="selectedComponent === 'mood'">
+        <app-mood></app-mood>
       </ng-container>
     </div>
   </div>
