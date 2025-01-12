@@ -205,12 +205,9 @@ ion-content {
     a {
       color: var(--random-primary);
       text-decoration: none;
-      font-weight: 700;
-      transition: color 0.3s ease;
-    }
-
-    a:hover {
-      color: var(--random-primary);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 1rem;
     }
   }
 
@@ -342,11 +339,7 @@ button {
 
     .author {
       display: block;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--random-primary);
       text-align: right;
-      margin-top: 1rem;
     }
   }
 }
