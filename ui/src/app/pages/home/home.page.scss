@@ -68,7 +68,8 @@ ion-content {
 
   .path-1,
   .path-2,
-  .path-3 {
+  .path-3,
+  .path-4 {
     stroke-dashoffset: 1000;
   }
 
@@ -85,8 +86,7 @@ ion-content {
   }
 
   .path-4 {
-    stroke-dashoffset: -1000;
-    animation: drawBackward 1s ease forwards 0.4s;
+    animation: drawForward 3s ease forwards 1.2s;
   }
 
   #main-content {
@@ -272,15 +272,6 @@ ion-content {
   @keyframes drawForward {
     from {
       stroke-dashoffset: 1000;
-    }
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  @keyframes drawBackward {
-    from {
-      stroke-dashoffset: -1000;
     }
     to {
       stroke-dashoffset: 0;
