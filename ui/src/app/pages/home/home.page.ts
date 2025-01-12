@@ -95,7 +95,7 @@ export class HomePage implements OnInit, AfterViewInit {
     }
 
     this.clickTimeout = setTimeout(() => {
-      this.clickCount = 0; // Reset after 1.5 seconds
+      this.clickCount = 0;
     }, 1500);
 
     if (this.clickCount === 3) {
