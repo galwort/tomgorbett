@@ -11,6 +11,7 @@
           <ion-select-option value="activities"
             >Activity Admin</ion-select-option
           >
+          <ion-select-option value="gratitudes">Gratitudes</ion-select-option>
         </ion-select>
       </ion-item>
     </div>
@@ -32,6 +33,9 @@
       </ng-container>
       <ng-container *ngIf="selectedComponent === 'timechart'">
         <app-timechart></app-timechart>
+      </ng-container>
+      <ng-container *ngIf="selectedComponent === 'gratitudes'">
+        <app-gratitudes></app-gratitudes>
       </ng-container>
     </div>
   </div>

@@ -8,25 +8,23 @@ export const db = getFirestore(app);
 
 @Component({
   selector: 'app-gratitudes',
-  templateUrl: './gratitudes.page.html',
-  styleUrls: ['./gratitudes.page.scss'],
+  templateUrl: './gratitudes.component.html',
+  styleUrls: ['./gratitudes.component.scss'],
 })
-export class GratitudesPage implements OnInit {
+export class GratitudesComponent implements OnInit {
   gratitude: string = '';
   isSaving: boolean = false;
   saveButtonText: string = 'Save';
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   adjustTextareaHeight(event: any) {
     const textarea = event.target;
     textarea.style.height = '2em';
-    textarea.style.height = (textarea.scrollHeight + 8) + 'px';
+    textarea.style.height = textarea.scrollHeight + 8 + 'px';
   }
-  
 
   private getFormattedDate(): string {
     const date = new Date();
@@ -39,17 +37,19 @@ export class GratitudesPage implements OnInit {
   async submit() {
     this.isSaving = true;
     this.saveButtonText = 'Saving...';
-  
+
     const dateId = this.getFormattedDate();
     try {
-      const docRef = await setDoc(doc(db, 'gratitudes', dateId), { gratitude: this.gratitude });
+      const docRef = await setDoc(doc(db, 'gratitudes', dateId), {
+        gratitude: this.gratitude,
+      });
       this.saveButtonText = 'Saved';
     } catch (error) {
       console.error('Error saving: ', error);
       this.saveButtonText = 'Save Failed';
     } finally {
       this.isSaving = false;
-      setTimeout(() => this.saveButtonText = 'Save', 2000);
+      setTimeout(() => (this.saveButtonText = 'Save'), 2000);
     }
-  }  
+  }
 }

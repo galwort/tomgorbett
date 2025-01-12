@@ -27,14 +27,6 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
-  {
-    path: 'gratitudes',
-    loadChildren: () =>
-      import('./pages/gratitudes/gratitudes.module').then(
-        (m) => m.GratitudesPageModule
-      ),
-    canActivate: [AuthGuard],
-  },
 ];
 
 @NgModule({
