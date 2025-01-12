@@ -100,7 +100,7 @@ export class HomePage implements OnInit, AfterViewInit {
 
     if (this.clickCount === 3) {
       if (this.authService.isAuthenticated()) {
-        this.router.navigate(['/time']);
+        this.router.navigate(['/log']);
       } else {
         this.router.navigate(['/unlock']);
       }

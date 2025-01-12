@@ -5,34 +5,42 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () =>
+      import('./pages/home/home.module').then((m) => m.HomePageModule),
   },
   {
     path: 'unlock',
-    loadChildren: () => import('./pages/unlock/unlock.module').then( m => m.UnlockPageModule)
+    loadChildren: () =>
+      import('./pages/unlock/unlock.module').then((m) => m.UnlockPageModule),
   },
   {
-    path: 'time',
-    loadChildren: () => import('./pages/time/time.module').then( m => m.TimePageModule),
-    canActivate: [AuthGuard]
+    path: 'log',
+    loadChildren: () =>
+      import('./pages/log/log.module').then((m) => m.LogPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'moodtracker',
-    loadChildren: () => import('./pages/moodtracker/moodtracker.module').then( m => m.MoodtrackerPageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () =>
+      import('./pages/moodtracker/moodtracker.module').then(
+        (m) => m.MoodtrackerPageModule
+      ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'gratitudes',
-    loadChildren: () => import('./pages/gratitudes/gratitudes.module').then( m => m.GratitudesPageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () =>
+      import('./pages/gratitudes/gratitudes.module').then(
+        (m) => m.GratitudesPageModule
+      ),
+    canActivate: [AuthGuard],
   },
-
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

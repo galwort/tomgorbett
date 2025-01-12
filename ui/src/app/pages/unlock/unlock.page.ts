@@ -16,14 +16,14 @@ export class UnlockPage implements OnInit {
 
   ngOnInit() {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/time']);
+      this.router.navigate(['/log']);
     }
   }
 
   login() {
     this.authService
       .login(this.loginData)
-      .then(() => this.router.navigate(['/time']))
+      .then(() => this.router.navigate(['/log']))
       .catch((e) => console.error('Login failed:', e.message));
   }
 }

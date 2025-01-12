@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TimePage } from './time.page';
-import { TimePageRoutingModule } from './time-routing.module';
+import { LogPage } from './log.page';
+import { LogPageRoutingModule } from './log-routing.module';
 
 import { TimetrackerComponent } from 'src/app/components/timetracker/timetracker.component';
 import { TimechartComponent } from 'src/app/components/timechart/timechart.component';
@@ -21,13 +21,13 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     CommonModule,
     FormsModule,
     IonicModule,
-    TimePageRoutingModule,
+    LogPageRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     NgChartsModule,
   ],
   declarations: [
-    TimePage,
+    LogPage,
     TimetrackerComponent,
     TimechartComponent,
     TimepieComponent,
@@ -37,4 +37,4 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class TimePageModule {}
+export class LogPageModule {}

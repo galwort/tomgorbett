@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-time',
-  templateUrl: 'time.page.html',
-  styleUrls: ['time.page.scss'],
+  selector: 'app-log',
+  templateUrl: 'log.page.html',
+  styleUrls: ['log.page.scss'],
 })
-export class TimePage {
+export class LogPage {
   selectedComponent: string = 'timetracker';
 
   constructor() {}
