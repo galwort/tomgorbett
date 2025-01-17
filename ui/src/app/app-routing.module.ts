@@ -18,11 +18,19 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/log/log.module').then((m) => m.LogPageModule),
     canActivate: [AuthGuard],
-  },  {
-    path: 'blog',
-    loadChildren: () => import('./pages/blog/blog.module').then( m => m.BlogPageModule)
   },
-
+  {
+    path: 'blog',
+    loadChildren: () =>
+      import('./pages/blog/blog.module').then((m) => m.BlogPageModule),
+  },
+  {
+    path: 'blog/:id',
+    loadChildren: () =>
+      import('./pages/blog-detail/blog-detail.module').then(
+        (m) => m.BlogDetailPageModule
+      ),
+  },
 ];
 
 @NgModule({

@@ -198,6 +198,10 @@ export class HomePage implements OnInit, AfterViewInit {
     });
   }
 
+  navigateToBlog(id: string) {
+    this.router.navigate([`/blog/${id}`]);
+  }
+
   hsvToHex(h: number, s: number, v: number): string {
     s /= 100;
     v /= 100;
