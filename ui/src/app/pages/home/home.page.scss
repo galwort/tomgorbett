@@ -351,14 +351,21 @@ button {
 
     .blog-title-overlay {
       position: absolute;
-      bottom: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      color: #fff;
-      text-align: center;
-      padding: 0.5rem;
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
+      bottom: 0.5rem;
+      left: 0.5rem;
+      width: 66%;
+      color: #ccc;
+      font-size: min(1.5rem, 8vw);
+      font-weight: 600;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+      white-space: normal;
+      line-height: 1.2;
+      word-wrap: break-word;
+    }
+
+    &:hover .blog-title-overlay {
+      color: white;
+      cursor: pointer;
     }
   }
 }
