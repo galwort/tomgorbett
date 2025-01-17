@@ -20,14 +20,15 @@ ion-content {
 
   .published-date {
     color: #ccc;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    font-size: 12px;
+    letter-spacing: 0.15rem;
   }
 
   .blog-details {
     padding: 1rem;
 
-    h2 {
+    ::ng-deep h2 {
       animation-delay: 0.2s;
       font-size: min(1.5rem, 8vw);
       font-weight: 600;
@@ -35,17 +36,17 @@ ion-content {
       margin-top: 12px;
     }
 
-    h3 {
+    ::ng-deep h3 {
       font-weight: 600;
       letter-spacing: 0.15rem;
       font-size: min(1.375rem, 5vw);
     }
 
-    p {
-      font-size: min(1rem, 6vw);
-      color: #ccc;
-      margin-top: 16px;
-      line-height: 1.5rem;
+    ::ng-deep p {
+      font-size: min(1rem, 6vw) !important;
+      color: #ccc !important;
+      margin-top: 16px !important;
+      line-height: 1.5rem !important;
     }
   }
 }
