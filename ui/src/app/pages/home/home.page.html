@@ -297,11 +297,14 @@
       </section>
       <section id="blog">
         <h3>RECENT BLOG POSTS</h3>
-        <p>No posts yet. Here are some placeholder links:</p>
-        <ul>
-          <li><a href="#">Placeholder Post One</a></li>
-          <li><a href="#">Placeholder Post Two</a></li>
-        </ul>
+        <div *ngFor="let blog of recentBlogs" class="blog-item">
+          <img
+            [src]="'assets/blog-images/' + blog.id + '.png'"
+            [alt]="blog.title"
+            class="blog-image"
+          />
+          <div class="blog-title-overlay">{{ blog.title }}</div>
+        </div>
         <button routerLink="/blog">Blog</button>
       </section>
       <section id="research">

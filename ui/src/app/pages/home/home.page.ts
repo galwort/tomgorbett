@@ -1,6 +1,19 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { initializeApp } from 'firebase/app';
+import {
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+} from 'firebase/firestore';
+import { environment } from 'src/environments/environment';
+
+const app = initializeApp(environment.firebase);
+const db = getFirestore(app);
 
 @Component({
   selector: 'app-home',
@@ -9,6 +22,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HomePage implements OnInit, AfterViewInit {
   activeLink: string = 'about';
+  recentBlogs: { id: string; title: string }[] = [];
   private observer?: IntersectionObserver;
   private clickCount: number = 0;
   private clickTimeout: any;
@@ -19,6 +33,7 @@ export class HomePage implements OnInit, AfterViewInit {
     this.setupThemeColors();
     this.setupStartButton();
     this.setupTripleClick();
+    this.fetchRecentBlogs();
   }
 
   ngAfterViewInit() {
@@ -167,6 +182,20 @@ export class HomePage implements OnInit, AfterViewInit {
     link.href = 'assets/Tom Gorbett Resume.pdf';
     link.download = 'Tom Gorbett Resume.pdf';
     link.click();
+  }
+
+  async fetchRecentBlogs() {
+    const blogsRef = collection(db, 'blogs');
+    const blogsQuery = query(blogsRef, orderBy('published', 'desc'), limit(3));
+    const snapshot = await getDocs(blogsQuery);
+
+    this.recentBlogs = snapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        title: data['title'],
+      };
+    });
   }
 
   hsvToHex(h: number, s: number, v: number): string {
