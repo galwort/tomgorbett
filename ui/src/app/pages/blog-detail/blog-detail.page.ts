@@ -35,7 +35,7 @@ export class BlogDetailPage implements OnInit {
     if (snapshot.exists()) {
       const data = snapshot.data();
       this.blogTitle = data['title'] || '';
-      this.blogContent = data['content'] || '';
+      this.blogContent = (data['content'] || '').replace(/\\n/g, '\n\n');
       const publishedDate = data['published'].toDate();
       this.blogPublished = publishedDate.toLocaleDateString();
       this.blogImage = `assets/blog-images/${this.blogId}.png`;
