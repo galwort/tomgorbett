@@ -343,10 +343,6 @@ button {
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       transition: transform 0.5s ease;
-    }
-
-    .blog-image:hover {
-      transform: scale(1.5);
       cursor: pointer;
     }
 
@@ -362,11 +358,11 @@ button {
       white-space: normal;
       line-height: 1.2;
       word-wrap: break-word;
+      pointer-events: none;
     }
 
-    &:hover .blog-title-overlay {
-      color: white;
-      cursor: pointer;
+    &:hover .blog-image {
+      transform: scale(1.5);
     }
   }
 }
