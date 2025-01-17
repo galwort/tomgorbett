@@ -10,6 +10,8 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
+import { HttpClientModule } from '@angular/common/http';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +24,8 @@ import { NgChartsModule } from 'ng2-charts';
     provideAuth(() => getAuth()),
     ReactiveFormsModule,
     NgChartsModule,
+    HttpClientModule,
+    MarkdownModule.forRoot(),
   ],
   exports: [FormsModule, ReactiveFormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

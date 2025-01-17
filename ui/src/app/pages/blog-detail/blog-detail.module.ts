@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { BlogDetailPageRoutingModule } from './blog-detail-routing.module';
 
 import { BlogDetailPage } from './blog-detail.page';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    BlogDetailPageRoutingModule
+    BlogDetailPageRoutingModule,
+    MarkdownModule.forChild(),
   ],
-  declarations: [BlogDetailPage]
+  declarations: [BlogDetailPage],
 })
 export class BlogDetailPageModule {}
