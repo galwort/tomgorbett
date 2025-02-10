@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
-import {
-  getFirestore,
-  collection,
-  doc,
-  getDocs,
-  setDoc,
-} from 'firebase/firestore';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
 export const app = initializeApp(environment.firebase);
@@ -16,6 +13,8 @@ export const db = getFirestore(app);
   selector: 'app-mood',
   templateUrl: './mood.component.html',
   styleUrls: ['./mood.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IonicModule, FormsModule],
 })
 export class MoodComponent implements OnInit {
   icons = [

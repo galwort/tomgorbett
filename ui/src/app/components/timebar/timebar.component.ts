@@ -1,4 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -10,7 +13,7 @@ import {
 } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 
 const app = initializeApp(environment.firebase);
 const db = getFirestore(app);
@@ -26,6 +29,8 @@ const categoryColors = {
   selector: 'app-timebar',
   templateUrl: './timebar.component.html',
   styleUrls: ['./timebar.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IonicModule, FormsModule, NgChartsModule],
 })
 export class TimebarComponent implements OnInit, OnDestroy {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;

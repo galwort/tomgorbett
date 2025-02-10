@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { initializeApp } from 'firebase/app';
@@ -22,6 +26,8 @@ export const db = getFirestore(app);
   selector: 'app-timetracker',
   templateUrl: './timetracker.component.html',
   styleUrls: ['./timetracker.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
 })
 export class TimetrackerComponent implements OnInit {
   trackerForm = new FormGroup({

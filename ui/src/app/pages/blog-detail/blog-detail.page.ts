@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
+import { MarkdownModule } from 'ngx-markdown';
 
 const app = initializeApp(environment.firebase);
 const db = getFirestore(app);
@@ -11,6 +15,14 @@ const db = getFirestore(app);
   selector: 'app-blog-detail',
   templateUrl: './blog-detail.page.html',
   styleUrls: ['./blog-detail.page.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    IonicModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MarkdownModule,
+  ],
 })
 export class BlogDetailPage implements OnInit {
   blogId: string = '';

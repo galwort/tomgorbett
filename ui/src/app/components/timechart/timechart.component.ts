@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 import { Chart, registerables } from 'chart.js';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, query, getDocs } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
+import { NgChartsModule } from 'ng2-charts';
 
 const app = initializeApp(environment.firebase);
 const db = getFirestore(app);
@@ -26,6 +30,8 @@ interface ChartData {
   selector: 'app-timechart',
   templateUrl: './timechart.component.html',
   styleUrls: ['./timechart.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IonicModule, FormsModule, NgChartsModule],
 })
 export class TimechartComponent implements OnInit {
   chart: any;

@@ -13,8 +13,8 @@ import { UnlockPage } from './unlock.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    UnlockPageRoutingModule
+    UnlockPageRoutingModule,
+    UnlockPage,
   ],
-  declarations: [UnlockPage]
 })
 export class UnlockPageModule {}

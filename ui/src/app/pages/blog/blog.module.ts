@@ -13,8 +13,8 @@ import { BlogPage } from './blog.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    BlogPageRoutingModule
+    BlogPageRoutingModule,
+    BlogPage,
   ],
-  declarations: [BlogPage]
 })
 export class BlogPageModule {}

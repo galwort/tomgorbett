@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
@@ -11,6 +13,8 @@ export const db = getFirestore(app);
   selector: 'app-activities',
   templateUrl: './activities.component.html',
   styleUrls: ['./activities.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IonicModule, ReactiveFormsModule],
 })
 export class ActivitiesComponent implements OnInit {
   activityForm = new FormGroup({

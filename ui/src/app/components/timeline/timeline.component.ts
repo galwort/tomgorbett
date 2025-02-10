@@ -1,4 +1,12 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -38,6 +46,9 @@ interface TimelineDay {
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, IonicModule, FormsModule],
 })
 export class TimelineComponent implements OnInit, AfterViewInit {
   public timelineData: TimelineDay[] = [];

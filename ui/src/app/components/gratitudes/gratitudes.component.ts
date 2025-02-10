@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
@@ -10,6 +13,8 @@ export const db = getFirestore(app);
   selector: 'app-gratitudes',
   templateUrl: './gratitudes.component.html',
   styleUrls: ['./gratitudes.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IonicModule, FormsModule],
 })
 export class GratitudesComponent implements OnInit {
   gratitude: string = '';

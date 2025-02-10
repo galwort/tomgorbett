@@ -25,10 +25,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     IonicModule,
     LogPageRoutingModule,
     ReactiveFormsModule,
-    FormsModule,
     NgChartsModule,
-  ],
-  declarations: [
+    // Standalone components moved to imports
     LogPage,
     TimetrackerComponent,
     TimechartComponent,

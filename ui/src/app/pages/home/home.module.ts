@@ -13,8 +13,8 @@ import { HomePage } from './home.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    HomePage,
   ],
-  declarations: [HomePage]
 })
 export class HomePageModule {}

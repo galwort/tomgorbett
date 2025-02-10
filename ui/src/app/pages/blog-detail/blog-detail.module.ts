@@ -16,7 +16,7 @@ import { MarkdownModule } from 'ngx-markdown';
     IonicModule,
     BlogDetailPageRoutingModule,
     MarkdownModule.forChild(),
+    BlogDetailPage,
   ],
-  declarations: [BlogDetailPage],
 })
 export class BlogDetailPageModule {}

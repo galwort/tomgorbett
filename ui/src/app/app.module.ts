@@ -18,8 +18,8 @@ import { MarkdownModule } from 'ngx-markdown';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 @NgModule({
-  declarations: [AppComponent],
   imports: [
+    AppComponent,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,

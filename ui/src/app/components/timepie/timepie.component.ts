@@ -1,4 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgChartsModule } from 'ng2-charts';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -28,6 +32,8 @@ const db = getFirestore(app);
   selector: 'app-timepie',
   templateUrl: './timepie.component.html',
   styleUrls: ['./timepie.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IonicModule, FormsModule, NgChartsModule],
 })
 export class TimepieComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
