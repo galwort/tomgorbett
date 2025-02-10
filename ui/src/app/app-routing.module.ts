@@ -2,33 +2,32 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./pages/home/home.module').then((m) => m.HomePageModule),
+    loadComponent: () =>
+      import('./pages/home/home.page').then((m) => m.HomePage),
   },
   {
     path: 'unlock',
-    loadChildren: () =>
-      import('./pages/unlock/unlock.module').then((m) => m.UnlockPageModule),
+    loadComponent: () =>
+      import('./pages/unlock/unlock.page').then((m) => m.UnlockPage),
   },
   {
     path: 'log',
-    loadChildren: () =>
-      import('./pages/log/log.module').then((m) => m.LogPageModule),
+    loadComponent: () => import('./pages/log/log.page').then((m) => m.LogPage),
     canActivate: [AuthGuard],
   },
   {
     path: 'blog',
-    loadChildren: () =>
-      import('./pages/blog/blog.module').then((m) => m.BlogPageModule),
+    loadComponent: () =>
+      import('./pages/blog/blog.page').then((m) => m.BlogPage),
   },
   {
     path: 'blog/:id',
-    loadChildren: () =>
-      import('./pages/blog-detail/blog-detail.module').then(
-        (m) => m.BlogDetailPageModule
+    loadComponent: () =>
+      import('./pages/blog-detail/blog-detail.page').then(
+        (m) => m.BlogDetailPage
       ),
   },
 ];

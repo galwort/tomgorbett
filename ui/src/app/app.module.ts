@@ -16,6 +16,9 @@ import {
 } from '@angular/common/http';
 import { MarkdownModule } from 'ngx-markdown';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { FirebaseApp } from '@angular/fire/app';
+import { Firestore } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
 
 @NgModule({
   imports: [
@@ -31,6 +34,9 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    { provide: FirebaseApp, useValue: initializeApp(environment.firebase) },
+    { provide: Firestore, useFactory: () => getFirestore() },
+    { provide: Auth, useFactory: () => getAuth() },
     provideHttpClient(withInterceptorsFromDi()),
   ],
   bootstrap: [AppComponent],
