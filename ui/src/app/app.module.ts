@@ -1,17 +1,13 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
-// Firebase imports
-import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment';
-import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-
-// Form and Charts modules
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
 
@@ -21,20 +17,13 @@ import { NgChartsModule } from 'ng2-charts';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
     ReactiveFormsModule,
     NgChartsModule,
   ],
-  providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    {
-      provide: 'FIREBASE_APP',
-      useFactory: () => initializeApp(environment.firebase),
-    },
-    { provide: 'FIRESTORE', useFactory: () => getFirestore() },
-    { provide: 'AUTH', useFactory: () => getAuth() },
-  ],
-  exports: [FormsModule, ReactiveFormsModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Fix for Ionic elements not recognized
 })
 export class AppModule {}

@@ -1,25 +1,22 @@
 import { Injectable } from '@angular/core';
-import {
-  Auth,
-  signInWithEmailAndPassword,
-  getIdToken,
-} from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { LoginData } from '../interfaces/login-data.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private auth: Auth) {}
+  constructor(private auth: AngularFireAuth) {}
 
   async login({ email, password }: LoginData) {
-    const userCredential = await signInWithEmailAndPassword(
-      this.auth,
+    const userCredential = await this.auth.signInWithEmailAndPassword(
       email,
       password
     );
-    const token = await getIdToken(userCredential.user);
-    localStorage.setItem('auth_token', token);
+    const token = await userCredential.user?.getIdToken();
+    if (token) {
+      localStorage.setItem('auth_token', token);
+    }
   }
 
   isAuthenticated(): boolean {
