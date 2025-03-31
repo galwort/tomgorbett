@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-blog-detail',
   templateUrl: './blog-detail.page.html',
   styleUrls: ['./blog-detail.page.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class BlogDetailPage implements OnInit {
   blogId: string = '';
@@ -47,6 +48,7 @@ export class BlogDetailPage implements OnInit {
 
   convertMarkdownToHtml(markdown: string): string {
     let html = markdown;
+    html = html.replace(/^#### (.*)$/gm, '<h4>$1</h4>');
     html = html.replace(/^### (.*)$/gm, '<h3>$1</h3>');
     html = html.replace(/^## (.*)$/gm, '<h2>$1</h2>');
     html = html.replace(/^# (.*)$/gm, '<h1>$1</h1>');
