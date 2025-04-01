@@ -5,4 +5,15 @@
   >
     <h1 class="blog-title">Blog</h1>
   </div>
+  <div class="blog-content">
+    <div *ngFor="let blog of blogs" class="blog-item">
+      <img
+        [src]="'assets/blog-images/' + blog.id + '.png'"
+        [alt]="blog.title"
+        class="blog-image"
+        (click)="navigateToBlog(blog.id)"
+      />
+      <div class="blog-title-overlay">{{ blog.title }}</div>
+    </div>
+  </div>
 </ion-content>

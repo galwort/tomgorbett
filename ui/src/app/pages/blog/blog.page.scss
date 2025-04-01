@@ -19,3 +19,51 @@ ion-content {
   font-size: min(3rem, 12vw);
   font-weight: 700;
 }
+
+.blog-content {
+  display: flex;
+  flex-direction: row;
+  padding: 16px;
+}
+
+.blog-item {
+  position: relative;
+  width: min(300px, 80vw);
+  height: calc(0.49 * min(300px, 91vw));
+  margin: 1rem;
+  overflow: hidden;
+  border-radius: 8px;
+
+  .blog-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.5s ease;
+  }
+
+  .blog-image:hover {
+    transform: scale(1.5);
+    cursor: pointer;
+  }
+
+  .blog-title-overlay {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    width: 66%;
+    color: #ccc;
+    font-size: min(1.5rem, 8vw);
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    white-space: normal;
+    line-height: 1.2;
+    word-wrap: break-word;
+  }
+
+  &:hover .blog-title-overlay {
+    color: white;
+    cursor: pointer;
+  }
+}
