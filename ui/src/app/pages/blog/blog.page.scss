@@ -15,7 +15,7 @@ ion-content {
   color: #fff;
   margin: 0;
   padding: 0;
-  padding-left: 16px;
+  padding-left: 32px;
   font-size: min(3rem, 12vw);
   font-weight: 700;
 }
@@ -30,7 +30,7 @@ ion-content {
   position: relative;
   width: min(300px, 80vw);
   height: calc(0.49 * min(300px, 91vw));
-  margin: 1rem;
+  margin: 16px;
   overflow: hidden;
   border-radius: 8px;
 
