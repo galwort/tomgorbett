@@ -1,0 +1,59 @@
+ion-content {
+  --background: #121212;
+}
+
+.blog-banner {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+}
+
+.blog-title {
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  padding-left: 32px;
+  font-size: min(3rem, 12vw);
+  font-weight: 700;
+}
+
+.published-date {
+  padding: 32px;
+  font-size: min(1rem, 4vw);
+  letter-spacing: 0.15rem;
+  color: #666;
+  font-weight: 600;
+}
+
+.blog-content {
+  padding: 32px;
+  color: #ccc;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+h2 {
+  font-size: min(1.5rem, 8vw);
+  letter-spacing: 0.15rem;
+  color: #fff;
+  margin: 0;
+}
+
+h3 {
+  font-size: min(1.5rem, 8vw);
+  font-weight: 600;
+  color: #fff;
+  margin-top: 5rem;
+  margin-bottom: 0;
+}
+
+h4 {
+  font-size: min(1.2rem, 6vw);
+  font-weight: 600;
+  color: #fff;
+  margin-top: 2rem;
+  margin-bottom: 0;
+}
