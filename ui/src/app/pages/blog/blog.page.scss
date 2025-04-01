@@ -1,11 +1,21 @@
 ion-content {
-  --background: linear-gradient(
-    to bottom right,
-    var(--random-bg),
-    var(--random-bg-shade)
-  );
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
+  --background: #121212;
+}
+
+.blog-banner {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+}
+
+.blog-title {
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  padding-left: 16px;
+  font-size: min(3rem, 12vw);
+  font-weight: 700;
 }
