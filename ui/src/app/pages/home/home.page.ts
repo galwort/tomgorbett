@@ -64,6 +64,30 @@ export class HomePage implements OnInit, AfterViewInit {
       ionContent.style.setProperty('--random-bg-shade', backgroundShade);
       ionContent.style.setProperty('--random-primary', primaryColor);
     }
+
+    this.loadAndReplaceProfileSVG(primaryColor);
+  }
+
+  private loadAndReplaceProfileSVG(primaryColor: string) {
+    fetch('assets/profile.svg')
+      .then((response) => response.text())
+      .then((svgText) => {
+        const updatedSVG = svgText.replace(
+          '--shirt: #000000;',
+          `--shirt: ${primaryColor};`
+        );
+
+        const container = document.querySelector('.profile-pic-container');
+        if (!container) return;
+
+        container.innerHTML = updatedSVG;
+
+        const injectedSVG = container.querySelector('svg');
+        if (injectedSVG) {
+          injectedSVG.classList.add('profile-pic');
+        }
+      })
+      .catch((err) => console.error('Error loading SVG:', err));
   }
 
   private setupStartButton() {
