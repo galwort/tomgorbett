@@ -30,7 +30,11 @@ const routes: Routes = [
       import('./pages/blog-detail/blog-detail.module').then(
         (m) => m.BlogDetailPageModule
       ),
+  },  {
+    path: 'wedding',
+    loadChildren: () => import('./pages/wedding/wedding.module').then( m => m.WeddingPageModule)
   },
+
 ];
 
 @NgModule({
