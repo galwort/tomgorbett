@@ -15,6 +15,8 @@ interface Photo {
 })
 export class WeddingPage implements OnInit {
   photos: Photo[] = [];
+  isFullscreen = false;
+  currentIndex = 0;
   private continuationToken: string | undefined;
   private containerClient: ContainerClient | undefined;
 
@@ -69,5 +71,32 @@ export class WeddingPage implements OnInit {
     link.download = fileName;
     link.click();
     URL.revokeObjectURL(url);
+  }
+
+  openFullscreen(index: number) {
+    this.isFullscreen = true;
+    this.currentIndex = index;
+  }
+
+  closeFullscreen() {
+    this.isFullscreen = false;
+  }
+
+  previousPhoto(event: MouseEvent) {
+    event.stopPropagation();
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    } else {
+      this.currentIndex = this.photos.length - 1;
+    }
+  }
+
+  nextPhoto(event: MouseEvent) {
+    event.stopPropagation();
+    if (this.currentIndex < this.photos.length - 1) {
+      this.currentIndex++;
+    } else {
+      this.currentIndex = 0;
+    }
   }
 }
