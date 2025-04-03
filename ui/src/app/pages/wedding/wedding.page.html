@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Wedding Photos</ion-title>
+    <div class="search-container">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Search coming soon" />
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -22,7 +25,6 @@
       </a>
     </div>
   </ion-grid>
-
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMorePhotos($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
