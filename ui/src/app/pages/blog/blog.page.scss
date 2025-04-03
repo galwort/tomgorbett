@@ -21,16 +21,17 @@ ion-content {
 }
 
 .blog-content {
-  display: flex;
-  flex-direction: row;
+  /* Use a responsive grid with auto-fitting columns and a consistent gap */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
   padding: 16px;
 }
 
 .blog-item {
   position: relative;
-  width: min(300px, 80vw);
+  width: 100%;
   height: calc(0.49 * min(300px, 91vw));
-  margin: 16px;
   overflow: hidden;
   border-radius: 8px;
 
@@ -63,7 +64,7 @@ ion-content {
   }
 
   &:hover .blog-title-overlay {
-    color: white;
+    color: #fff;
     cursor: pointer;
   }
 }
