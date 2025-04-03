@@ -84,7 +84,7 @@ ion-content {
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   border-radius: 5px;
-  font-size: 1.5rem;
+  font-size: min(1.5rem, 2vw);
   cursor: pointer;
 
   &:hover {
@@ -100,7 +100,7 @@ ion-content {
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   border-radius: 5px;
-  font-size: 2rem;
+  font-size: min(1.5rem, 2vw);
   cursor: pointer;
 
   &:hover {
