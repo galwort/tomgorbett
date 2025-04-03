@@ -3,23 +3,17 @@ ion-content {
 }
 
 .photo-item {
-  position: relative;
-  margin: 10px 0;
-  border-radius: 5px;
-  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
   text-align: center;
-
   img {
     width: 100%;
     height: auto;
-    object-fit: cover;
     display: block;
-    border-bottom: 1px solid #ccc;
+    margin-bottom: 0.5rem;
   }
+}
 
-  ion-button {
-    --padding-start: 0.5rem;
-    --padding-end: 0.5rem;
-    margin-top: 0.5rem;
-  }
+.loaded {
+  opacity: 1;
 }

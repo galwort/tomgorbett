@@ -7,9 +7,9 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="6" size-md="3" *ngFor="let photo of photos">
-        <div class="photo-item">
-          <img [src]="photo.blobUrl" [alt]="photo.name" />
+      <ion-col size="6" size-md="3" *ngFor="let photo of photos; let i = index">
+        <div [class.loaded]="photo.loaded" class="photo-item">
+          <img [src]="photo.blobUrl" (load)="onImageLoad(i)" />
           <ion-button
             size="small"
             (click)="downloadPhoto(photo.blobUrl, photo.name)"
@@ -24,8 +24,6 @@
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMorePhotos($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
-      loadingText="Loading more photos..."
-    >
-    </ion-infinite-scroll-content>
+    ></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
