@@ -60,11 +60,14 @@ export class WeddingPage implements OnInit {
     this.photos[index].isPortrait = height > width;
   }
 
-  downloadPhoto(blobUrl: string, fileName: string) {
+  async downloadPhoto(blobUrl: string, fileName: string) {
+    const response = await fetch(blobUrl);
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.href = blobUrl;
+    link.href = url;
     link.download = fileName;
-    link.target = '_blank';
     link.click();
+    URL.revokeObjectURL(url);
   }
 }
