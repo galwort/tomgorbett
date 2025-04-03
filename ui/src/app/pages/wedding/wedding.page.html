@@ -23,26 +23,26 @@
     </div>
   </ion-grid>
 
-  <div
-    class="fullscreen-overlay"
-    *ngIf="isFullscreen"
-    (click)="closeFullscreen()"
-  >
-    <div class="fullscreen-content" (click)="$event.stopPropagation()">
-      <i class="fa-solid fa-x close-button" (click)="closeFullscreen()"></i>
-      <img [src]="photos[currentIndex].blobUrl" />
-      <div class="arrow left-arrow" (click)="previousPhoto($event)">
-        <i class="fa-solid fa-chevron-left"></i>
-      </div>
-      <div class="arrow right-arrow" (click)="nextPhoto($event)">
-        <i class="fa-solid fa-chevron-right"></i>
-      </div>
-    </div>
-  </div>
-
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMorePhotos($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
     ></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
+
+<div
+  class="fullscreen-overlay"
+  *ngIf="isFullscreen"
+  (click)="closeFullscreen()"
+>
+  <div class="fullscreen-content" (click)="$event.stopPropagation()">
+    <i class="fa-solid fa-x close-button" (click)="closeFullscreen()"></i>
+    <img [src]="photos[currentIndex].blobUrl" />
+    <div class="arrow left-arrow" (click)="previousPhoto($event)">
+      <i class="fa-solid fa-chevron-left"></i>
+    </div>
+    <div class="arrow right-arrow" (click)="nextPhoto($event)">
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
+  </div>
+</div>
