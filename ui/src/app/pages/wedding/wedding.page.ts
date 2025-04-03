@@ -35,27 +35,24 @@ export class WeddingPage implements OnInit {
     }
 
     try {
-      const listBlobsResponse = this.containerClient.listBlobsFlat({
+      const pages = this.containerClient.listBlobsFlat().byPage({
         continuationToken: this.continuationToken,
+        maxPageSize: 30,
       });
 
-      let counter = 0;
-      const photosToAdd: Photo[] = [];
+      const { done, value } = await pages.next();
 
-      for await (const blob of listBlobsResponse) {
-        if (counter >= 30) break;
-
-        const blobUrl = this.containerClient.getBlobClient(blob.name).url;
-        photosToAdd.push({
-          name: blob.name,
-          blobUrl: blobUrl,
-        });
-        counter++;
+      if (!done) {
+        const segment = value.segment;
+        for (const blob of segment.blobItems) {
+          const blobUrl = this.containerClient.getBlobClient(blob.name).url;
+          this.photos.push({
+            name: blob.name,
+            blobUrl: blobUrl,
+          });
+        }
+        this.continuationToken = value.continuationToken;
       }
-
-      this.photos = [...this.photos, ...photosToAdd];
-
-      this.continuationToken = (listBlobsResponse as any).continuationToken;
 
       if (event) {
         event.target.complete();
