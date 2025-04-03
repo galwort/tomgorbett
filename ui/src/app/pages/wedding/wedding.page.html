@@ -2,7 +2,12 @@
   <ion-toolbar>
     <div class="search-container">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" placeholder="Search coming soon" />
+      <input
+        type="text"
+        placeholder="Search photos..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearch()"
+      />
     </div>
   </ion-toolbar>
 </ion-header>

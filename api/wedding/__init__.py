@@ -1,7 +1,6 @@
 import logging
 import os
 import json
-import azure.functions as func
 
 import torch
 import numpy as np
@@ -9,6 +8,7 @@ import numpy as np
 from transformers import CLIPModel, CLIPProcessor
 from azure.storage.blob import BlobServiceClient
 from io import BytesIO
+from flask import Flask, request, jsonify
 
 
 clip_model_name = "openai/clip-vit-base-patch32"
@@ -59,29 +59,16 @@ def search_images(query: str, top_k: int = 5):
     return results
 
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info("search_images function triggered.")
+app = Flask(__name__)
 
-    query = req.params.get("q")
+@app.route('/search', methods=['GET'])
+def search_images_endpoint():
+    query = request.args.get('q')
     if not query:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            req_body = {}
-        query = req_body.get("q")
-
-    if not query:
-        return func.HttpResponse(
-            "Please provide a query parameter 'q'. For example: ?q=bride+and+groom+dancing",
-            status_code=400,
-        )
-
-    logging.info(f"Received query: {query}")
+        return jsonify({"error": "Please provide a query parameter 'q'. For example: ?q=bride+and+groom+dancing"}), 400
 
     results = search_images(query, top_k=5)
+    return jsonify({"query": query, "results": results})
 
-    return func.HttpResponse(
-        json.dumps({"query": query, "results": results}, indent=2),
-        status_code=200,
-        mimetype="application/json",
-    )
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

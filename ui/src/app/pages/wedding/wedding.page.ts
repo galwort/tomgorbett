@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BlobServiceClient, ContainerClient } from '@azure/storage-blob';
+import { HttpClient } from '@angular/common/http';
 
 interface Photo {
   name: string;
@@ -17,10 +18,11 @@ export class WeddingPage implements OnInit {
   photos: Photo[] = [];
   isFullscreen = false;
   currentIndex = 0;
+  searchQuery: string = '';
   private continuationToken: string | undefined;
   private containerClient: ContainerClient | undefined;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     const blobServiceClient = new BlobServiceClient(
@@ -53,6 +55,28 @@ export class WeddingPage implements OnInit {
     } catch {
       if (event) event.target.complete();
     }
+  }
+
+  onSearch() {
+    if (!this.searchQuery.trim()) {
+      this.loadMorePhotos(); // Reset to all photos if search query is empty
+      return;
+    }
+
+    const apiUrl = 'https://<your-app-service-url>/search';
+    this.http
+      .get<{ query: string; results: { url: string }[] }>(`${apiUrl}?q=${this.searchQuery}`)
+      .subscribe(
+        (response) => {
+          this.photos = response.results.map((result) => ({
+            name: '',
+            blobUrl: result.url,
+          }));
+        },
+        (error) => {
+          console.error('Error fetching search results:', error);
+        }
+      );
   }
 
   onImageLoad(index: number, imgElement: HTMLImageElement) {
