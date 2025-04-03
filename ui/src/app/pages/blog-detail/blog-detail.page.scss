@@ -1,5 +1,9 @@
 ion-content {
   --background: #121212;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
 .blog-banner {
