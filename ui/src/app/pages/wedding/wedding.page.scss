@@ -2,11 +2,25 @@ ion-content {
   --background: linear-gradient(to bottom right, black, #222);
 }
 
+.masonry {
+  column-count: 3;
+  column-gap: 1rem;
+  @media (max-width: 768px) {
+    column-count: 2;
+  }
+  @media (max-width: 480px) {
+    column-count: 1;
+  }
+}
+
 .photo-item {
   position: relative;
   opacity: 0;
-  transition: opacity 0.4s ease-in-out;
+  margin-bottom: 1rem;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
   text-align: center;
+  transition: opacity 0.4s ease-in-out;
   img {
     width: 100%;
     height: auto;
@@ -28,7 +42,6 @@ ion-content {
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   border-radius: 5px;
-
   &:hover {
     background-color: rgba(0, 0, 0, 0.7);
     cursor: pointer;
