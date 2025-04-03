@@ -63,7 +63,7 @@ export class WeddingPage implements OnInit {
       return;
     }
 
-    const apiUrl = 'https://<your-app-service-url>/search';
+    const apiUrl = 'https://tomgorbett-api.azurewebsites.net/search';
     this.http
       .get<{ query: string; results: { url: string }[] }>(`${apiUrl}?q=${this.searchQuery}`)
       .subscribe(
