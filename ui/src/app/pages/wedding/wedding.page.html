@@ -30,7 +30,7 @@
   >
     <div class="fullscreen-content" (click)="$event.stopPropagation()">
       <i class="fa-solid fa-x close-button" (click)="closeFullscreen()"></i>
-      <img [src]="photos[currentIndex]?.blobUrl" />
+      <img [src]="photos[currentIndex].blobUrl" />
       <div class="arrow left-arrow" (click)="previousPhoto($event)">
         <i class="fa-solid fa-chevron-left"></i>
       </div>
