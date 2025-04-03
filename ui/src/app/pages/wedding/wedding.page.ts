@@ -5,6 +5,7 @@ interface Photo {
   name: string;
   blobUrl: string;
   loaded?: boolean;
+  isPortrait?: boolean;
 }
 
 @Component({
@@ -47,13 +48,16 @@ export class WeddingPage implements OnInit {
         this.continuationToken = value.continuationToken;
       }
       if (event) event.target.complete();
-    } catch (error) {
+    } catch {
       if (event) event.target.complete();
     }
   }
 
-  onImageLoad(index: number) {
+  onImageLoad(index: number, imgElement: HTMLImageElement) {
+    const width = imgElement.naturalWidth;
+    const height = imgElement.naturalHeight;
     this.photos[index].loaded = true;
+    this.photos[index].isPortrait = height > width;
   }
 
   downloadPhoto(blobUrl: string, fileName: string) {

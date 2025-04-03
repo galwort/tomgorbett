@@ -5,13 +5,14 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="masonry">
+  <ion-grid class="photo-grid">
     <div
       class="photo-item"
-      *ngFor="let photo of photos; let i = index"
       [class.loaded]="photo.loaded"
+      [class.portrait]="photo.isPortrait"
+      *ngFor="let photo of photos; let i = index"
     >
-      <img [src]="photo.blobUrl" (load)="onImageLoad(i)" />
+      <img #imgRef [src]="photo.blobUrl" (load)="onImageLoad(i, imgRef)" />
       <a
         (click)="downloadPhoto(photo.blobUrl, photo.name)"
         class="download-icon"
