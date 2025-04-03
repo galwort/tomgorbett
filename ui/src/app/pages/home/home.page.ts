@@ -26,6 +26,12 @@ export class HomePage implements OnInit, AfterViewInit {
   private observer?: IntersectionObserver;
   private clickCount: number = 0;
   private clickTimeout: any;
+  coffeeShops = [
+    'https://instagram.com/metropolitancoffee',
+    'https://instagram.com/lekkocoffee',
+    'https://instagram.com/roastedtremont',
+    'https://instagram.com/blueskybrews',
+  ];
 
   constructor(private router: Router, private authService: AuthService) {}
 
@@ -199,6 +205,12 @@ export class HomePage implements OnInit, AfterViewInit {
   toggleActiveLink(section: string) {
     this.activeLink = section;
     document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  openRandomCoffeeShop() {
+    const randomIndex = Math.floor(Math.random() * this.coffeeShops.length);
+    const url = this.coffeeShops[randomIndex];
+    window.open(url, '_blank');
   }
 
   downloadResume() {

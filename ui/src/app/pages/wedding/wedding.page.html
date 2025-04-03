@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="search-container">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Search coming soon" />
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="photo-grid">
+    <div
+      class="photo-item"
+      [class.loaded]="photo.loaded"
+      [class.portrait]="photo.isPortrait"
+      *ngFor="let photo of photos; let i = index"
+      (click)="openFullscreen(i)"
+    >
+      <img #imgRef [src]="photo.blobUrl" (load)="onImageLoad(i, imgRef)" />
+      <a
+        (click)="downloadPhoto(photo.blobUrl, photo.name); $event.stopPropagation()"
+        class="download-icon"
+      >
+        <i class="fa-solid fa-download"></i>
+      </a>
+    </div>
+  </ion-grid>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMorePhotos($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+    ></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<div
+  class="fullscreen-overlay"
+  *ngIf="isFullscreen"
+  (click)="closeFullscreen()"
+>
+  <div class="fullscreen-content" (click)="$event.stopPropagation()">
+    <i class="fa-solid fa-x close-button" (click)="closeFullscreen()"></i>
+    <img [src]="photos[currentIndex].blobUrl" />
+    <div class="arrow left-arrow" (click)="previousPhoto($event)">
+      <i class="fa-solid fa-chevron-left"></i>
+    </div>
+    <div class="arrow right-arrow" (click)="nextPhoto($event)">
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
+  </div>
+</div>
