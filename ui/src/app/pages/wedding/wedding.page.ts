@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { BlobServiceClient, ContainerClient } from '@azure/storage-blob';
+import { IonInfiniteScroll } from '@ionic/angular';
+
+interface Photo {
+  name: string;
+  blobUrl: string;
+}
 
 @Component({
   selector: 'app-wedding',
@@ -6,10 +13,64 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wedding.page.scss'],
 })
 export class WeddingPage implements OnInit {
+  photos: Photo[] = [];
+  private continuationToken: string | undefined;
+  private containerClient: ContainerClient | undefined;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    const blobServiceClient = new BlobServiceClient(
+      `https://gorbettwedding.blob.core.windows.net?sv=2024-11-04&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2026-12-31T11:24:38Z&st=2025-04-03T02:24:38Z&spr=https&sig=Iw8FjCPMzEqaAMvOeWJeGSvWg%2Fytzf%2FG2%2FohggssoVs%3D`
+    );
+    this.containerClient = blobServiceClient.getContainerClient('photos');
+
+    this.loadMorePhotos();
   }
 
+  async loadMorePhotos(event?: any) {
+    if (!this.containerClient) {
+      if (event) event.target.complete();
+      return;
+    }
+
+    try {
+      const listBlobsResponse = this.containerClient.listBlobsFlat({
+        continuationToken: this.continuationToken,
+      });
+
+      let counter = 0;
+      const photosToAdd: Photo[] = [];
+
+      for await (const blob of listBlobsResponse) {
+        if (counter >= 30) break;
+
+        const blobUrl = this.containerClient.getBlobClient(blob.name).url;
+        photosToAdd.push({
+          name: blob.name,
+          blobUrl: blobUrl,
+        });
+        counter++;
+      }
+
+      this.photos = [...this.photos, ...photosToAdd];
+
+      this.continuationToken = (listBlobsResponse as any).continuationToken;
+
+      if (event) {
+        event.target.complete();
+      }
+    } catch (error) {
+      console.error('Error listing blobs:', error);
+      if (event) event.target.complete();
+    }
+  }
+
+  downloadPhoto(blobUrl: string, fileName: string) {
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = fileName;
+    link.target = '_blank';
+    link.click();
+  }
 }
