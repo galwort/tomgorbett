@@ -3,6 +3,7 @@ ion-content {
 }
 
 .photo-item {
+  position: relative;
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
   text-align: center;
@@ -11,9 +12,25 @@ ion-content {
     height: auto;
     display: block;
     margin-bottom: 0.5rem;
+    border-radius: 5px;
   }
 }
 
 .loaded {
   opacity: 1;
+}
+
+.download-icon {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+  }
 }
