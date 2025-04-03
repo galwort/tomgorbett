@@ -76,10 +76,12 @@ export class WeddingPage implements OnInit {
   openFullscreen(index: number) {
     this.isFullscreen = true;
     this.currentIndex = index;
+    window.addEventListener('keydown', this.handleKeydown);
   }
 
   closeFullscreen() {
     this.isFullscreen = false;
+    window.removeEventListener('keydown', this.handleKeydown);
   }
 
   previousPhoto(event: MouseEvent) {
@@ -99,4 +101,14 @@ export class WeddingPage implements OnInit {
       this.currentIndex = 0;
     }
   }
+
+  handleKeydown = (event: KeyboardEvent) => {
+    if (event.key === 'ArrowLeft') {
+      this.previousPhoto(new MouseEvent('keydown'));
+    } else if (event.key === 'ArrowRight') {
+      this.nextPhoto(new MouseEvent('keydown'));
+    } else if (event.key === 'Escape') {
+      this.closeFullscreen();
+    }
+  };
 }
