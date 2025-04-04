@@ -8,6 +8,7 @@ import numpy as np
 from transformers import CLIPModel, CLIPProcessor
 from azure.storage.blob import BlobServiceClient
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 clip_model_name = "openai/clip-vit-base-patch32"
 model = CLIPModel.from_pretrained(clip_model_name)
@@ -53,6 +54,7 @@ def search_images(query: str, top_k: int = 5):
     return results
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/search', methods=['GET'])
 def search_images_endpoint():
