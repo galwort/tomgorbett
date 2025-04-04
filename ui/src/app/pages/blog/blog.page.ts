@@ -6,7 +6,6 @@ import {
   collection,
   query,
   orderBy,
-  limit,
   getDocs,
 } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
@@ -30,7 +29,7 @@ export class BlogPage implements OnInit {
 
   async fetchBlogs() {
     const blogsRef = collection(db, 'blogs');
-    const blogsQuery = query(blogsRef, orderBy('published', 'desc'), limit(3));
+    const blogsQuery = query(blogsRef, orderBy('published', 'desc'));
     const snapshot = await getDocs(blogsQuery);
 
     this.blogs = snapshot.docs.map((doc) => {
