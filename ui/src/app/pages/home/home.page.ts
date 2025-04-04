@@ -9,6 +9,7 @@ import {
   orderBy,
   limit,
   getDocs,
+  where,
 } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
@@ -222,7 +223,13 @@ export class HomePage implements OnInit, AfterViewInit {
 
   async fetchRecentBlogs() {
     const blogsRef = collection(db, 'blogs');
-    const blogsQuery = query(blogsRef, orderBy('published', 'desc'), limit(3));
+    const today = new Date();
+    const blogsQuery = query(
+      blogsRef,
+      orderBy('published', 'desc'),
+      where('published', '<=', today),
+      limit(3)
+    );
     const snapshot = await getDocs(blogsQuery);
 
     this.recentBlogs = snapshot.docs.map((doc) => {
