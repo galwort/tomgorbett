@@ -1,4 +1,10 @@
 {
+  "routes": [
+    {
+      "route": "/resume.pdf",
+      "rewrite": "/assets/resume.pdf"
+    }
+  ],
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": ["/assets/*", "/*.js", "/*.css"]
