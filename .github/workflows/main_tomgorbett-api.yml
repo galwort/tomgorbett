@@ -54,5 +54,6 @@ jobs:
           app-name: tomgorbett-api
           slot-name: Production
           package: release.zip
+          clean: true
           startup-command: |
             gunicorn -w 4 -b 0.0.0.0:$PORT api:app
