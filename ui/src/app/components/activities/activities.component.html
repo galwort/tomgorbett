@@ -26,6 +26,7 @@
             <ion-toggle
               color="success"
               [checked]="selectedActivity?.Active"
+              (ionChange)="onToggleChange('Active', $event)"
             ></ion-toggle>
           </ion-item>
           <ion-item lines="none">
@@ -33,6 +34,7 @@
             <ion-toggle
               color="success"
               [checked]="selectedActivity?.Productive"
+              (ionChange)="onToggleChange('Productive', $event)"
             ></ion-toggle>
           </ion-item>
           <ion-item lines="none">
@@ -40,6 +42,7 @@
             <ion-toggle
               color="success"
               [checked]="selectedActivity?.Work"
+              (ionChange)="onToggleChange('Work', $event)"
             ></ion-toggle>
           </ion-item>
           <ion-item lines="none">
@@ -47,9 +50,14 @@
             <ion-toggle
               color="success"
               [checked]="selectedActivity?.Side_Project"
+              (ionChange)="onToggleChange('Side_Project', $event)"
             ></ion-toggle>
           </ion-item>
-          <ion-button type="submit" shape="round" [disabled]="updateDisabled">
+          <ion-button
+            (click)="updateActivity()"
+            shape="round"
+            [disabled]="updateDisabled"
+          >
             {{ updateButtonText }}
           </ion-button>
         </div>
