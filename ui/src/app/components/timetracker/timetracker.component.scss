@@ -30,19 +30,6 @@ ion-alert {
   text-align: center;
 }
 
-// Add styles for the search toast
-:host ::ng-deep .search-toast {
-  --min-height: 45px;
-  --border-radius: 25px;
-  --background: rgba(0, 0, 0, 0.7);
-  font-weight: bold;
-  text-align: center;
-
-  .toast-message {
-    font-size: 14px;
-  }
-}
-
 // Add styles for the hint text
 .hint-text {
   font-size: 12px;

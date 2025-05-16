@@ -215,7 +215,6 @@ export class TimetrackerComponent implements OnInit {
   private lastKey: string = '';
   private currentMatchIndex: number = 0;
   private lastKeyPressTime: number = 0;
-
   /**
    * Global keyboard event listener that works even when select is not focused
    */
@@ -227,7 +226,20 @@ export class TimetrackerComponent implements OnInit {
       event.preventDefault();
       return;
     }
-    
+
+    // Handle arrow keys for adjusting end time
+    if (!event.ctrlKey && !event.altKey && !event.metaKey) {
+      if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
+        this.adjustEndTime(1); // Increase end time by 15 minutes
+        event.preventDefault();
+        return;
+      } else if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
+        this.adjustEndTime(-1); // Decrease end time by 15 minutes
+        event.preventDefault();
+        return;
+      }
+    }
+
     // Only handle other keyboard shortcuts if we're not in an input field or textarea
     if (
       document.activeElement instanceof HTMLInputElement ||
@@ -329,15 +341,37 @@ export class TimetrackerComponent implements OnInit {
       }
     }
   }
+  /**
+   * Adjusts end time by 15-minute increments
+   * @param direction 1 for forward, -1 for backward
+   */
+  adjustEndTime(direction: number): void {
+    const datetimeToControl = this.trackerForm.get('datetimeTo');
+    const datetimeFromControl = this.trackerForm.get('datetime');
 
-  async presentSearchToast(message: string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 1000,
-      position: 'top',
-      cssClass: 'search-toast',
-      color: 'medium',
-    });
-    toast.present();
+    if (!datetimeToControl || !datetimeToControl.value) return;
+    if (!datetimeFromControl || !datetimeFromControl.value) return;
+
+    // Get current start and end dates
+    const startDate = new Date(datetimeFromControl.value);
+    const currentEndDate = new Date(datetimeToControl.value);
+
+    // Adjust by 15 minutes in the specified direction
+    const newEndDate = new Date(currentEndDate);
+    newEndDate.setMinutes(newEndDate.getMinutes() + 15 * direction);
+
+    // Validate that the new end time is after the start time when decreasing
+    if (direction < 0 && newEndDate <= startDate) {
+      // Don't allow end time to be before start time
+      return;
+    }
+
+    // Format as ISO string and update the control
+    const timezoneOffset = newEndDate.getTimezoneOffset() * 60000;
+    const newDateTimeValue = new Date(newEndDate.getTime() - timezoneOffset)
+      .toISOString()
+      .slice(0, -1);
+
+    datetimeToControl.setValue(newDateTimeValue);
   }
 }

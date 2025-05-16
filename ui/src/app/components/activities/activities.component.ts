@@ -142,7 +142,7 @@ export class ActivitiesComponent implements OnInit {
       event.preventDefault();
       return;
     }
-    
+
     // Only handle other keyboard shortcuts if we're not in an input field or textarea
     if (
       document.activeElement instanceof HTMLInputElement ||
@@ -249,16 +249,5 @@ export class ActivitiesComponent implements OnInit {
         this.updatedFields = {};
       }
     }
-  }
-
-  async presentSearchToast(message: string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 1000,
-      position: 'top',
-      cssClass: 'search-toast',
-      color: 'medium',
-    });
-    toast.present();
   }
 }
