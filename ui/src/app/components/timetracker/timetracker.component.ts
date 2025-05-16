@@ -221,7 +221,14 @@ export class TimetrackerComponent implements OnInit {
    */
   @HostListener('document:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent): void {
-    // Only handle if we're not in an input field or textarea
+    // Check for Ctrl+Enter to submit the form
+    if (event.ctrlKey && event.key === 'Enter') {
+      this.submitData();
+      event.preventDefault();
+      return;
+    }
+    
+    // Only handle other keyboard shortcuts if we're not in an input field or textarea
     if (
       document.activeElement instanceof HTMLInputElement ||
       document.activeElement instanceof HTMLTextAreaElement

@@ -134,7 +134,16 @@ export class ActivitiesComponent implements OnInit {
    */
   @HostListener('document:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent): void {
-    // Only handle if we're not in an input field or textarea
+    // Check for Ctrl+Enter to submit the form (update activity)
+    if (event.ctrlKey && event.key === 'Enter') {
+      if (!this.updateDisabled) {
+        this.updateActivity();
+      }
+      event.preventDefault();
+      return;
+    }
+    
+    // Only handle other keyboard shortcuts if we're not in an input field or textarea
     if (
       document.activeElement instanceof HTMLInputElement ||
       document.activeElement instanceof HTMLTextAreaElement
