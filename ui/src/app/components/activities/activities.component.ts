@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
 import {
@@ -9,7 +9,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
-import { ToastController } from '@ionic/angular';
+import { ToastController, IonSelect } from '@ionic/angular';
 
 export const app = initializeApp(environment.firebase);
 export const db = getFirestore(app);
@@ -20,6 +20,8 @@ export const db = getFirestore(app);
   styleUrls: ['./activities.component.scss'],
 })
 export class ActivitiesComponent implements OnInit {
+  @ViewChild('activitySelect') activitySelect!: IonSelect;
+
   activityForm = new FormGroup({
     activity: new FormControl(''),
   });
@@ -117,6 +119,136 @@ export class ActivitiesComponent implements OnInit {
       duration: 2000,
       position: 'bottom',
       color: message.includes('Error') ? 'danger' : 'success',
+    });
+    toast.present();
+  }
+  private searchString: string = '';
+  private typingTimer: any;
+  private typingTimeout: number = 1000; // 1 second timeout
+  private lastKey: string = '';
+  private currentMatchIndex: number = 0;
+  private lastKeyPressTime: number = 0;
+
+  /**
+   * Global keyboard event listener that works even when select is not focused
+   */
+  @HostListener('document:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent): void {
+    // Only handle if we're not in an input field or textarea
+    if (
+      document.activeElement instanceof HTMLInputElement ||
+      document.activeElement instanceof HTMLTextAreaElement
+    ) {
+      return;
+    }
+
+    this.handleKeyboardNavigation(event);
+  }
+  /**
+   * Jump to activities that start with the typed keys
+   * @param event Keyboard event
+   */
+  async handleKeyboardNavigation(event: any) {
+    // Ignore special keys like Shift, Control, Alt, etc.
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+
+    const key = event.key.toLowerCase();
+    const currentTime = Date.now();
+
+    // Only handle alphanumeric and some special characters
+    if (/^[a-z0-9]$/i.test(key)) {
+      // Clear the timer if it exists
+      clearTimeout(this.typingTimer);
+
+      // Add to the search string
+      if (currentTime - this.lastKeyPressTime < this.typingTimeout) {
+        // If typing quickly, append to the current search string
+        this.searchString += key;
+      } else {
+        // Start a new search string
+        this.searchString = key;
+      }
+
+      // Reset match index when search string changes
+      this.currentMatchIndex = 0;
+
+      // Find and select matching activities
+      this.findAndSelectMatch();
+
+      // Update last key press data
+      this.lastKey = key;
+      this.lastKeyPressTime = currentTime;
+
+      // Set a timer to clear the search string after the timeout
+      this.typingTimer = setTimeout(() => {
+        this.searchString = '';
+        this.currentMatchIndex = 0;
+      }, this.typingTimeout);
+    } else if (key === 'escape') {
+      // Clear search string on Escape
+      this.searchString = '';
+      this.currentMatchIndex = 0;
+    } else if (key === 'enter') {
+      // Clear search string on Enter
+      this.searchString = '';
+      this.currentMatchIndex = 0;
+    } else if (key === 'tab') {
+      // Cycle to next match on Tab
+      this.cycleToNextMatch();
+    }
+  }
+  /**
+   * Cycles to the next matching activity
+   */
+  private async cycleToNextMatch() {
+    // Find all matching options
+    const matchingOptions = this.activities.filter((activity) =>
+      activity.id.toLowerCase().startsWith(this.searchString.toLowerCase())
+    );
+
+    if (matchingOptions.length > 0) {
+      // Increment the index or reset to 0 if we reach the end
+      this.currentMatchIndex =
+        (this.currentMatchIndex + 1) % matchingOptions.length;
+
+      // Select the current match
+      const activityControl = this.activityForm.get('activity');
+      if (activityControl) {
+        activityControl.setValue(matchingOptions[this.currentMatchIndex].id);
+        this.selectedActivity = matchingOptions[this.currentMatchIndex];
+        this.updateDisabled = true;
+        this.updatedFields = {};
+      }
+    }
+  }
+  /**
+   * Finds and selects matching activities based on the search string
+   */
+  private async findAndSelectMatch() {
+    // Find matching activities
+    const matchingOptions = this.activities.filter((activity) =>
+      activity.id.toLowerCase().startsWith(this.searchString.toLowerCase())
+    );
+
+    if (matchingOptions.length > 0) {
+      // Select the first matching option
+      const activityControl = this.activityForm.get('activity');
+      if (activityControl) {
+        activityControl.setValue(matchingOptions[this.currentMatchIndex].id);
+        this.selectedActivity = matchingOptions[this.currentMatchIndex];
+        this.updateDisabled = true;
+        this.updatedFields = {};
+      }
+    }
+  }
+
+  async presentSearchToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 1000,
+      position: 'top',
+      cssClass: 'search-toast',
+      color: 'medium',
     });
     toast.present();
   }
