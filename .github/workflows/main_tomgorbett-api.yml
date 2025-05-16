@@ -20,9 +20,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Create deployment artifact
-        run: |
-          cd api
-          zip -r ../release.zip .
+        run: zip -r release.zip api
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
