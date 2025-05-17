@@ -1,3 +1,2 @@
 [config]
 SCM_DO_BUILD_DURING_DEPLOYMENT=true
-POST_BUILD_COMMAND=cd api && chmod +x build.sh && ./build.sh
