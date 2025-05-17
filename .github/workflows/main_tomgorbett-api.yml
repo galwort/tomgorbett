@@ -19,8 +19,19 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install PyTorch explicitly
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch==2.0.1 --extra-index-url https://download.pytorch.org/whl/cpu
       - name: Create deployment artifact
-        run: zip -r release.zip api
+        run: |
+          pip install -r api/requirements.txt
+          cd api
+          echo '#!/bin/bash' > install_torch.sh
+          echo 'pip install torch==2.0.1 --extra-index-url https://download.pytorch.org/whl/cpu' >> install_torch.sh
+          chmod +x install_torch.sh
+          cd ..
+          zip -r release.zip api
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -56,4 +67,4 @@ jobs:
           package: release.zip
           clean: true
           startup-command: |
-            gunicorn -w 4 -b 0.0.0.0:$PORT api:app
+            cd api && ./install_torch.sh && cd .. && gunicorn -w 4 -b 0.0.0.0:$PORT api:app
