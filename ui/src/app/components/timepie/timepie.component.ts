@@ -112,11 +112,13 @@ export class TimepieComponent implements OnInit {
   }
 
   async fetchChartData() {
-    const startTimestamp = new Date(this.startDate).setHours(0, 0, 0, 0);
-    const endTimestamp = new Date(this.endDate).setHours(23, 45, 0, 0);
+    const startDate = this.parseDate(this.startDate);
+    startDate.setHours(0, 0, 0, 0);
+    const endDate = this.parseDate(this.endDate);
+    endDate.setHours(23, 45, 0, 0);
 
-    const startId = this.formatDate(new Date(startTimestamp));
-    const endId = this.formatDate(new Date(endTimestamp)) + '\uf8ff';
+    const startId = this.formatDate(startDate);
+    const endId = this.formatDate(endDate) + '\uf8ff';
 
     const trackerQuery = query(
       collection(db, 'tracker'),
@@ -182,7 +184,14 @@ export class TimepieComponent implements OnInit {
   }
 
   formatDate(date: Date): string {
-    return date.toISOString().slice(0, 10).replace(/-/g, '');
+    const offset = date.getTimezoneOffset() * 60000;
+    const localDate = new Date(date.getTime() - offset);
+    return localDate.toISOString().slice(0, 10).replace(/-/g, '');
+  }
+
+  parseDate(dateStr: string): Date {
+    const [year, month, day] = dateStr.substring(0, 10).split('-').map(Number);
+    return new Date(year, month - 1, day);
   }
 
   onDateChange() {
