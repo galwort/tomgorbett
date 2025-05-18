@@ -344,9 +344,7 @@ export class TimetrackerComponent implements OnInit {
   private lastKey: string = '';
   private currentMatchIndex: number = 0;
   private lastKeyPressTime: number = 0;
-  /**
-   * Global keyboard event listener that works even when select is not focused
-   */
+
   @HostListener('document:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent): void {
     if (event.ctrlKey && event.key === 'Enter') {
@@ -404,9 +402,7 @@ export class TimetrackerComponent implements OnInit {
       this.cycleToNextMatch();
     }
   }
-  /**
-   * Cycles to the next matching activity
-   */
+
   private async cycleToNextMatch() {
     const matchingOptions = this.activities.filter((activity) =>
       activity.id.toLowerCase().startsWith(this.searchString.toLowerCase())
@@ -422,9 +418,7 @@ export class TimetrackerComponent implements OnInit {
       }
     }
   }
-  /**
-   * Finds and selects matching activities based on the search string
-   */
+
   private async findAndSelectMatch() {
     const matchingOptions = this.activities.filter((activity) =>
       activity.id.toLowerCase().startsWith(this.searchString.toLowerCase())
@@ -437,10 +431,7 @@ export class TimetrackerComponent implements OnInit {
       }
     }
   }
-  /**
-   * Adjusts end time by 15-minute increments
-   * @param direction 1 for forward, -1 for backward
-   */
+
   adjustEndTime(direction: number): void {
     const datetimeToControl = this.trackerForm.get('datetimeTo');
     const datetimeFromControl = this.trackerForm.get('datetime');

@@ -21,7 +21,6 @@ ion-content {
 }
 
 .blog-content {
-  /* Use a responsive grid with auto-fitting columns and a consistent gap */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 16px;
