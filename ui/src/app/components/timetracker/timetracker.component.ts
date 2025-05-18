@@ -268,9 +268,11 @@ export class TimetrackerComponent implements OnInit {
       await this.batchWriteTimeEntries(startDateTime, endDateTime, activity);
 
       this.trackerForm.reset();
-      await this.fetchLastUpdatedDateTime();
 
+      // Clear cached timestamp before fetching the updated value so we
+      // always get the latest entry after submission
       localStorage.removeItem('cached_last_datetime');
+      await this.fetchLastUpdatedDateTime();
 
       this.submitButtonText = 'Submitted';
     } catch (e) {
