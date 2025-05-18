@@ -237,6 +237,34 @@ export class TimetrackerComponent implements OnInit {
       const startDateTime = new Date(formData.datetime ?? '');
       const endDateTime = new Date(formData.datetimeTo ?? '');
 
+      const hoursDiff =
+        (endDateTime.getTime() - startDateTime.getTime()) / 36e5;
+
+      if (hoursDiff > 8) {
+        const warnAlert = await this.alertController.create({
+          header: 'Large Entry',
+          message:
+            'You are about to submit more than 8 hours at once. Continue?',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+            },
+            {
+              text: 'Continue',
+              role: 'confirm',
+            },
+          ],
+        });
+        await warnAlert.present();
+        const { role } = await warnAlert.onDidDismiss();
+        if (role !== 'confirm') {
+          this.isSubmitting = false;
+          this.submitButtonText = 'Submit';
+          return;
+        }
+      }
+
       await this.batchWriteTimeEntries(startDateTime, endDateTime, activity);
 
       this.trackerForm.reset();
