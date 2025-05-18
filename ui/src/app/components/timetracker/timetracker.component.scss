@@ -26,6 +26,16 @@ ion-content {
   background-color: transparent;
 }
 
+/* Add minimal styling for loading and error states without changing layout */
+.loading-container,
+.error-container {
+  margin: 20px 0;
+
+  p {
+    margin: 10px 0;
+  }
+}
+
 ion-alert {
   text-align: center;
 }

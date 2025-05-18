@@ -1,6 +1,25 @@
 <ion-content>
   <div class="centered-content">
-    <form [formGroup]="trackerForm" (ngSubmit)="submitData()">
+    <!-- Simple loading spinner -->
+    <ion-spinner *ngIf="isLoading" name="circular"></ion-spinner>
+
+    <!-- Simple error message -->
+    <ion-text
+      *ngIf="loadError && !isLoading"
+      color="danger"
+      style="margin: 10px"
+    >
+      {{ loadError }}
+      <ion-button (click)="loadInitialData()" fill="clear" size="small"
+        >Retry</ion-button
+      >
+    </ion-text>
+
+    <form
+      [formGroup]="trackerForm"
+      (ngSubmit)="submitData()"
+      [hidden]="isLoading || loadError"
+    >
       <ion-list>
         <ion-item lines="none">
           <ion-label>Start time:</ion-label>
