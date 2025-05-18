@@ -269,8 +269,6 @@ export class TimetrackerComponent implements OnInit {
 
       this.trackerForm.reset();
 
-      // Clear cached timestamp before fetching the updated value so we
-      // always get the latest entry after submission
       localStorage.removeItem('cached_last_datetime');
       await this.fetchLastUpdatedDateTime();
 
