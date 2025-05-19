@@ -316,14 +316,16 @@
       </section>
       <section id="blog">
         <h3>RECENT BLOG POSTS</h3>
-        <div *ngFor="let blog of recentBlogs" class="blog-item">
-          <img
-            [src]="'assets/blog-images/' + blog.id + '.png'"
-            [alt]="blog.title"
-            class="blog-image"
-            (click)="navigateToBlog(blog.id)"
-          />
-          <div class="blog-title-overlay">{{ blog.title }}</div>
+        <div class="blog-container">
+          <div *ngFor="let blog of recentBlogs" class="blog-item">
+            <img
+              [src]="'assets/blog-images/' + blog.id + '.png'"
+              [alt]="blog.title"
+              class="blog-image"
+              (click)="navigateToBlog(blog.id)"
+            />
+            <div class="blog-title-overlay">{{ blog.title }}</div>
+          </div>
         </div>
         <button routerLink="/blog">All Blog Posts</button>
       </section>
