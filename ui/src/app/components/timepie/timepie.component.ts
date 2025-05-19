@@ -103,8 +103,10 @@ export class TimepieComponent implements OnInit {
 
   constructor() {
     const today = new Date();
-    this.startDate = today.toISOString();
-    this.endDate = today.toISOString();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    const isoDate = today.toISOString().split('T')[0];
+    this.startDate = isoDate;
+    this.endDate = isoDate;
   }
 
   async ngOnInit() {
