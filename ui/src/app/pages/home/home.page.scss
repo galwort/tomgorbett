@@ -158,7 +158,7 @@ ion-content {
   }
 
   #left-col {
-    width: 35%;
+    width: min(35%, 500px);
     margin-right: 2rem;
     margin-top: 48px;
     position: fixed;
@@ -167,8 +167,9 @@ ion-content {
   }
 
   #right-col {
-    width: 55%;
-    margin-left: 45%;
+    width: max(55%, calc(100% - 500px));
+    margin-left: min(45%, 600px);
+
     section {
       opacity: 0;
       transform: translateY(20px);
