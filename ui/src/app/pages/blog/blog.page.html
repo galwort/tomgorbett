@@ -13,7 +13,9 @@
         class="blog-image"
         (click)="navigateToBlog(blog.id)"
       />
-      <div class="blog-title-overlay">{{ blog.title }}</div>
+      <div class="blog-title-overlay" (click)="navigateToBlog(blog.id)">
+        {{ blog.title }}
+      </div>
     </div>
   </div>
 </ion-content>
