@@ -43,7 +43,7 @@ ion-content {
     transition: transform 0.5s ease;
   }
 
-  .blog-image:hover {
+  &:hover .blog-image {
     transform: scale(1.5);
     cursor: pointer;
   }
