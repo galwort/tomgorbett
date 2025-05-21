@@ -1,9 +1,6 @@
 <ion-content>
   <div class="centered-content">
-    <!-- Simple loading spinner -->
     <ion-spinner *ngIf="isLoading" name="circular"></ion-spinner>
-
-    <!-- Simple error message -->
     <ion-text
       *ngIf="loadError && !isLoading"
       color="danger"

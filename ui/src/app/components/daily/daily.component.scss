@@ -1,0 +1,46 @@
+ion-content {
+  --background: transparent;
+
+  form {
+    ion-list {
+      --ion-item-background: transparent;
+    }
+
+    ion-label {
+      width: fit-content;
+      padding-right: 5px;
+    }
+
+    ion-select {
+      color: white;
+      background-color: #595959;
+      border: 2px solid #595959;
+      border-radius: 8px;
+      padding: 8px;
+      margin-top: 4px;
+      width: 200px;
+    }
+
+    ion-input {
+      background-color: transparent;
+      border: 2px solid #595959;
+      border-radius: 8px;
+      padding: 8px;
+      margin-top: 4px;
+      max-width: 150px;
+    }
+
+    ion-button {
+      --background: #595959;
+      margin-top: 10px;
+      width: fit-content;
+      padding-left: 12px;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  height: 100%;
+  background-color: transparent;
+}

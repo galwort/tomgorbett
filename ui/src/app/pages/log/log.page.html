@@ -4,6 +4,7 @@
       <ion-item lines="none">
         <ion-select [(ngModel)]="selectedComponent" interface="popover">
           <ion-select-option value="timetracker">Log Time</ion-select-option>
+          <ion-select-option value="daily">Log Day</ion-select-option>
           <ion-select-option value="timepie">Pie Chart</ion-select-option>
           <ion-select-option value="timebar">Bar Chart</ion-select-option>
           <ion-select-option value="timeline">Timeline</ion-select-option>
@@ -11,14 +12,15 @@
           <ion-select-option value="activities"
             >Activity Admin</ion-select-option
           >
-          <ion-select-option value="gratitudes">Gratitudes</ion-select-option>
-          <ion-select-option value="mood">Mood</ion-select-option>
         </ion-select>
       </ion-item>
     </div>
     <div class="component-container">
       <ng-container *ngIf="selectedComponent === 'timetracker'">
         <app-timetracker></app-timetracker>
+      </ng-container>
+      <ng-container *ngIf="selectedComponent === 'daily'">
+        <app-daily></app-daily>
       </ng-container>
       <ng-container *ngIf="selectedComponent === 'timepie'">
         <app-timepie></app-timepie>
@@ -34,12 +36,6 @@
       </ng-container>
       <ng-container *ngIf="selectedComponent === 'timechart'">
         <app-timechart></app-timechart>
-      </ng-container>
-      <ng-container *ngIf="selectedComponent === 'gratitudes'">
-        <app-gratitudes></app-gratitudes>
-      </ng-container>
-      <ng-container *ngIf="selectedComponent === 'mood'">
-        <app-mood></app-mood>
       </ng-container>
     </div>
   </div>

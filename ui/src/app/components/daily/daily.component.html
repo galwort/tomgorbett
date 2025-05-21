@@ -1,0 +1,67 @@
+<ion-content>
+  <div class="content">
+    <form [formGroup]="dailyForm" (ngSubmit)="submitData()">
+      <ion-list>
+        <ion-item lines="none">
+          <ion-label>Diet:</ion-label>
+          <ion-select #dietSelect formControlName="diet" interface="popover">
+            <ion-select-option *ngFor="let mood of moods" [value]="mood">
+              {{ mood }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Marriage:</ion-label>
+          <ion-select
+            #marriageSelect
+            formControlName="marriage"
+            interface="popover"
+          >
+            <ion-select-option *ngFor="let mood of moods" [value]="mood">
+              {{ mood }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Parents:</ion-label>
+          <ion-select
+            #parentsSelect
+            formControlName="parents"
+            interface="popover"
+          >
+            <ion-select-option *ngFor="let mood of moods" [value]="mood">
+              {{ mood }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Productivity:</ion-label>
+          <ion-select
+            #productivitySelect
+            formControlName="productivity"
+            interface="popover"
+          >
+            <ion-select-option *ngFor="let mood of moods" [value]="mood">
+              {{ mood }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Sleep:</ion-label>
+          <ion-select #sleepSelect formControlName="sleep" interface="popover">
+            <ion-select-option *ngFor="let mood of moods" [value]="mood">
+              {{ mood }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Gratitude:</ion-label>
+          <ion-input formControlName="gratitude"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button type="submit" shape="round" [disabled]="isSubmitting">
+        {{ submitButtonText }}
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
