@@ -82,14 +82,14 @@ export class TimepieComponent implements OnInit {
   };
 
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: ['Work', 'Productive', 'Side Projects', 'Other', 'Sleeping'],
+    labels: ['Work', 'Side Projects', 'Productive', 'Other', 'Sleeping'],
     datasets: [
       {
         data: [],
         backgroundColor: [
           '#2E8B57',
-          '#6A0DAD',
           '#705D00',
+          '#6A0DAD',
           'transparent',
           '#0A2463',
         ],
@@ -177,7 +177,7 @@ export class TimepieComponent implements OnInit {
       }
     });
 
-    this.updateChartData([work, productive, sideProjects, other, sleeping]);
+    this.updateChartData([work, sideProjects, productive, other, sleeping]);
   }
 
   updateChartData(data: number[]) {
