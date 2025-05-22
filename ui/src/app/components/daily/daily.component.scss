@@ -27,7 +27,7 @@ ion-content {
       border-radius: 8px;
       padding: 8px;
       margin-top: 4px;
-      max-width: 150px;
+      width: 200px;
     }
 
     ion-button {
@@ -43,4 +43,10 @@ ion-content {
   display: flex;
   height: 100%;
   background-color: transparent;
+}
+
+@media (max-width: 768px) {
+  ion-input {
+    max-width: 136px !important;
+  }
 }
