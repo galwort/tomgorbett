@@ -12,6 +12,7 @@ interface DailyData {
   productive: number;
   sleep: number;
   other: number;
+  sideProject: number;
 }
 
 interface ChartData {
@@ -20,6 +21,7 @@ interface ChartData {
   productiveData: number[];
   sleepData: number[];
   otherData: number[];
+  sideProjectData: number[];
 }
 
 @Component({
@@ -112,6 +114,7 @@ export class TimechartComponent implements OnInit {
                 productive: 0,
                 sleep: 0,
                 other: 0,
+                sideProject: 0,
               };
             }
 
@@ -119,6 +122,8 @@ export class TimechartComponent implements OnInit {
               weeklyData[formattedDate].sleep += 0.25;
             } else if (activityData['Work']) {
               weeklyData[formattedDate].work += 0.25;
+            } else if (activityData['Side_Project']) {
+              weeklyData[formattedDate].sideProject += 0.25;
             } else if (activityData['Productive']) {
               weeklyData[formattedDate].productive += 0.25;
             } else {
@@ -135,6 +140,7 @@ export class TimechartComponent implements OnInit {
       labels: Object.keys(weeklyData).sort(),
       workData: Object.values(weeklyData).map((d) => d.work),
       productiveData: Object.values(weeklyData).map((d) => d.productive),
+      sideProjectData: Object.values(weeklyData).map((d) => d.sideProject),
       sleepData: Object.values(weeklyData).map((d) => d.sleep),
       otherData: Object.values(weeklyData).map((d) => d.other),
     };
@@ -171,6 +177,16 @@ export class TimechartComponent implements OnInit {
             borderColor: '#6A0DAD',
             borderWidth: 5,
             data: chartData.productiveData,
+            fill: false,
+            pointRadius: 5,
+            pointBackgroundColor: 'transparent',
+            pointBorderColor: 'transparent',
+          },
+          {
+            label: 'Side Projects',
+            borderColor: '#123456',
+            borderWidth: 5,
+            data: chartData.sideProjectData,
             fill: false,
             pointRadius: 5,
             pointBackgroundColor: 'transparent',
