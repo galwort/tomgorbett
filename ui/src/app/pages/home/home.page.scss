@@ -9,6 +9,23 @@ ion-content {
   -ms-user-select: text;
   user-select: text;
 
+  scrollbar-width: thin;
+  scrollbar-color: var(--random-primary) transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--random-primary);
+    border-radius: 4px;
+  }
+
   ::selection {
     color: var(--random-bg);
     background-color: var(--random-primary);
