@@ -22,7 +22,7 @@ const categoryColors = {
   Sleeping: '#0A2463',
   Work: '#1E5631',
   Productive: '#6A0DAD',
-  Side_Projects: '#123456',
+  Side_Projects: '#705D00',
 };
 
 interface TimelineActivity {

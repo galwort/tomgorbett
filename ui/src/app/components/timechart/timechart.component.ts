@@ -184,7 +184,7 @@ export class TimechartComponent implements OnInit {
           },
           {
             label: 'Side Projects',
-            borderColor: '#123456',
+            borderColor: '#705D00',
             borderWidth: 5,
             data: chartData.sideProjectData,
             fill: false,

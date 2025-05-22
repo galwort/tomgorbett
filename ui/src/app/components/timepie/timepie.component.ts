@@ -89,7 +89,7 @@ export class TimepieComponent implements OnInit {
         backgroundColor: [
           '#2E8B57',
           '#6A0DAD',
-          '#123456',
+          '#705D00',
           'transparent',
           '#0A2463',
         ],
