@@ -22,6 +22,7 @@ const categoryColors = {
   Sleeping: '#0A2463',
   Work: '#1E5631',
   Productive: '#6A0DAD',
+  Side_Projects: '#123456',
 };
 
 interface TimelineActivity {
@@ -111,6 +112,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             color = categoryColors.Sleeping;
           } else if (activityData['Work']) {
             color = categoryColors.Work;
+          } else if (activityData['Side_Project']) {
+            color = categoryColors.Side_Projects;
           } else if (activityData['Productive']) {
             color = categoryColors.Productive;
           }
@@ -170,6 +173,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         return 'Sleeping';
       case categoryColors.Work:
         return 'Work';
+      case categoryColors.Side_Projects:
+        return 'Side Project';
       case categoryColors.Productive:
         return 'Productive';
       default:
