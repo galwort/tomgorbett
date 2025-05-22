@@ -1,0 +1,11 @@
+ion-content {
+  --ion-background-color: transparent;
+
+  .centered-content {
+    height: 100%;
+    swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+import { Component, AfterViewInit } from '@angular/core';
+import { register } from 'swiper/element/bundle';
+
+register();
+
+@Component({
+  selector: 'app-analytics',
+  templateUrl: './analytics.component.html',
+  styleUrls: ['./analytics.component.scss'],
+})
+export class AnalyticsComponent implements AfterViewInit {
+  ngAfterViewInit() {
+    setTimeout(() => {
+      const el = document.querySelector('swiper-container.analytics-swiper') as any;
+      el?.swiper?.update();
+    }, 100);
+  }
+}
