@@ -8,6 +8,7 @@ import { LogPageRoutingModule } from './log-routing.module';
 
 import { TimetrackerComponent } from 'src/app/components/timetracker/timetracker.component';
 import { DailyComponent } from 'src/app/components/daily/daily.component';
+import { AnalyticsComponent } from 'src/app/components/analytics/analytics.component';
 import { TimechartComponent } from 'src/app/components/timechart/timechart.component';
 import { TimepieComponent } from 'src/app/components/timepie/timepie.component';
 import { TimebarComponent } from 'src/app/components/timebar/timebar.component';
@@ -31,6 +32,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     LogPage,
     TimetrackerComponent,
     DailyComponent,
+    AnalyticsComponent,
     TimechartComponent,
     TimepieComponent,
     TimebarComponent,

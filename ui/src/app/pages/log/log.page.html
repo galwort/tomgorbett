@@ -5,10 +5,8 @@
         <ion-select [(ngModel)]="selectedComponent" interface="popover">
           <ion-select-option value="timetracker">Log Time</ion-select-option>
           <ion-select-option value="daily">Log Day</ion-select-option>
-          <ion-select-option value="timepie">Pie Chart</ion-select-option>
-          <ion-select-option value="timebar">Bar Chart</ion-select-option>
+          <ion-select-option value="analytics">Analytics</ion-select-option>
           <ion-select-option value="timeline">Timeline</ion-select-option>
-          <ion-select-option value="timechart">Line Chart</ion-select-option>
           <ion-select-option value="activities">Activities</ion-select-option>
         </ion-select>
       </ion-item>
@@ -20,20 +18,14 @@
       <ng-container *ngIf="selectedComponent === 'daily'">
         <app-daily></app-daily>
       </ng-container>
-      <ng-container *ngIf="selectedComponent === 'timepie'">
-        <app-timepie></app-timepie>
-      </ng-container>
-      <ng-container *ngIf="selectedComponent === 'timebar'">
-        <app-timebar></app-timebar>
+      <ng-container *ngIf="selectedComponent === 'analytics'">
+        <app-analytics></app-analytics>
       </ng-container>
       <ng-container *ngIf="selectedComponent === 'timeline'">
         <app-timeline></app-timeline>
       </ng-container>
       <ng-container *ngIf="selectedComponent === 'activities'">
         <app-activities></app-activities>
-      </ng-container>
-      <ng-container *ngIf="selectedComponent === 'timechart'">
-        <app-timechart></app-timechart>
       </ng-container>
     </div>
   </div>
