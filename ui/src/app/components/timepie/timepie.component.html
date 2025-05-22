@@ -8,6 +8,12 @@
         [type]="pieChartType"
       ></canvas>
     </div>
+    <div class="production">
+      <ion-text
+        >Productive Hours:
+        {{ totalProductiveHours | number : "1.2-2" }}</ion-text
+      >
+    </div>
     <div class="filter-container">
       <ion-item lines="none">
         <ion-datetime-button datetime="startDateTime"></ion-datetime-button>

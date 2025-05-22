@@ -20,8 +20,18 @@ ion-content {
       }
     }
 
-    .filter-container {
+    .production {
       margin-top: 20px;
+
+      ion-text {
+        font-size: min(3vw, 1em);
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+
+    .filter-container {
+      margin-top: 0px;
 
       ion-item {
         --background: transparent;

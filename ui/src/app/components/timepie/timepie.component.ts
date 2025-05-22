@@ -105,6 +105,14 @@ export class TimepieComponent implements OnInit {
   public productiveHours = 0;
   public sideProjectHours = 0;
 
+  get totalProductiveHours(): number {
+    return (
+      this.workHours +
+      this.sideProjectHours +
+      this.productiveHours
+    );
+  }
+
   public startDate: string;
   public endDate: string;
 
@@ -184,8 +192,8 @@ export class TimepieComponent implements OnInit {
     this.pieChartData.datasets[0].data = data;
     [
       this.workHours,
-      this.productiveHours,
       this.sideProjectHours,
+      this.productiveHours,
       this.otherHours,
       this.sleepingHours,
     ] = data;
