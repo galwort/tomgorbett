@@ -20,6 +20,7 @@ const categoryColors = {
   Sleeping: '#0A2463',
   Work: '#1E5631',
   Productive: '#6A0DAD',
+  Side_Projects: '#FF6F61',
 };
 
 @Component({
@@ -99,9 +100,12 @@ export class TimebarComponent implements OnInit, OnDestroy {
   public barChartType: ChartType = 'bar';
 
   public startDate: string;
-  public endDate: string;
-
-  public selectedCategories: string[] = ['Work', 'Productive', 'Other'];
+  public endDate: string;  public selectedCategories: string[] = [
+    'Work',
+    'Productive',
+    'Side Projects',
+    'Other',
+  ];
 
   constructor() {
     const today = new Date();
@@ -148,7 +152,6 @@ export class TimebarComponent implements OnInit, OnDestroy {
     const startId = this.formatDate(startDate);
     const endId = this.formatDate(endDate) + '\uf8ff';
 
-
     const trackerQuery = query(
       collection(db, 'tracker'),
       where(documentId(), '>=', startId),
@@ -174,13 +177,13 @@ export class TimebarComponent implements OnInit, OnDestroy {
           const currentData = activityTimes.get(activity) || {
             time: 0,
             color: categoryColors.Other,
-          };
-
-          let color = categoryColors.Other;
+          };          let color = categoryColors.Other;
           if (activity === 'Sleeping') {
             color = categoryColors.Sleeping;
           } else if (activityData['Work']) {
             color = categoryColors.Work;
+          } else if (activityData['Side_Project']) {
+            color = categoryColors.Side_Projects;
           } else if (activityData['Productive']) {
             color = categoryColors.Productive;
           }
@@ -191,12 +194,11 @@ export class TimebarComponent implements OnInit, OnDestroy {
           });
         }
       }
-    });
-
-    const filteredActivities = Array.from(activityTimes.entries())
-      .filter(([activity, { color }]) =>
-        this.selectedCategories.includes(this.getCategoryFromColor(color))
-      )
+    });    const filteredActivities = Array.from(activityTimes.entries())
+      .filter(([activity, { color }]) => {
+        const category = this.getCategoryFromColor(color);
+        return this.selectedCategories.includes(category);
+      })
       .sort((a, b) => b[1].time - a[1].time)
       .slice(0, 10);
 
@@ -237,9 +239,7 @@ export class TimebarComponent implements OnInit, OnDestroy {
     this.fetchChartData().then((chartData) => {
       this.updateChartData(chartData);
     });
-  }
-
-  getCategoryFromColor(color: string): string {
+  }  getCategoryFromColor(color: string): string {
     switch (color) {
       case categoryColors.Sleeping:
         return 'Sleeping';
@@ -247,6 +247,8 @@ export class TimebarComponent implements OnInit, OnDestroy {
         return 'Work';
       case categoryColors.Productive:
         return 'Productive';
+      case categoryColors.Side_Projects:
+        return 'Side Projects';
       default:
         return 'Other';
     }
