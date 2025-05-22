@@ -50,10 +50,14 @@ export class ActivitiesComponent implements OnInit {
 
   async fetchActivities() {
     const querySnapshot = await getDocs(collection(db, 'activities'));
-    this.activities = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    this.activities = querySnapshot.docs
+      .map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      .sort((a, b) =>
+        a.id.localeCompare(b.id, undefined, { sensitivity: 'base' })
+      );
   }
 
   onActivityChange(event: any) {

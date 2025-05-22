@@ -96,7 +96,9 @@ export class TimetrackerComponent implements OnInit {
     try {
       const cachedActivities = this.getCachedActivities();
       if (cachedActivities) {
-        this.activities = cachedActivities;
+        this.activities = cachedActivities.sort((a, b) =>
+          a.id.localeCompare(b.id, undefined, { sensitivity: 'base' })
+        );
         return;
       }
       const querySnapshot = await getDocs(
@@ -107,7 +109,11 @@ export class TimetrackerComponent implements OnInit {
         )
       );
 
-      this.activities = querySnapshot.docs.map((doc) => ({ id: doc.id }));
+      this.activities = querySnapshot.docs
+        .map((doc) => ({ id: doc.id }))
+        .sort((a, b) =>
+          a.id.localeCompare(b.id, undefined, { sensitivity: 'base' })
+        );
       this.cacheActivities(this.activities);
     } catch (error) {
       console.error('Error fetching activities:', error);
