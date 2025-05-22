@@ -20,7 +20,7 @@ const categoryColors = {
   Sleeping: '#0A2463',
   Work: '#1E5631',
   Productive: '#6A0DAD',
-  Side_Projects: '#FF6F61',
+  Side_Projects: '#123456',
 };
 
 @Component({
@@ -100,7 +100,8 @@ export class TimebarComponent implements OnInit, OnDestroy {
   public barChartType: ChartType = 'bar';
 
   public startDate: string;
-  public endDate: string;  public selectedCategories: string[] = [
+  public endDate: string;
+  public selectedCategories: string[] = [
     'Work',
     'Productive',
     'Side Projects',
@@ -177,7 +178,8 @@ export class TimebarComponent implements OnInit, OnDestroy {
           const currentData = activityTimes.get(activity) || {
             time: 0,
             color: categoryColors.Other,
-          };          let color = categoryColors.Other;
+          };
+          let color = categoryColors.Other;
           if (activity === 'Sleeping') {
             color = categoryColors.Sleeping;
           } else if (activityData['Work']) {
@@ -194,7 +196,8 @@ export class TimebarComponent implements OnInit, OnDestroy {
           });
         }
       }
-    });    const filteredActivities = Array.from(activityTimes.entries())
+    });
+    const filteredActivities = Array.from(activityTimes.entries())
       .filter(([activity, { color }]) => {
         const category = this.getCategoryFromColor(color);
         return this.selectedCategories.includes(category);
@@ -239,7 +242,8 @@ export class TimebarComponent implements OnInit, OnDestroy {
     this.fetchChartData().then((chartData) => {
       this.updateChartData(chartData);
     });
-  }  getCategoryFromColor(color: string): string {
+  }
+  getCategoryFromColor(color: string): string {
     switch (color) {
       case categoryColors.Sleeping:
         return 'Sleeping';

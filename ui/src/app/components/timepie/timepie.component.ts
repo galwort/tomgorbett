@@ -82,11 +82,17 @@ export class TimepieComponent implements OnInit {
   };
 
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: ['Work', 'Productive', 'Other', 'Sleeping'],
+    labels: ['Work', 'Productive', 'Side Projects', 'Other', 'Sleeping'],
     datasets: [
       {
         data: [],
-        backgroundColor: ['#2E8B57', '#6A0DAD', 'transparent', '#0A2463'],
+        backgroundColor: [
+          '#2E8B57',
+          '#6A0DAD',
+          '#123456',
+          'transparent',
+          '#0A2463',
+        ],
       },
     ],
   };
@@ -97,6 +103,7 @@ export class TimepieComponent implements OnInit {
   public sleepingHours = 0;
   public workHours = 0;
   public productiveHours = 0;
+  public sideProjectHours = 0;
 
   public startDate: string;
   public endDate: string;
@@ -140,6 +147,7 @@ export class TimepieComponent implements OnInit {
     let sleeping = 0;
     let work = 0;
     let productive = 0;
+    let sideProjects = 0;
     let other = 0;
 
     const loggedActivities = new Set<string>();
@@ -153,6 +161,8 @@ export class TimepieComponent implements OnInit {
             sleeping += 0.25;
           } else if (activityData['Work']) {
             work += 0.25;
+          } else if (activityData['Side_Project']) {
+            sideProjects += 0.25;
           } else if (activityData['Productive']) {
             productive += 0.25;
           } else {
@@ -167,7 +177,7 @@ export class TimepieComponent implements OnInit {
       }
     });
 
-    this.updateChartData([work, productive, other, sleeping]);
+    this.updateChartData([work, productive, sideProjects, other, sleeping]);
   }
 
   updateChartData(data: number[]) {
@@ -175,6 +185,7 @@ export class TimepieComponent implements OnInit {
     [
       this.workHours,
       this.productiveHours,
+      this.sideProjectHours,
       this.otherHours,
       this.sleepingHours,
     ] = data;
