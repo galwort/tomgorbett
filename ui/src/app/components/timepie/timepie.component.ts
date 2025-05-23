@@ -48,8 +48,8 @@ export class TimepieComponent implements OnInit {
               console.warn('Unexpected data type encountered:', data);
             }
           });
-          let percentage = Math.round((value * 100) / sum) + '%';
-          return percentage;
+          let perc = Math.round((value * 100) / sum);
+          return perc === 0 ? '' : perc + '%';
         },
         color: 'white',
         font: (context) => {
