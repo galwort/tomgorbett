@@ -2,13 +2,13 @@
   <div class="centered-content">
     <swiper-container class="analytics-swiper" [slidesPerView]="1" pagination="true">
       <swiper-slide>
-        <app-timepie></app-timepie>
+        <app-timepie *ngIf="loadedSlides[0]"></app-timepie>
       </swiper-slide>
       <swiper-slide>
-        <app-timebar></app-timebar>
+        <app-timebar *ngIf="loadedSlides[1]"></app-timebar>
       </swiper-slide>
       <swiper-slide>
-        <app-timechart></app-timechart>
+        <app-timechart *ngIf="loadedSlides[2]"></app-timechart>
       </swiper-slide>
     </swiper-container>
   </div>
