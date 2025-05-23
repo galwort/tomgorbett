@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-log',
@@ -9,4 +9,21 @@ export class LogPage {
   selectedComponent: string = 'timetracker';
 
   constructor() {}
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (
+      document.activeElement instanceof HTMLInputElement ||
+      document.activeElement instanceof HTMLTextAreaElement
+    ) {
+      return;
+    }
+    if (!event.shiftKey) return;
+    const key = event.key.toUpperCase();
+    if (key === 'L') this.selectedComponent = 'timetracker';
+    else if (key === 'D') this.selectedComponent = 'daily';
+    else if (key === 'C') this.selectedComponent = 'analytics';
+    else if (key === 'G') this.selectedComponent = 'timeline';
+    else if (key === 'A') this.selectedComponent = 'activities';
+  }
 }
