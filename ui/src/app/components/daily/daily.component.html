@@ -4,7 +4,12 @@
       <ion-list>
         <ion-item lines="none">
           <ion-label>Diet:</ion-label>
-          <ion-select #dietSelect formControlName="diet" interface="popover">
+          <ion-select
+            #dietSelect
+            formControlName="diet"
+            interface="popover"
+            (ionFocus)="setFocusIndex(0)"
+          >
             <ion-select-option *ngFor="let mood of moods" [value]="mood">
               {{ mood }}
             </ion-select-option>
@@ -16,6 +21,7 @@
             #marriageSelect
             formControlName="marriage"
             interface="popover"
+            (ionFocus)="setFocusIndex(1)"
           >
             <ion-select-option *ngFor="let mood of moods" [value]="mood">
               {{ mood }}
@@ -28,6 +34,7 @@
             #parentsSelect
             formControlName="parents"
             interface="popover"
+            (ionFocus)="setFocusIndex(2)"
           >
             <ion-select-option *ngFor="let mood of moods" [value]="mood">
               {{ mood }}
@@ -40,6 +47,7 @@
             #productivitySelect
             formControlName="productivity"
             interface="popover"
+            (ionFocus)="setFocusIndex(3)"
           >
             <ion-select-option *ngFor="let mood of moods" [value]="mood">
               {{ mood }}
@@ -48,7 +56,12 @@
         </ion-item>
         <ion-item lines="none">
           <ion-label>Sleep:</ion-label>
-          <ion-select #sleepSelect formControlName="sleep" interface="popover">
+          <ion-select
+            #sleepSelect
+            formControlName="sleep"
+            interface="popover"
+            (ionFocus)="setFocusIndex(4)"
+          >
             <ion-select-option *ngFor="let mood of moods" [value]="mood">
               {{ mood }}
             </ion-select-option>
@@ -56,7 +69,12 @@
         </ion-item>
         <ion-item lines="none">
           <ion-label>Gratitude:</ion-label>
-          <ion-input formControlName="gratitude" slot="end"></ion-input>
+          <ion-input
+            #gratitudeInput
+            formControlName="gratitude"
+            slot="end"
+            (ionFocus)="setFocusIndex(5)"
+          ></ion-input>
         </ion-item>
       </ion-list>
       <ion-button type="submit" shape="round" [disabled]="isSubmitting">

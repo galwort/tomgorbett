@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  HostListener,
+  AfterViewInit,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { IonSelect, IonInput } from '@ionic/angular';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
@@ -12,7 +19,7 @@ export const db = getFirestore(app);
   templateUrl: './daily.component.html',
   styleUrls: ['./daily.component.scss'],
 })
-export class DailyComponent implements OnInit {
+export class DailyComponent implements OnInit, AfterViewInit {
   dailyForm: FormGroup = new FormGroup({
     diet: new FormControl('Okay'),
     marriage: new FormControl('Okay'),
@@ -26,9 +33,94 @@ export class DailyComponent implements OnInit {
   isSubmitting: boolean = false;
   submitButtonText: string = 'Submit';
 
+  @ViewChild('dietSelect') dietSelect!: IonSelect;
+  @ViewChild('marriageSelect') marriageSelect!: IonSelect;
+  @ViewChild('parentsSelect') parentsSelect!: IonSelect;
+  @ViewChild('productivitySelect') productivitySelect!: IonSelect;
+  @ViewChild('sleepSelect') sleepSelect!: IonSelect;
+  @ViewChild('gratitudeInput') gratitudeInput!: IonInput;
+
+  focusableElements: Array<IonSelect | IonInput> = [];
+  currentFocusIndex: number = 0;
+
   constructor() {}
 
   ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.focusableElements = [
+      this.dietSelect,
+      this.marriageSelect,
+      this.parentsSelect,
+      this.productivitySelect,
+      this.sleepSelect,
+      this.gratitudeInput,
+    ];
+  }
+
+  setFocusIndex(index: number) {
+    this.currentFocusIndex = index;
+  }
+
+  private focusCurrent() {
+    const element: any = this.focusableElements[this.currentFocusIndex];
+    if (element && element.setFocus) {
+      element.setFocus();
+    }
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      if (!this.isSubmitting) this.submitData();
+      event.preventDefault();
+      return;
+    }
+    if (event.key === 'ArrowDown') {
+      this.currentFocusIndex =
+        (this.currentFocusIndex + 1) % this.focusableElements.length;
+      this.focusCurrent();
+      event.preventDefault();
+      return;
+    }
+    if (event.key === 'ArrowUp') {
+      this.currentFocusIndex =
+        (this.currentFocusIndex - 1 + this.focusableElements.length) %
+        this.focusableElements.length;
+      this.focusCurrent();
+      event.preventDefault();
+      return;
+    }
+    if (event.key === 'ArrowLeft') {
+      this.adjustSelect(-1);
+      event.preventDefault();
+      return;
+    }
+    if (event.key === 'ArrowRight') {
+      this.adjustSelect(1);
+      event.preventDefault();
+      return;
+    }
+  }
+
+  private adjustSelect(direction: number) {
+    const controlNames = [
+      'diet',
+      'marriage',
+      'parents',
+      'productivity',
+      'sleep',
+    ];
+    if (this.currentFocusIndex < controlNames.length) {
+      const control = this.dailyForm.get(controlNames[this.currentFocusIndex]);
+      if (!control) return;
+      const index = this.moods.indexOf(control.value);
+      const newIndex = index + direction;
+      if (newIndex >= 0 && newIndex < this.moods.length) {
+        control.setValue(this.moods[newIndex]);
+      }
+    }
+  }
 
   private getFormattedDate(): string {
     const date = new Date();
