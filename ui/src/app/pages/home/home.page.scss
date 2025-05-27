@@ -440,6 +440,8 @@ button {
     .author {
       display: block;
       text-align: right;
+      width: fit-content;
+      margin-left: auto;
     }
   }
 }
