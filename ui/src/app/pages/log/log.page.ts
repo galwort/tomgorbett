@@ -20,7 +20,7 @@ export class LogPage {
     }
     if (!event.shiftKey) return;
     const key = event.key.toUpperCase();
-    if (key === 'L') this.selectedComponent = 'timetracker';
+    if (key === 'T') this.selectedComponent = 'timetracker';
     else if (key === 'D') this.selectedComponent = 'daily';
     else if (key === 'C') this.selectedComponent = 'analytics';
     else if (key === 'G') this.selectedComponent = 'timeline';
