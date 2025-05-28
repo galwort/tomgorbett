@@ -99,26 +99,33 @@ export class TimetrackerComponent implements OnInit {
         this.activities = cachedActivities.sort((a, b) =>
           a.id.localeCompare(b.id, undefined, { sensitivity: 'base' })
         );
+        this.fetchActivitiesFromServer().catch((err) =>
+          console.error('Error refreshing activities:', err)
+        );
         return;
       }
-      const querySnapshot = await getDocs(
-        query(
-          collection(db, 'activities'),
-          where('Active', '==', true),
-          limit(100)
-        )
-      );
-
-      this.activities = querySnapshot.docs
-        .map((doc) => ({ id: doc.id }))
-        .sort((a, b) =>
-          a.id.localeCompare(b.id, undefined, { sensitivity: 'base' })
-        );
-      this.cacheActivities(this.activities);
+      await this.fetchActivitiesFromServer();
     } catch (error) {
       console.error('Error fetching activities:', error);
       throw error;
     }
+  }
+
+  private async fetchActivitiesFromServer() {
+    const querySnapshot = await getDocs(
+      query(
+        collection(db, 'activities'),
+        where('Active', '==', true),
+        limit(100)
+      )
+    );
+
+    this.activities = querySnapshot.docs
+      .map((doc) => ({ id: doc.id }))
+      .sort((a, b) =>
+        a.id.localeCompare(b.id, undefined, { sensitivity: 'base' })
+      );
+    this.cacheActivities(this.activities);
   }
   private cacheActivities(activities: any[]) {
     const cacheItem = {
@@ -166,42 +173,45 @@ export class TimetrackerComponent implements OnInit {
       if (cachedDateTime) {
         this.lastUpdatedDateTime = cachedDateTime;
         this.setDateTimeElements();
+        this.fetchLastUpdatedDateTimeFromServer().catch((err) =>
+          console.error('Error refreshing last datetime:', err)
+        );
         return;
       }
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      const startKey = this.formatDateForDocId(thirtyDaysAgo);
-
-      const querySnapshot = await getDocs(
-        query(collection(db, 'tracker'), orderBy('__name__', 'desc'), limit(1))
-      );
-
-      if (!querySnapshot.empty) {
-        const lastDocId = querySnapshot.docs[0].id;
-        const year = parseInt(lastDocId.slice(0, 4), 10);
-        const month = parseInt(lastDocId.slice(4, 6), 10);
-        const day = parseInt(lastDocId.slice(6, 8), 10);
-        const hour = parseInt(lastDocId.slice(8, 10), 10);
-        const minute = parseInt(lastDocId.slice(10, 12), 10);
-
-        this.lastUpdatedDateTime = new Date(
-          year,
-          month - 1,
-          day,
-          hour,
-          minute
-        ).toISOString();
-        this.cacheLastDateTime(this.lastUpdatedDateTime);
-        this.setDateTimeElements();
-      } else {
-        this.lastUpdatedDateTime = new Date().toISOString();
-        this.setDateTimeElements();
-      }
+      await this.fetchLastUpdatedDateTimeFromServer();
     } catch (error) {
       console.error('Error fetching last updated date time:', error);
       this.lastUpdatedDateTime = new Date().toISOString();
       this.setDateTimeElements();
       throw error;
+    }
+  }
+
+  private async fetchLastUpdatedDateTimeFromServer() {
+    const querySnapshot = await getDocs(
+      query(collection(db, 'tracker'), orderBy('__name__', 'desc'), limit(1))
+    );
+
+    if (!querySnapshot.empty) {
+      const lastDocId = querySnapshot.docs[0].id;
+      const year = parseInt(lastDocId.slice(0, 4), 10);
+      const month = parseInt(lastDocId.slice(4, 6), 10);
+      const day = parseInt(lastDocId.slice(6, 8), 10);
+      const hour = parseInt(lastDocId.slice(8, 10), 10);
+      const minute = parseInt(lastDocId.slice(10, 12), 10);
+
+      this.lastUpdatedDateTime = new Date(
+        year,
+        month - 1,
+        day,
+        hour,
+        minute
+      ).toISOString();
+      this.cacheLastDateTime(this.lastUpdatedDateTime);
+      this.setDateTimeElements();
+    } else {
+      this.lastUpdatedDateTime = new Date().toISOString();
+      this.setDateTimeElements();
     }
   }
   private cacheLastDateTime(dateTime: string) {
