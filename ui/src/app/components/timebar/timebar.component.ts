@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -28,7 +28,7 @@ const categoryColors = {
   templateUrl: './timebar.component.html',
   styleUrls: ['./timebar.component.scss'],
 })
-export class TimebarComponent implements OnInit, OnDestroy {
+export class TimebarComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -99,8 +99,8 @@ export class TimebarComponent implements OnInit, OnDestroy {
 
   public barChartType: ChartType = 'bar';
 
-  public startDate: string;
-  public endDate: string;
+  @Input() startDate!: string;
+  @Input() endDate!: string;
   public selectedCategories: string[] = [
     'Work',
     'Productive',
@@ -108,13 +108,7 @@ export class TimebarComponent implements OnInit, OnDestroy {
     'Other',
   ];
 
-  constructor() {
-    const today = new Date();
-    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
-    const isoDate = today.toISOString().split('T')[0];
-    this.startDate = isoDate;
-    this.endDate = isoDate;
-  }
+  constructor() {}
 
   ngOnInit() {
     this.fetchChartData().then((chartData) => {
@@ -128,6 +122,14 @@ export class TimebarComponent implements OnInit, OnDestroy {
         this.chart.update();
       }
     }, 100);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['startDate'] || changes['endDate']) {
+      this.fetchChartData().then((chartData) => {
+        this.updateChartData(chartData);
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -236,12 +238,6 @@ export class TimebarComponent implements OnInit, OnDestroy {
   parseDate(dateStr: string): Date {
     const [year, month, day] = dateStr.substring(0, 10).split('-').map(Number);
     return new Date(year, month - 1, day);
-  }
-
-  onDateChange() {
-    this.fetchChartData().then((chartData) => {
-      this.updateChartData(chartData);
-    });
   }
   getCategoryFromColor(color: string): string {
     switch (color) {
