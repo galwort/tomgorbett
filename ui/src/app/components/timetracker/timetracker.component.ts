@@ -444,7 +444,6 @@ export class TimetrackerComponent implements OnInit {
   private lastKey: string = '';
   private currentMatchIndex: number = 0;
   private lastKeyPressTime: number = 0;
-
   @HostListener('document:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent): void {
     if (event.ctrlKey && event.key === 'Enter') {
@@ -452,6 +451,15 @@ export class TimetrackerComponent implements OnInit {
       event.preventDefault();
       return;
     }
+    
+    if (event.shiftKey && event.key === 'Backspace') {
+      if (this.existingDocIds.length > 0 && !this.isDeletingEntries) {
+        this.deleteExistingEntries();
+        event.preventDefault();
+      }
+      return;
+    }
+    
     if (!event.ctrlKey && !event.altKey && !event.metaKey) {
       if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
         this.adjustEndTime(1);
