@@ -19,6 +19,12 @@
         <app-timechart *ngIf="loadedSlides[2]"></app-timechart>
       </swiper-slide>
     </swiper-container>
+    <div class="arrow left-arrow" (click)="previousSlide()">
+      <i class="fa-solid fa-chevron-left"></i>
+    </div>
+    <div class="arrow right-arrow" (click)="nextSlide()">
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
     <div class="filter-container">
       <ion-item lines="none">
         <ion-datetime-button datetime="startDateTime"></ion-datetime-button>

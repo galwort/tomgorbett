@@ -38,3 +38,9 @@ ion-content {
     }
   }
 }
+
+@media (min-width: 768px) {
+  .chart-container {
+    padding: 0 64px;
+  }
+}

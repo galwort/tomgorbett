@@ -13,6 +13,7 @@ export class AnalyticsComponent implements AfterViewInit {
   startDate: string;
   endDate: string;
   today: string;
+  private swiper: any;
 
   constructor() {
     const today = new Date();
@@ -25,13 +26,24 @@ export class AnalyticsComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      const el = document.querySelector('swiper-container.analytics-swiper') as any;
-      el?.swiper?.update();
+      const el = document.querySelector(
+        'swiper-container.analytics-swiper'
+      ) as any;
+      this.swiper = el?.swiper;
+      this.swiper?.update();
       el?.addEventListener('swiperslidechange', () => {
-        const index = el.swiper?.activeIndex ?? 0;
+        const index = this.swiper?.activeIndex ?? 0;
         this.loadedSlides[index] = true;
       });
     }, 100);
+  }
+
+  previousSlide() {
+    this.swiper?.slidePrev();
+  }
+
+  nextSlide() {
+    this.swiper?.slideNext();
   }
 
   onStartDateChange() {
