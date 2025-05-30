@@ -65,9 +65,20 @@
           </ng-template>
         </ion-modal>
       </ion-item>
-      <ion-button fill="clear" (click)="toggleWeekView()">{{
-        weekView ? "Timeline" : "Week View"
-      }}</ion-button>
+      <ion-item lines="none">
+        <ion-segment
+          [(ngModel)]="viewMode"
+          (ionChange)="onViewModeChange($event)"
+          color="dark"
+        >
+          <ion-segment-button value="day">
+            <ion-label>Day</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="week">
+            <ion-label>Week</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-item>
     </div>
   </div>
 </ion-content>

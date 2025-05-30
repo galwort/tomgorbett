@@ -44,6 +44,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
   public timelineData: TimelineDay[] = [];
 
   public weekView = false;
+  public viewMode = 'day';
   public weekMatrix: (TimelineActivity | null)[][] = [];
   public weekDays: Date[] = [];
   public timeLabels: string[] = [];
@@ -88,15 +89,21 @@ export class TimelineComponent implements OnInit, AfterViewInit {
       this.timeLabels.push(`${hh}:${mm} ${ampm}`);
     }
     for (const entry of this.timelineData) {
-      const dayIndex = Math.floor((entry.date.getTime() - start.getTime()) / 86400000);
-      const timeIndex = entry.date.getHours() * 4 + entry.date.getMinutes() / 15;
+      const dayIndex = Math.floor(
+        (entry.date.getTime() - start.getTime()) / 86400000
+      );
+      const timeIndex =
+        entry.date.getHours() * 4 + entry.date.getMinutes() / 15;
       if (dayIndex >= 0 && dayIndex < 7 && timeIndex >= 0 && timeIndex < 96) {
         this.weekMatrix[timeIndex][dayIndex] = entry.activities[0];
       }
     }
   }
 
-  async fetchTimelineData(startDate: Date, endDate: Date): Promise<TimelineDay[]> {
+  async fetchTimelineData(
+    startDate: Date,
+    endDate: Date
+  ): Promise<TimelineDay[]> {
     const startId = this.formatDate(startDate);
     const endId = this.formatDate(endDate) + '\uf8ff';
 
@@ -225,13 +232,19 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         return 'Other';
     }
   }
-
   onCategoryChange() {
+    this.updateTimelineData();
+  }
+
+  onViewModeChange(event: any) {
+    this.viewMode = event.detail.value;
+    this.weekView = this.viewMode === 'week';
     this.updateTimelineData();
   }
 
   toggleWeekView() {
     this.weekView = !this.weekView;
+    this.viewMode = this.weekView ? 'week' : 'day';
     this.updateTimelineData();
   }
 }
