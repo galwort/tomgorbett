@@ -8,6 +8,7 @@ ion-content {
     justify-content: center;
     height: 100%;
     padding: 5vw;
+    padding-bottom: 0;
     box-sizing: border-box;
 
     .chart-container {
@@ -21,7 +22,10 @@ ion-content {
     }
 
     .production {
+      display: flex;
+      align-items: end;
       margin-top: 20px;
+      height: 20%;
 
       ion-text {
         font-size: min(3vw, 1em);

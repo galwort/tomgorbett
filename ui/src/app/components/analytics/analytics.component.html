@@ -1,10 +1,6 @@
 <ion-content>
   <div class="centered-content">
-    <swiper-container
-      class="analytics-swiper"
-      [slidesPerView]="1"
-      pagination="true"
-    >
+    <swiper-container class="analytics-swiper" [slidesPerView]="1">
       <swiper-slide>
         <app-timepie
           *ngIf="loadedSlides[0]"

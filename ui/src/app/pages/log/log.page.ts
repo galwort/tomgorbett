@@ -6,7 +6,7 @@ import { Component, HostListener } from '@angular/core';
   styleUrls: ['log.page.scss'],
 })
 export class LogPage {
-  selectedComponent: string = 'timetracker';
+  selectedComponent: string = 'analytics';
 
   constructor() {}
 
