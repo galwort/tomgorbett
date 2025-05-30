@@ -20,13 +20,21 @@ export const db = getFirestore(app);
   styleUrls: ['./daily.component.scss'],
 })
 export class DailyComponent implements OnInit, AfterViewInit {
+  defaultValues = {
+    diet: 'Okay',
+    marriage: 'Okay',
+    parents: 'Okay',
+    productivity: 'Okay',
+    sleep: 'Okay',
+    gratitude: '',
+  };
   dailyForm: FormGroup = new FormGroup({
-    diet: new FormControl('Okay'),
-    marriage: new FormControl('Okay'),
-    parents: new FormControl('Okay'),
-    productivity: new FormControl('Okay'),
-    sleep: new FormControl('Okay'),
-    gratitude: new FormControl(''),
+    diet: new FormControl(this.defaultValues.diet),
+    marriage: new FormControl(this.defaultValues.marriage),
+    parents: new FormControl(this.defaultValues.parents),
+    productivity: new FormControl(this.defaultValues.productivity),
+    sleep: new FormControl(this.defaultValues.sleep),
+    gratitude: new FormControl(this.defaultValues.gratitude),
   });
 
   moods = ['Very Bad', 'Bad', 'Okay', 'Good', 'Great'];
@@ -148,7 +156,7 @@ export class DailyComponent implements OnInit, AfterViewInit {
       await setDoc(doc(db, 'mood', dateId), mood);
       await setDoc(doc(db, 'gratitudes', dateId), { gratitude });
       this.submitButtonText = 'Submitted';
-      this.dailyForm.reset();
+      this.dailyForm.reset(this.defaultValues);
     } catch (error) {
       this.submitButtonText = 'Submit Failed';
     } finally {
