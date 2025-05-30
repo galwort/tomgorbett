@@ -29,20 +29,5 @@ ion-content {
         text-align: center;
       }
     }
-
-    .filter-container {
-      margin-top: 0px;
-
-      ion-item {
-        --background: transparent;
-
-        ion-datetime-button::part(native) {
-          background-color: transparent;
-          font-size: min(3.5vw, 1.2em);
-          font-weight: bold;
-          padding: 5px;
-        }
-      }
-    }
   }
 }

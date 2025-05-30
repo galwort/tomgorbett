@@ -10,6 +10,16 @@ register();
 })
 export class AnalyticsComponent implements AfterViewInit {
   loadedSlides = [true, false, false];
+  startDate: string;
+  endDate: string;
+
+  constructor() {
+    const today = new Date();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    const isoDate = today.toISOString().split('T')[0];
+    this.startDate = isoDate;
+    this.endDate = isoDate;
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {

@@ -9,12 +9,14 @@ describe('TimepieComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimepieComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [TimepieComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TimepieComponent);
     component = fixture.componentInstance;
+    component.startDate = '2024-01-01';
+    component.endDate = '2024-01-01';
     fixture.detectChanges();
   }));
 

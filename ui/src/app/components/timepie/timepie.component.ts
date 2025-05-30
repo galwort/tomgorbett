@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -29,7 +29,7 @@ const db = getFirestore(app);
   templateUrl: './timepie.component.html',
   styleUrls: ['./timepie.component.scss'],
 })
-export class TimepieComponent implements OnInit {
+export class TimepieComponent implements OnInit, OnChanges {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public pieChartOptions: ChartConfiguration['options'] = {
@@ -114,19 +114,19 @@ export class TimepieComponent implements OnInit {
     return this.workHours + this.sideProjectHours + this.productiveHours;
   }
 
-  public startDate: string;
-  public endDate: string;
+  @Input() startDate!: string;
+  @Input() endDate!: string;
 
-  constructor() {
-    const today = new Date();
-    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
-    const isoDate = today.toISOString().split('T')[0];
-    this.startDate = isoDate;
-    this.endDate = isoDate;
-  }
+  constructor() {}
 
   async ngOnInit() {
     await this.fetchChartData();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['startDate'] || changes['endDate']) {
+      this.fetchChartData();
+    }
   }
 
   async fetchChartData() {
@@ -246,7 +246,4 @@ export class TimepieComponent implements OnInit {
     return new Date(year, month - 1, day);
   }
 
-  onDateChange() {
-    this.fetchChartData();
-  }
 }

@@ -1,8 +1,16 @@
 <ion-content>
   <div class="centered-content">
-    <swiper-container class="analytics-swiper" [slidesPerView]="1" pagination="true">
+    <swiper-container
+      class="analytics-swiper"
+      [slidesPerView]="1"
+      pagination="true"
+    >
       <swiper-slide>
-        <app-timepie *ngIf="loadedSlides[0]"></app-timepie>
+        <app-timepie
+          *ngIf="loadedSlides[0]"
+          [startDate]="startDate"
+          [endDate]="endDate"
+        ></app-timepie>
       </swiper-slide>
       <swiper-slide>
         <app-timebar *ngIf="loadedSlides[1]"></app-timebar>
@@ -11,5 +19,32 @@
         <app-timechart *ngIf="loadedSlides[2]"></app-timechart>
       </swiper-slide>
     </swiper-container>
+    <div class="filter-container">
+      <ion-item lines="none">
+        <ion-datetime-button datetime="startDateTime"></ion-datetime-button>
+        <ion-text>-</ion-text>
+        <ion-datetime-button datetime="endDateTime"></ion-datetime-button>
+      </ion-item>
+    </div>
   </div>
 </ion-content>
+
+<ion-modal [keepContentsMounted]="true">
+  <ng-template>
+    <ion-datetime
+      id="startDateTime"
+      presentation="date"
+      [(ngModel)]="startDate"
+    ></ion-datetime>
+  </ng-template>
+</ion-modal>
+
+<ion-modal [keepContentsMounted]="true">
+  <ng-template>
+    <ion-datetime
+      id="endDateTime"
+      presentation="date"
+      [(ngModel)]="endDate"
+    ></ion-datetime>
+  </ng-template>
+</ion-modal>
