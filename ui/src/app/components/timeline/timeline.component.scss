@@ -27,9 +27,11 @@ ion-content {
         }
       }
     }
+
     .filter-container {
       display: flex;
       flex-direction: row;
+      justify-content: space-between;
 
       ion-button {
         margin-left: auto;
@@ -38,6 +40,9 @@ ion-content {
       ion-item {
         --background: transparent;
         --inner-padding-end: 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
         ion-datetime-button::part(native) {
           background-color: transparent;
@@ -49,6 +54,7 @@ ion-content {
         ion-segment {
           --background: transparent;
           padding: 12px;
+          width: 250px;
 
           ion-segment-button {
             font-size: min(4.5vw, 1.6em);
