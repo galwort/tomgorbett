@@ -12,6 +12,7 @@ export class AnalyticsComponent implements AfterViewInit {
   loadedSlides = [true, false, false];
   startDate: string;
   endDate: string;
+  today: string;
 
   constructor() {
     const today = new Date();
@@ -19,6 +20,7 @@ export class AnalyticsComponent implements AfterViewInit {
     const isoDate = today.toISOString().split('T')[0];
     this.startDate = isoDate;
     this.endDate = isoDate;
+    this.today = isoDate;
   }
 
   ngAfterViewInit() {
@@ -30,5 +32,23 @@ export class AnalyticsComponent implements AfterViewInit {
         this.loadedSlides[index] = true;
       });
     }, 100);
+  }
+
+  onStartDateChange() {
+    if (this.startDate > this.endDate) {
+      this.endDate = this.startDate;
+    }
+    if (this.startDate > this.today) {
+      this.startDate = this.today;
+    }
+  }
+
+  onEndDateChange() {
+    if (this.endDate < this.startDate) {
+      this.startDate = this.endDate;
+    }
+    if (this.endDate > this.today) {
+      this.endDate = this.today;
+    }
   }
 }

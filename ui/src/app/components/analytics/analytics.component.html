@@ -31,6 +31,8 @@
       id="startDateTime"
       presentation="date"
       [(ngModel)]="startDate"
+      [max]="endDate"
+      (ionChange)="onStartDateChange()"
     ></ion-datetime>
   </ng-template>
 </ion-modal>
@@ -41,6 +43,9 @@
       id="endDateTime"
       presentation="date"
       [(ngModel)]="endDate"
+      [min]="startDate"
+      [max]="today"
+      (ionChange)="onEndDateChange()"
     ></ion-datetime>
   </ng-template>
 </ion-modal>
