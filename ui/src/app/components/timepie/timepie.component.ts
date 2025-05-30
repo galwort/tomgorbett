@@ -39,13 +39,18 @@ export class TimepieComponent implements OnInit {
       legend: { display: false },
       datalabels: {
         formatter: (value, ctx) => {
-          let sum = 0;
           let dataArr = ctx.chart.data.datasets[0].data;
+          if (
+            dataArr.length === 1 &&
+            ctx.chart.data.labels &&
+            ctx.chart.data.labels[0] === 'No data'
+          ) {
+            return 'No data';
+          }
+          let sum = 0;
           dataArr.map((data) => {
             if (typeof data === 'number') {
               sum += data;
-            } else {
-              console.warn('Unexpected data type encountered:', data);
             }
           });
           let perc = Math.round((value * 100) / sum);
@@ -106,11 +111,7 @@ export class TimepieComponent implements OnInit {
   public sideProjectHours = 0;
 
   get totalProductiveHours(): number {
-    return (
-      this.workHours +
-      this.sideProjectHours +
-      this.productiveHours
-    );
+    return this.workHours + this.sideProjectHours + this.productiveHours;
   }
 
   public startDate: string;
@@ -189,16 +190,46 @@ export class TimepieComponent implements OnInit {
   }
 
   updateChartData(data: number[]) {
-    this.pieChartData.datasets[0].data = data;
-    [
-      this.workHours,
-      this.sideProjectHours,
-      this.productiveHours,
-      this.otherHours,
-      this.sleepingHours,
-    ] = data;
+    const sum = data.reduce((a, b) => a + b, 0);
+    if (sum === 0) {
+      this.pieChartData.labels = ['No data'];
+      this.pieChartData.datasets[0].data = [1];
+      this.pieChartData.datasets[0].backgroundColor = ['transparent'];
+      this.workHours = 0;
+      this.sideProjectHours = 0;
+      this.productiveHours = 0;
+      this.otherHours = 0;
+      this.sleepingHours = 0;
+    } else {
+      this.pieChartData.labels = [
+        'Work',
+        'Side Projects',
+        'Productive',
+        'Other',
+        'Sleeping',
+      ];
+      this.pieChartData.datasets[0].data = data;
+      this.pieChartData.datasets[0].backgroundColor = [
+        '#2E8B57',
+        '#705D00',
+        '#6A0DAD',
+        'transparent',
+        '#0A2463',
+      ];
+      [
+        this.workHours,
+        this.sideProjectHours,
+        this.productiveHours,
+        this.otherHours,
+        this.sleepingHours,
+      ] = data;
+    }
     if (this.chart) {
-      this.chart.update();
+      if (sum === 0) {
+        this.chart.update('none');
+      } else {
+        this.chart.update();
+      }
     } else {
       console.warn('Chart reference is not available.');
     }
