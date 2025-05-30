@@ -14,8 +14,9 @@ ion-content {
     ion-button {
       --background: #595959;
       margin-top: 10px;
-      width: fit-content;
-      padding-left: 12px;
+      min-width: 120px;
+      min-height: 30px;
+      margin-right: 10px;
     }
   }
 }
