@@ -13,6 +13,8 @@ import {
   orderBy,
   limit,
   writeBatch,
+  startAt,
+  endBefore,
 } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
@@ -40,6 +42,7 @@ export class TimetrackerComponent implements OnInit {
   loadError: string | null = null;
   isSubmitting: boolean = false;
   submitButtonText: string = 'Submit';
+  existingDocIds: string[] = [];
 
   constructor(
     private alertController: AlertController,
@@ -91,6 +94,7 @@ export class TimetrackerComponent implements OnInit {
     if (datetimeToControl) {
       datetimeToControl.setValue(datetimeToISOTime);
     }
+    this.checkExistingEntries();
   }
   async fetchActivities() {
     try {
@@ -154,6 +158,7 @@ export class TimetrackerComponent implements OnInit {
       this.trackerForm.get('datetime')?.setValue(value);
     }
     this.updateDocId(value);
+    this.checkExistingEntries();
   }
 
   changeTimeTo(event: any) {
@@ -161,6 +166,7 @@ export class TimetrackerComponent implements OnInit {
     if (this.trackerForm.get('datetimeTo')) {
       this.trackerForm.get('datetimeTo')?.setValue(value);
     }
+    this.checkExistingEntries();
   }
 
   updateDocId(datetime: string) {
@@ -288,6 +294,8 @@ export class TimetrackerComponent implements OnInit {
       localStorage.removeItem('cached_last_datetime');
       await this.fetchLastUpdatedDateTime();
 
+      this.existingDocIds = [];
+
       this.submitButtonText = 'Submitted';
     } catch (e) {
       console.error('Error adding document: ', e);
@@ -381,6 +389,52 @@ export class TimetrackerComponent implements OnInit {
   formatDateForDocId(date: Date): string {
     const formatted = this.convertToLocalTimezone(date);
     return formatted.replace(/[-:T]/g, '').slice(0, -7);
+  }
+
+  async checkExistingEntries(): Promise<void> {
+    const start = this.trackerForm.get('datetime')?.value;
+    const end = this.trackerForm.get('datetimeTo')?.value;
+    if (!start || !end) {
+      this.existingDocIds = [];
+      return;
+    }
+    const startId = this.formatDateForDocId(new Date(start));
+    const endId = this.formatDateForDocId(new Date(end));
+    const snapshot = await getDocs(
+      query(
+        collection(db, 'tracker'),
+        orderBy('__name__'),
+        startAt(startId),
+        endBefore(endId)
+      )
+    );
+    this.existingDocIds = snapshot.docs.map((d) => d.id);
+  }
+
+  async deleteExistingEntries(): Promise<void> {
+    if (this.existingDocIds.length === 0) return;
+    this.isSubmitting = true;
+    this.submitButtonText = 'Submitting...';
+    let batch = writeBatch(db);
+    let count = 0;
+    for (const id of this.existingDocIds) {
+      if (count >= 500) {
+        await batch.commit();
+        batch = writeBatch(db);
+        count = 0;
+      }
+      batch.delete(doc(db, 'tracker', id));
+      count++;
+    }
+    if (count > 0) {
+      await batch.commit();
+    }
+    this.trackerForm.reset();
+    this.existingDocIds = [];
+    localStorage.removeItem('cached_last_datetime');
+    await this.fetchLastUpdatedDateTime();
+    this.submitButtonText = 'Submit';
+    this.isSubmitting = false;
   }
   private searchString: string = '';
   private typingTimer: any;

@@ -66,9 +66,20 @@
             >Updated {{ formatDateTime(lastUpdatedDateTime) }}</ion-text
           >
         </ion-item>
-        <ion-button type="submit" shape="round" [disabled]="isSubmitting">{{
-          submitButtonText
-        }}</ion-button>
+        <ion-item lines="none">
+          <ion-button type="submit" shape="round" [disabled]="isSubmitting">
+            {{ submitButtonText }}
+          </ion-button>
+          <ion-button
+            *ngIf="existingDocIds.length > 0"
+            type="button"
+            shape="round"
+            [disabled]="isSubmitting"
+            (click)="deleteExistingEntries()"
+          >
+            Delete
+          </ion-button>
+        </ion-item>
       </ion-list>
     </form>
   </div>
