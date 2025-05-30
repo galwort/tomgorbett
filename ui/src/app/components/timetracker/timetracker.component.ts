@@ -451,7 +451,7 @@ export class TimetrackerComponent implements OnInit {
       event.preventDefault();
       return;
     }
-    
+
     if (event.shiftKey && event.key === 'Backspace') {
       if (this.existingDocIds.length > 0 && !this.isDeletingEntries) {
         this.deleteExistingEntries();
@@ -459,7 +459,7 @@ export class TimetrackerComponent implements OnInit {
       }
       return;
     }
-    
+
     if (!event.ctrlKey && !event.altKey && !event.metaKey) {
       if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
         this.adjustEndTime(1);
