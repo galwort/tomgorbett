@@ -20,9 +20,10 @@ ion-content {
     }
 
     .filter-container {
-      margin-top: 20px;
       display: flex;
-      flex-direction: row;
+      align-items: end;
+      margin-top: 10px;
+      height: 10%;
 
       ion-item {
         --background: transparent;
@@ -30,15 +31,8 @@ ion-content {
 
         ion-select {
           color: white;
-          font-size: min(3.5vw, 1.2em);
+          font-size: min(3vw, 1em);
           font-weight: bold;
-        }
-
-        ion-datetime-button::part(native) {
-          background-color: transparent;
-          font-size: min(3.5vw, 1.2em);
-          font-weight: bold;
-          padding: 5px;
         }
       }
     }
