@@ -32,6 +32,10 @@ ion-content {
       display: flex;
       flex-direction: row;
 
+      ion-button {
+        margin-left: auto;
+      }
+
       ion-item {
         --background: transparent;
         --inner-padding-end: 0px;
@@ -41,6 +45,40 @@ ion-content {
           font-size: min(4.5vw, 1.6em);
           font-weight: bold;
           padding: 12px;
+        }
+      }
+    }
+
+    .week-container {
+      padding: 10px;
+      overflow: auto;
+
+      .week-grid {
+        display: grid;
+        grid-template-columns: 60px repeat(7, 1fr);
+        width: max-content;
+
+        .time-col {
+          font-size: min(1.5vh, 0.9em);
+          padding: 2px;
+          text-align: right;
+        }
+
+        .day-header {
+          font-weight: bold;
+          text-align: center;
+          border: 1px solid #ccc;
+          padding: 2px;
+        }
+
+        .day-cell {
+          border: 1px solid #ccc;
+          min-width: 80px;
+          min-height: 20px;
+          font-size: min(1.5vh, 0.9em);
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
     }

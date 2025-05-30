@@ -1,6 +1,6 @@
 <ion-content>
   <div class="centered-content">
-    <div class="timeline-container">
+    <div class="timeline-container" *ngIf="!weekView">
       <swiper-container
         direction="vertical"
         [slidesPerView]="4"
@@ -31,6 +31,25 @@
         </ng-container>
       </swiper-container>
     </div>
+    <div class="week-container" *ngIf="weekView">
+      <div class="week-grid">
+        <div class="time-col"></div>
+        <div class="day-header" *ngFor="let d of weekDays">
+          {{ d | date : "EEE MM/dd" }}
+        </div>
+        <ng-container *ngFor="let row of weekMatrix; let i = index">
+          <div class="time-col">{{ timeLabels[i] }}</div>
+          <ng-container *ngFor="let cell of row">
+            <div
+              class="day-cell"
+              [ngStyle]="{ 'background-color': cell?.color || 'transparent' }"
+            >
+              {{ cell?.name }}
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
     <div class="filter-container">
       <ion-item lines="none">
         <ion-datetime-button datetime="filterDate"></ion-datetime-button>
@@ -46,6 +65,9 @@
           </ng-template>
         </ion-modal>
       </ion-item>
+      <ion-button fill="clear" (click)="toggleWeekView()">{{
+        weekView ? "Timeline" : "Week View"
+      }}</ion-button>
     </div>
   </div>
 </ion-content>

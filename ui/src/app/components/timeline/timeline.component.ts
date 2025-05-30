@@ -43,6 +43,11 @@ interface TimelineDay {
 export class TimelineComponent implements OnInit, AfterViewInit {
   public timelineData: TimelineDay[] = [];
 
+  public weekView = false;
+  public weekMatrix: (TimelineActivity | null)[][] = [];
+  public weekDays: Date[] = [];
+  public timeLabels: string[] = [];
+
   public startDate: string;
   public endDate: string;
 
@@ -65,12 +70,33 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }, 100);
   }
 
-  async fetchTimelineData(): Promise<TimelineDay[]> {
-    const startDate = this.parseDate(this.startDate);
-    startDate.setHours(0, 0, 0, 0);
-    const endDate = this.parseDate(this.endDate);
-    endDate.setHours(23, 45, 0, 0);
+  buildWeekMatrix(start: Date) {
+    this.weekMatrix = Array.from({ length: 96 }, () => Array(7).fill(null));
+    this.weekDays = [];
+    this.timeLabels = [];
+    for (let d = 0; d < 7; d++) {
+      const day = new Date(start);
+      day.setDate(start.getDate() + d);
+      this.weekDays.push(day);
+    }
+    for (let i = 0; i < 96; i++) {
+      const h = Math.floor(i / 4);
+      const m = (i % 4) * 15;
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const hh = h % 12 === 0 ? 12 : h % 12;
+      const mm = m.toString().padStart(2, '0');
+      this.timeLabels.push(`${hh}:${mm} ${ampm}`);
+    }
+    for (const entry of this.timelineData) {
+      const dayIndex = Math.floor((entry.date.getTime() - start.getTime()) / 86400000);
+      const timeIndex = entry.date.getHours() * 4 + entry.date.getMinutes() / 15;
+      if (dayIndex >= 0 && dayIndex < 7 && timeIndex >= 0 && timeIndex < 96) {
+        this.weekMatrix[timeIndex][dayIndex] = entry.activities[0];
+      }
+    }
+  }
 
+  async fetchTimelineData(startDate: Date, endDate: Date): Promise<TimelineDay[]> {
     const startId = this.formatDate(startDate);
     const endId = this.formatDate(endDate) + '\uf8ff';
 
@@ -144,7 +170,25 @@ export class TimelineComponent implements OnInit, AfterViewInit {
   }
 
   async updateTimelineData() {
-    this.timelineData = await this.fetchTimelineData();
+    let start = this.parseDate(this.startDate);
+    let end = this.parseDate(this.endDate);
+    if (this.weekView) {
+      const day = start.getDay();
+      start.setDate(start.getDate() - day + 1);
+      start.setHours(0, 0, 0, 0);
+      end = new Date(start);
+      end.setDate(start.getDate() + 6);
+      end.setHours(23, 45, 0, 0);
+    } else {
+      start.setHours(0, 0, 0, 0);
+      end.setHours(23, 45, 0, 0);
+    }
+
+    this.timelineData = await this.fetchTimelineData(start, end);
+
+    if (this.weekView) {
+      this.buildWeekMatrix(start);
+    }
 
     setTimeout(() => {
       const swiper = document.querySelector('swiper-container')?.swiper;
@@ -183,6 +227,11 @@ export class TimelineComponent implements OnInit, AfterViewInit {
   }
 
   onCategoryChange() {
+    this.updateTimelineData();
+  }
+
+  toggleWeekView() {
+    this.weekView = !this.weekView;
     this.updateTimelineData();
   }
 }
