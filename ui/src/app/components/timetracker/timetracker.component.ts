@@ -42,6 +42,8 @@ export class TimetrackerComponent implements OnInit {
   loadError: string | null = null;
   isSubmitting: boolean = false;
   submitButtonText: string = 'Submit';
+  isDeletingEntries: boolean = false;
+  deleteButtonText: string = 'Delete';
   existingDocIds: string[] = [];
 
   constructor(
@@ -410,11 +412,10 @@ export class TimetrackerComponent implements OnInit {
     );
     this.existingDocIds = snapshot.docs.map((d) => d.id);
   }
-
   async deleteExistingEntries(): Promise<void> {
     if (this.existingDocIds.length === 0) return;
-    this.isSubmitting = true;
-    this.submitButtonText = 'Submitting...';
+    this.isDeletingEntries = true;
+    this.deleteButtonText = 'Deleting...';
     let batch = writeBatch(db);
     let count = 0;
     for (const id of this.existingDocIds) {
@@ -433,8 +434,9 @@ export class TimetrackerComponent implements OnInit {
     this.existingDocIds = [];
     localStorage.removeItem('cached_last_datetime');
     await this.fetchLastUpdatedDateTime();
-    this.submitButtonText = 'Submit';
-    this.isSubmitting = false;
+    this.deleteButtonText = 'Deleted';
+    this.isDeletingEntries = false;
+    setTimeout(() => (this.deleteButtonText = 'Delete'), 2000);
   }
   private searchString: string = '';
   private typingTimer: any;

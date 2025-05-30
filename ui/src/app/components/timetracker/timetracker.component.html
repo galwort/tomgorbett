@@ -74,10 +74,10 @@
             *ngIf="existingDocIds.length > 0"
             type="button"
             shape="round"
-            [disabled]="isSubmitting"
+            [disabled]="isDeletingEntries"
             (click)="deleteExistingEntries()"
           >
-            Delete
+            {{ deleteButtonText }}
           </ion-button>
         </ion-item>
       </ion-list>
