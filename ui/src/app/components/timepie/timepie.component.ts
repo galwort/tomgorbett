@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -69,6 +76,17 @@ export class TimepieComponent implements OnInit, OnChanges {
         },
       },
       tooltip: {
+        filter: function (tooltipItem) {
+          const chart = tooltipItem.chart;
+          if (
+            chart.data.labels &&
+            chart.data.labels.length === 1 &&
+            chart.data.labels[0] === 'No data'
+          ) {
+            return false;
+          }
+          return true;
+        },
         callbacks: {
           label: function (context) {
             let label = context.parsed + ' hours';
@@ -245,5 +263,4 @@ export class TimepieComponent implements OnInit, OnChanges {
     const [year, month, day] = dateStr.substring(0, 10).split('-').map(Number);
     return new Date(year, month - 1, day);
   }
-
 }
