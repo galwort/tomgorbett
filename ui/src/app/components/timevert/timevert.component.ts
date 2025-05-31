@@ -64,42 +64,21 @@ export class TimevertComponent implements OnInit, OnDestroy {
         },
       },
       y: {
+        display: false,
         stacked: true,
-        ticks: {
-          color: 'white',
-          stepSize: 2,
-        },
-        title: {
-          display: true,
-          text: 'Hours',
-          color: 'white',
-          font: {
-            size: 14,
-            weight: 'bold',
-          },
-        },
       },
     },
     plugins: {
       legend: {
-        display: true,
-        position: 'top',
-        labels: {
-          color: 'white',
-          font: {
-            size: 12,
-            weight: 'bold',
-          },
-          usePointStyle: true,
-        },
+        display: false,
       },
       tooltip: {
         callbacks: {
           label: function (context) {
-            return context.dataset.label + ': ' + context.parsed.y + ' hours';
+            return context.parsed.y + ' hours';
           },
         },
-        displayColors: true,
+        displayColors: false,
         bodyFont: {
           size: 14,
         },
