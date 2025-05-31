@@ -46,7 +46,7 @@ ion-content {
 
         ion-datetime-button::part(native) {
           background-color: transparent;
-          font-size: min(4.5vw, 1.6em);
+          font-size: min(3vw, 1em);
           font-weight: bold;
           padding: 12px;
         }
@@ -54,10 +54,10 @@ ion-content {
         ion-segment {
           --background: transparent;
           padding: 12px;
-          width: 250px;
+          width: 220px;
 
           ion-segment-button {
-            font-size: min(4.5vw, 1.6em);
+            font-size: min(3vw, 1em);
             font-weight: bold;
           }
         }
