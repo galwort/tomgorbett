@@ -95,7 +95,6 @@ ion-content {
           align-items: center;
           justify-content: center;
           transition: filter 0.2s ease;
-          cursor: pointer;
 
           &[data-has-activity="true"]:hover {
             filter: brightness(1.3);
