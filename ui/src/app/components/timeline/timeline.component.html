@@ -35,7 +35,7 @@
       <div class="week-grid">
         <div class="time-col"></div>
         <div class="day-header" *ngFor="let d of weekDays">
-          {{ d | date : "EEE MM/dd" }}
+          {{ d | date : "M/d" }}
         </div>
         <ng-container *ngFor="let row of weekMatrix; let i = index">
           <div class="time-col">{{ timeLabels[i] }}</div>
@@ -43,9 +43,7 @@
             <div
               class="day-cell"
               [ngStyle]="{ 'background-color': cell?.color || 'transparent' }"
-            >
-              {{ cell?.name }}
-            </div>
+            ></div>
           </ng-container>
         </ng-container>
       </div>
