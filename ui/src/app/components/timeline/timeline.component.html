@@ -45,6 +45,10 @@
               [ngClass]="getBorderRadiusClass(i, j)"
               [ngStyle]="{ 'background-color': cell?.color || 'transparent' }"
               [title]="getTooltipText(i, j)"
+              [attr.data-activity-group]="getActivityGroupId(i, j)"
+              [attr.data-has-activity]="cell?.name ? 'true' : 'false'"
+              (mouseenter)="highlightActivityGroup(getActivityGroupId(i, j))"
+              (mouseleave)="clearActivityGroupHighlight()"
             ></div>
           </ng-container>
         </ng-container>

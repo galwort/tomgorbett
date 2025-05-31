@@ -322,4 +322,48 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     const mm = m.toString().padStart(2, '0');
     return `${hh}:${mm} ${ampm}`;
   }
+
+  getActivityGroupId(rowIndex: number, colIndex: number): string {
+    const currentCell = this.weekMatrix[rowIndex]?.[colIndex];
+    if (!currentCell?.color || currentCell.color === 'transparent') {
+      return '';
+    }
+
+    const currentColor = currentCell.color;
+    const currentActivity = currentCell.name;
+
+    // Find the start of the activity group (same color AND same activity)
+    let startRow = rowIndex;
+    while (startRow > 0) {
+      const cellAbove = this.weekMatrix[startRow - 1]?.[colIndex];
+      if (cellAbove?.color === currentColor && cellAbove?.name === currentActivity) {
+        startRow--;
+      } else {
+        break;
+      }
+    }
+
+    // Create a unique ID for this activity group
+    return `activity-group-${colIndex}-${startRow}-${currentActivity.replace(/\s+/g, '-')}`;
+  }
+
+  highlightActivityGroup(groupId: string) {
+    if (!groupId) return;
+    
+    // Remove any existing highlights
+    this.clearActivityGroupHighlight();
+    
+    // Add highlight to all cells with the same activity group ID
+    const cells = document.querySelectorAll(`[data-activity-group="${groupId}"]`);
+    cells.forEach(cell => {
+      cell.classList.add('activity-group-highlight');
+    });
+  }
+
+  clearActivityGroupHighlight() {
+    const highlightedCells = document.querySelectorAll('.activity-group-highlight');
+    highlightedCells.forEach(cell => {
+      cell.classList.remove('activity-group-highlight');
+    });
+  }
 }
