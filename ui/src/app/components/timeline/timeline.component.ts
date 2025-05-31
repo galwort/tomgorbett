@@ -175,16 +175,13 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
     return timelineData;
   }
-
   async updateTimelineData() {
     let start = this.parseDate(this.startDate);
     let end = this.parseDate(this.endDate);
     if (this.weekView) {
-      const day = start.getDay();
-      start.setDate(start.getDate() - day + 1);
+      start.setDate(start.getDate() - 6);
       start.setHours(0, 0, 0, 0);
-      end = new Date(start);
-      end.setDate(start.getDate() + 6);
+      end = this.parseDate(this.endDate);
       end.setHours(23, 45, 0, 0);
     } else {
       start.setHours(0, 0, 0, 0);
