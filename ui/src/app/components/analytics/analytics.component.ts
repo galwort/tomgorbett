@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, HostListener } from '@angular/core';
 import { register } from 'swiper/element/bundle';
 
 register();
@@ -54,13 +54,23 @@ export class AnalyticsComponent implements AfterViewInit {
       this.startDate = this.today;
     }
   }
-
   onEndDateChange() {
     if (this.endDate < this.startDate) {
       this.startDate = this.endDate;
     }
     if (this.endDate > this.today) {
       this.endDate = this.today;
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'ArrowLeft') {
+      this.previousSlide();
+      event.preventDefault();
+    } else if (event.key === 'ArrowRight') {
+      this.nextSlide();
+      event.preventDefault();
     }
   }
 }
