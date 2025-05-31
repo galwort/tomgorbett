@@ -1,3 +1,17 @@
-<p>
-  timevert works!
-</p>
+<ion-content>
+  <div class="centered-content">
+    <div class="chart-container">
+      <canvas
+        baseChart
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [type]="barChartType"
+      ></canvas>
+    </div>
+    <div class="info-container">
+      <ion-text color="light">
+        <p>Last 7 Days Activity Distribution</p>
+      </ion-text>
+    </div>
+  </div>
+</ion-content>
