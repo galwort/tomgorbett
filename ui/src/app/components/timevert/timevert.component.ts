@@ -77,11 +77,17 @@ export class TimevertComponent implements OnInit, OnDestroy {
           label: function (context) {
             return context.parsed.y + ' hours';
           },
+          title: function () {
+            return '';
+          },
         },
         displayColors: false,
         bodyFont: {
           size: 14,
         },
+      },
+      datalabels: {
+        display: false,
       },
     },
   };
@@ -205,6 +211,9 @@ export class TimevertComponent implements OnInit, OnDestroy {
       label: this.getCategoryDisplayName(category),
       data: days.map((day) => dayData.get(day)?.get(category) || 0),
       backgroundColor: categoryColors[category as keyof typeof categoryColors],
+      datalabels: {
+        display: false,
+      },
     }));
 
     return { labels: days, datasets };
