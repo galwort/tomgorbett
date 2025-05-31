@@ -185,6 +185,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
       end.setHours(23, 45, 0, 0);
     } else {
       start.setHours(0, 0, 0, 0);
+      end = new Date(start);
       end.setHours(23, 45, 0, 0);
     }
 
