@@ -259,16 +259,12 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     const hasSameColorBelow = cellBelow?.color === currentColor;
 
     if (!hasSameColorAbove && !hasSameColorBelow) {
-      // Isolated cell - full border radius
       return 'full-radius';
     } else if (!hasSameColorAbove && hasSameColorBelow) {
-      // Top of group
       return 'top-radius';
     } else if (hasSameColorAbove && !hasSameColorBelow) {
-      // Bottom of group
       return 'bottom-radius';
     } else {
-      // Middle of group
       return 'no-radius';
     }
   }
