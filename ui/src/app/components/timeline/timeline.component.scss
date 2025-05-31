@@ -85,13 +85,28 @@ ion-content {
           padding: 4px 2px;
           font-size: min(1.5vh, 0.9em);
         }
-
         .day-cell {
           min-width: 0;
           min-height: 15px;
           display: flex;
           align-items: center;
           justify-content: center;
+
+          &.full-radius {
+            border-radius: 8px;
+          }
+
+          &.top-radius {
+            border-radius: 8px 8px 0 0;
+          }
+
+          &.bottom-radius {
+            border-radius: 0 0 8px 8px;
+          }
+
+          &.no-radius {
+            border-radius: 0;
+          }
         }
       }
     }

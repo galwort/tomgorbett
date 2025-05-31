@@ -244,4 +244,32 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     this.viewMode = this.weekView ? 'week' : 'day';
     this.updateTimelineData();
   }
+
+  getBorderRadiusClass(rowIndex: number, colIndex: number): string {
+    const currentCell = this.weekMatrix[rowIndex]?.[colIndex];
+    if (!currentCell?.color || currentCell.color === 'transparent') {
+      return '';
+    }
+
+    const currentColor = currentCell.color;
+    const cellAbove = this.weekMatrix[rowIndex - 1]?.[colIndex];
+    const cellBelow = this.weekMatrix[rowIndex + 1]?.[colIndex];
+
+    const hasSameColorAbove = cellAbove?.color === currentColor;
+    const hasSameColorBelow = cellBelow?.color === currentColor;
+
+    if (!hasSameColorAbove && !hasSameColorBelow) {
+      // Isolated cell - full border radius
+      return 'full-radius';
+    } else if (!hasSameColorAbove && hasSameColorBelow) {
+      // Top of group
+      return 'top-radius';
+    } else if (hasSameColorAbove && !hasSameColorBelow) {
+      // Bottom of group
+      return 'bottom-radius';
+    } else {
+      // Middle of group
+      return 'no-radius';
+    }
+  }
 }

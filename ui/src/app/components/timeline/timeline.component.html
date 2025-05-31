@@ -39,9 +39,10 @@
         </div>
         <ng-container *ngFor="let row of weekMatrix; let i = index">
           <div class="time-col">{{ timeLabels[i] }}</div>
-          <ng-container *ngFor="let cell of row">
+          <ng-container *ngFor="let cell of row; let j = index">
             <div
               class="day-cell"
+              [ngClass]="getBorderRadiusClass(i, j)"
               [ngStyle]="{ 'background-color': cell?.color || 'transparent' }"
             ></div>
           </ng-container>
