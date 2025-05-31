@@ -65,13 +65,12 @@ ion-content {
     }
     .week-container {
       padding: 10px;
-      overflow: auto;
-
-      .week-grid {
+      overflow: auto;      .week-grid {
         display: grid;
         grid-template-columns: 60px repeat(7, 1fr);
         width: 100%;
         max-width: 100vw;
+        column-gap: 4px;
 
         .time-col {
           font-size: min(1.5vh, 0.8em);
@@ -94,14 +93,17 @@ ion-content {
 
           &.full-radius {
             border-radius: 8px;
+            margin: 2px 0;
           }
 
           &.top-radius {
             border-radius: 8px 8px 0 0;
+            margin-top: 2px;
           }
 
           &.bottom-radius {
             border-radius: 0 0 8px 8px;
+            margin-bottom: 2px;
           }
 
           &.no-radius {
