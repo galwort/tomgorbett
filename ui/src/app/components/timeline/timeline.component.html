@@ -44,6 +44,7 @@
               class="day-cell"
               [ngClass]="getBorderRadiusClass(i, j)"
               [ngStyle]="{ 'background-color': cell?.color || 'transparent' }"
+              [title]="getTooltipText(i, j)"
             ></div>
           </ng-container>
         </ng-container>

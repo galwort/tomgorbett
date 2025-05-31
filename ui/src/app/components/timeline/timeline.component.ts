@@ -268,4 +268,58 @@ export class TimelineComponent implements OnInit, AfterViewInit {
       return 'no-radius';
     }
   }
+
+  getTooltipText(rowIndex: number, colIndex: number): string {
+    const currentCell = this.weekMatrix[rowIndex]?.[colIndex];
+    if (!currentCell?.color || currentCell.color === 'transparent') {
+      return '';
+    }
+
+    const currentColor = currentCell.color;
+    const currentActivity = currentCell.name;
+
+    let startRow = rowIndex;
+    let endRow = rowIndex;
+    while (startRow > 0) {
+      const cellAbove = this.weekMatrix[startRow - 1]?.[colIndex];
+      if (
+        cellAbove?.color === currentColor &&
+        cellAbove?.name === currentActivity
+      ) {
+        startRow--;
+      } else {
+        break;
+      }
+    }
+
+    while (endRow < this.weekMatrix.length - 1) {
+      const cellBelow = this.weekMatrix[endRow + 1]?.[colIndex];
+      if (
+        cellBelow?.color === currentColor &&
+        cellBelow?.name === currentActivity
+      ) {
+        endRow++;
+      } else {
+        break;
+      }
+    }
+
+    const startTime = this.formatTimeFromRow(startRow);
+    const endTime = this.formatTimeFromRow(endRow + 1);
+
+    if (startRow === endRow) {
+      return `${currentActivity} at ${startTime}`;
+    } else {
+      return `${currentActivity}\n${startTime} - ${endTime}`;
+    }
+  }
+
+  formatTimeFromRow(rowIndex: number): string {
+    const h = Math.floor(rowIndex / 4);
+    const m = (rowIndex % 4) * 15;
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const hh = h % 12 === 0 ? 12 : h % 12;
+    const mm = m.toString().padStart(2, '0');
+    return `${hh}:${mm} ${ampm}`;
+  }
 }
