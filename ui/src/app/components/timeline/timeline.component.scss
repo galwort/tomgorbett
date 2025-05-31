@@ -65,7 +65,8 @@ ion-content {
     }
     .week-container {
       padding: 10px;
-      overflow: auto;      .week-grid {
+      overflow: auto;
+      .week-grid {
         display: grid;
         grid-template-columns: 60px repeat(7, 1fr);
         width: 100%;
