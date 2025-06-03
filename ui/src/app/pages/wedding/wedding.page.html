@@ -9,6 +9,9 @@
         (input)="onSearch()"
       />
     </div>
+    <ion-select [(ngModel)]="selectedTag">
+      <ion-select-option *ngFor="let t of tagService.tags" [value]="t">{{ t }}</ion-select-option>
+    </ion-select>
   </ion-toolbar>
 </ion-header>
 
@@ -18,8 +21,11 @@
       class="photo-item"
       [class.loaded]="photo.loaded"
       [class.portrait]="photo.isPortrait"
+      [class.active]="i === activeIndex"
+      [class.tagged]="isTagged(selectedTag, photo.name)"
       *ngFor="let photo of photos; let i = index"
-      (click)="openFullscreen(i)"
+      (click)="selectPhoto(i); toggleTag(photo.name)"
+      (dblclick)="openFullscreen(i)"
     >
       <img #imgRef [src]="photo.blobUrl" (load)="onImageLoad(i, imgRef)" />
       <a

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BlobServiceClient, ContainerClient } from '@azure/storage-blob';
 import { HttpClient } from '@angular/common/http';
+import { WeddingTagsService } from '../../services/wedding-tags.service';
 
 interface Photo {
   name: string;
@@ -14,15 +15,21 @@ interface Photo {
   templateUrl: './wedding.page.html',
   styleUrls: ['./wedding.page.scss'],
 })
-export class WeddingPage implements OnInit {
+export class WeddingPage implements OnInit, OnDestroy {
   photos: Photo[] = [];
   isFullscreen = false;
   currentIndex = 0;
   searchQuery: string = '';
+  selectedTag = '';
+  activeIndex = 0;
+  tagsData: Record<string, string[]> = {};
   private continuationToken: string | undefined;
   private containerClient: ContainerClient | undefined;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    public tagService: WeddingTagsService
+  ) {}
 
   ngOnInit() {
     const blobServiceClient = new BlobServiceClient(
@@ -30,6 +37,11 @@ export class WeddingPage implements OnInit {
     );
     this.containerClient = blobServiceClient.getContainerClient('photos');
     this.loadMorePhotos();
+    this.tagService.getTags().subscribe((d) => {
+      this.tagsData = d;
+    });
+    this.selectedTag = this.tagService.tags[0];
+    window.addEventListener('keydown', this.tagKeyHandler);
   }
 
   async loadMorePhotos(event?: any) {
@@ -63,9 +75,11 @@ export class WeddingPage implements OnInit {
       return;
     }
 
-    const apiUrl = 'https://tomgorbett-api.azurewebsites.net/search';
+    const apiUrl = 'https://fa-tom.azurewebsites.net/search';
     this.http
-      .get<{ query: string; results: { url: string }[] }>(`${apiUrl}?q=${this.searchQuery}`)
+      .get<{ query: string; results: { url: string }[] }>(
+        `${apiUrl}?q=${this.searchQuery}`
+      )
       .subscribe(
         (response) => {
           this.photos = response.results.map((result) => ({
@@ -108,6 +122,10 @@ export class WeddingPage implements OnInit {
     window.removeEventListener('keydown', this.handleKeydown);
   }
 
+  ngOnDestroy() {
+    window.removeEventListener('keydown', this.tagKeyHandler);
+  }
+
   previousPhoto(event: MouseEvent) {
     event.stopPropagation();
     if (this.currentIndex > 0) {
@@ -125,6 +143,46 @@ export class WeddingPage implements OnInit {
       this.currentIndex = 0;
     }
   }
+
+  isTagged(tag: string, name: string) {
+    return this.tagsData[tag]?.includes(name);
+  }
+
+  selectPhoto(index: number) {
+    this.activeIndex = index;
+  }
+
+  toggleCurrent() {
+    const photo = this.photos[this.activeIndex];
+    if (!photo) return;
+    this.toggleTag(photo.name);
+  }
+
+  toggleTag(name: string) {
+    if (!this.selectedTag) return;
+    const tagged = this.isTagged(this.selectedTag, name);
+    this.tagsData[this.selectedTag] ||= [];
+    this.tagService.toggle(this.selectedTag, name).subscribe(() => {
+      if (tagged) {
+        this.tagsData[this.selectedTag] = this.tagsData[
+          this.selectedTag
+        ].filter((n) => n !== name);
+      } else {
+        this.tagsData[this.selectedTag].push(name);
+      }
+    });
+  }
+
+  tagKeyHandler = (event: KeyboardEvent) => {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      this.activeIndex = (this.activeIndex + 1) % this.photos.length;
+    }
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.toggleCurrent();
+    }
+  };
 
   handleKeydown = (event: KeyboardEvent) => {
     if (event.key === 'ArrowLeft') {

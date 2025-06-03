@@ -161,3 +161,11 @@ ion-toolbar {
 .right-arrow {
   right: 1rem;
 }
+
+.photo-item.active {
+  outline: 3px solid yellow;
+}
+
+.photo-item.tagged {
+  outline: 3px solid lime;
+}
