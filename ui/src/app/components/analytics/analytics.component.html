@@ -9,21 +9,28 @@
         ></app-timepie>
       </swiper-slide>
       <swiper-slide>
-        <app-timebar
+        <app-timepieml
           *ngIf="loadedSlides[1]"
+          [startDate]="startDate"
+          [endDate]="endDate"
+        ></app-timepieml>
+      </swiper-slide>
+      <swiper-slide>
+        <app-timebar
+          *ngIf="loadedSlides[2]"
           [startDate]="startDate"
           [endDate]="endDate"
         ></app-timebar>
       </swiper-slide>
       <swiper-slide>
         <app-timevert
-          *ngIf="loadedSlides[2]"
+          *ngIf="loadedSlides[3]"
           [startDate]="startDate"
           [endDate]="endDate"
         ></app-timevert>
       </swiper-slide>
       <swiper-slide>
-        <app-timechart *ngIf="loadedSlides[3]"></app-timechart>
+        <app-timechart *ngIf="loadedSlides[4]"></app-timechart>
       </swiper-slide>
     </swiper-container>
     <div class="arrow left-arrow" (click)="previousSlide()">

@@ -9,7 +9,7 @@ register();
   styleUrls: ['./analytics.component.scss'],
 })
 export class AnalyticsComponent implements AfterViewInit {
-  loadedSlides = [true, false, false, false];
+  loadedSlides = [true, false, false, false, false];
   startDate: string;
   endDate: string;
   today: string;

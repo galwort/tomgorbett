@@ -11,6 +11,7 @@ import { DailyComponent } from 'src/app/components/daily/daily.component';
 import { AnalyticsComponent } from 'src/app/components/analytics/analytics.component';
 import { TimechartComponent } from 'src/app/components/timechart/timechart.component';
 import { TimepieComponent } from 'src/app/components/timepie/timepie.component';
+import { TimepiemlComponent } from 'src/app/components/timepieml/timepieml.component';
 import { TimebarComponent } from 'src/app/components/timebar/timebar.component';
 import { TimevertComponent } from 'src/app/components/timevert/timevert.component';
 import { TimelineComponent } from 'src/app/components/timeline/timeline.component';
@@ -36,6 +37,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     AnalyticsComponent,
     TimechartComponent,
     TimepieComponent,
+    TimepiemlComponent,
     TimebarComponent,
     TimevertComponent,
     TimelineComponent,
