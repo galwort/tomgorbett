@@ -128,6 +128,8 @@ export class TimepieComponent implements OnInit, OnChanges {
   public productiveHours = 0;
   public sideProjectHours = 0;
 
+  public estimatedProductiveHours = 0;
+
   get totalProductiveHours(): number {
     return this.workHours + this.sideProjectHours + this.productiveHours;
   }
