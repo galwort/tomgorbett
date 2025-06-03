@@ -8,7 +8,6 @@ import firebase_admin as fb
 
 vault = "https://kv-tomgorbett.vault.azure.net/"
 sc = SecretClient(vault_url=vault, credential=DefaultAzureCredential())
-
 conn = sc.get_secret("StorageConnectionString").value
 cred = credentials.Certificate(json.loads(sc.get_secret("FirebaseSDK").value))
 if not fb._apps:
@@ -31,40 +30,37 @@ productive_map = {
 }
 
 
+def day_ids(date_obj: dt.date):
+    return date_obj.strftime("%Y%m%d") + "0000", date_obj.strftime("%Y%m%d") + "2359"
+
+
+def fetch_rows(start_id: str, end_id: str):
+    ref = db.collection("tracker")
+    return ref.order_by("__name__").start_at([start_id]).end_at([end_id]).stream()
+
+
 def build_feature_row() -> pd.DataFrame:
     today = dt.date.today()
-    start_id = today.strftime("%Y%m%d") + "0000"
-    end_id = today.strftime("%Y%m%d") + "2359"
-    docs = (
-        db.collection("tracker")
-        .where("id", ">=", start_id)
-        .where("id", "<=", end_id)
-        .stream()
-    )
-    rows = [d.to_dict() for d in docs]
+    start_id, end_id = day_ids(today)
+    rows = [{"doc_id": d.id, **d.to_dict()} for d in fetch_rows(start_id, end_id)]
     if not rows:
         raise ValueError("No tracker data found for today.")
     df = pd.DataFrame(rows)
-    df["timestamp"] = pd.to_datetime(df["id"].astype(str), format="%Y%m%d%H%M")
+    df["timestamp"] = pd.to_datetime(df["doc_id"].astype(str), format="%Y%m%d%H%M")
     df["productive"] = df["Activity"].map(productive_map).fillna(False)
     prod_so_far = df["productive"].sum() * 15
     act_pct = df.groupby("Activity").size() / len(df)
 
-    seven = today - dt.timedelta(days=7)
-    start7 = seven.strftime("%Y%m%d") + "0000"
+    seven_ago = today - dt.timedelta(days=7)
+    start7, _ = day_ids(seven_ago)
     now_id = dt.datetime.utcnow().strftime("%Y%m%d%H%M")
-    docs7 = (
-        db.collection("tracker")
-        .where("id", ">=", start7)
-        .where("id", "<=", now_id)
-        .stream()
-    )
-    df7 = pd.DataFrame([d.to_dict() for d in docs7])
-    if df7.empty:
-        prod_7day_avg = prod_so_far
-    else:
+    rows7 = [{"doc_id": d.id, **d.to_dict()} for d in fetch_rows(start7, now_id)]
+    if rows7:
+        df7 = pd.DataFrame(rows7)
         df7["productive"] = df7["Activity"].map(productive_map).fillna(False)
         prod_7day_avg = df7["productive"].sum() * 15 / 7
+    else:
+        prod_7day_avg = prod_so_far
 
     X = pd.Series(0.0, index=feature_names)
     X["prod_so_far"] = prod_so_far
@@ -83,7 +79,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
         X = build_feature_row()
         pred_minutes = model.predict(X)[0]
-        pred_hours = round((pred_minutes / 60) / 0.25) * 0.25
+        pred_hours = round(pred_minutes / 60 / 0.25) * 0.25
         return func.HttpResponse(
             json.dumps({"predicted_hours": pred_hours}), mimetype="application/json"
         )
