@@ -6,6 +6,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -137,15 +138,15 @@ export class TimepieComponent implements OnInit, OnChanges {
   @Input() startDate!: string;
   @Input() endDate!: string;
 
-  constructor() {}
-
+  constructor(private http: HttpClient) {}
   async ngOnInit() {
     await this.fetchChartData();
+    await this.fetchEstimatedProductiveHours();
   }
-
   ngOnChanges(changes: SimpleChanges) {
     if (changes['startDate'] || changes['endDate']) {
       this.fetchChartData();
+      this.fetchEstimatedProductiveHours();
     }
   }
 
@@ -264,5 +265,19 @@ export class TimepieComponent implements OnInit, OnChanges {
   parseDate(dateStr: string): Date {
     const [year, month, day] = dateStr.substring(0, 10).split('-').map(Number);
     return new Date(year, month - 1, day);
+  }
+  async fetchEstimatedProductiveHours() {
+    const url = 'https://fa-tom.azurewebsites.net/api/predict_productivity';
+
+    try {
+      const response = await this.http
+        .get<{ predicted_hours: number }>(url)
+        .toPromise();
+      if (response) {
+        this.estimatedProductiveHours = response.predicted_hours;
+      }
+    } catch (error) {
+      console.error('Error fetching estimated productive hours:', error);
+    }
   }
 }

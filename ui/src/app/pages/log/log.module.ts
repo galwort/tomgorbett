@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { LogPage } from './log.page';
 import { LogPageRoutingModule } from './log-routing.module';
@@ -28,6 +29,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     ReactiveFormsModule,
     FormsModule,
     NgChartsModule,
+    HttpClientModule,
   ],
   declarations: [
     LogPage,
