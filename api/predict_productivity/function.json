@@ -7,7 +7,7 @@
       "direction": "in",
       "name": "req",
       "methods": ["get"],
-      "route": "predict_ productivity"
+      "route": "predict_productivity"
     },
     {
       "type": "http",
