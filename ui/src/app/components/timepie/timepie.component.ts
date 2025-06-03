@@ -267,17 +267,97 @@ export class TimepieComponent implements OnInit, OnChanges {
     return new Date(year, month - 1, day);
   }
   async fetchEstimatedProductiveHours() {
+    const startDate = this.parseDate(this.startDate);
+    const endDate = this.parseDate(this.endDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let totalEstimated = 0;
+    let futureDaysCount = 0;
+
+    const currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+      if (currentDate < today) {
+        const dayProductiveHours = await this.getActualProductiveHoursForDate(
+          currentDate
+        );
+        totalEstimated += dayProductiveHours;
+      } else {
+        futureDaysCount++;
+      }
+
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    if (futureDaysCount > 0) {
+      const predictedHoursPerDay = await this.getPredictedHoursFromAPI();
+      totalEstimated += predictedHoursPerDay * futureDaysCount;
+    }
+
+    this.estimatedProductiveHours = totalEstimated;
+  }
+
+  async getPredictedHoursFromAPI(): Promise<number> {
     const url = 'https://fa-tom.azurewebsites.net/api/predict_productivity';
 
     try {
       const response = await this.http
         .get<{ predicted_hours: number }>(url)
         .toPromise();
-      if (response) {
-        this.estimatedProductiveHours = response.predicted_hours;
-      }
+      return response?.predicted_hours || 0;
     } catch (error) {
-      console.error('Error fetching estimated productive hours:', error);
+      console.error('Error fetching predicted productive hours:', error);
+      return 0;
+    }
+  }
+
+  async getActualProductiveHoursForDate(date: Date): Promise<number> {
+    const dateStr = this.formatDate(date);
+    const startId = dateStr;
+    const endId = dateStr + '\uf8ff';
+
+    try {
+      const trackerQuery = query(
+        collection(db, 'tracker'),
+        where(documentId(), '>=', startId),
+        where(documentId(), '<=', endId)
+      );
+
+      const trackerSnapshot = await getDocs(trackerQuery);
+
+      const activityMap = new Map<string, any>();
+      const activitiesQuery = query(collection(db, 'activities'));
+      const activitiesSnapshot = await getDocs(activitiesQuery);
+      activitiesSnapshot.forEach((doc) => {
+        activityMap.set(doc.id, doc.data());
+      });
+
+      let productiveHours = 0;
+
+      trackerSnapshot.forEach((doc) => {
+        const activity = doc.data()['Activity'];
+        if (activity) {
+          const activityData = activityMap.get(activity);
+          if (activityData) {
+            if (
+              activityData['Work'] ||
+              activityData['Side_Project'] ||
+              activityData['Productive']
+            ) {
+              productiveHours += 0.25;
+            }
+          }
+        }
+      });
+
+      return productiveHours;
+    } catch (error) {
+      console.error(
+        'Error fetching actual productive hours for date:',
+        date,
+        error
+      );
+      return 0;
     }
   }
 }
