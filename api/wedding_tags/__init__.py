@@ -1,4 +1,5 @@
 import azure.functions as func
+from azure.storage.blob import BlobServiceClient
 import json
 import os
 
@@ -21,17 +22,32 @@ TAGS = [
     'Food',
 ]
 
-FILE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'wedding_tags.json'))
+CONNECTION_STRING = os.getenv('WEDDING_ASSETS_CONNECTION_STRING')
+CONTAINER = 'assets'
+BLOB_NAME = 'wedding_tags.json'
+
+def get_blob_client():
+    if not CONNECTION_STRING:
+        return None
+    service = BlobServiceClient.from_connection_string(CONNECTION_STRING)
+    container = service.get_container_client(CONTAINER)
+    return container.get_blob_client(BLOB_NAME)
 
 def load_data():
-    if os.path.exists(FILE_PATH):
-        with open(FILE_PATH, 'r') as f:
-            return json.load(f)
-    return {tag: [] for tag in TAGS}
+    client = get_blob_client()
+    if client is None:
+        return {tag: [] for tag in TAGS}
+    try:
+        data = client.download_blob().readall().decode()
+        return json.loads(data)
+    except Exception:
+        return {tag: [] for tag in TAGS}
 
 def save_data(data):
-    with open(FILE_PATH, 'w') as f:
-        json.dump(data, f)
+    client = get_blob_client()
+    if client is None:
+        return
+    client.upload_blob(json.dumps(data), overwrite=True)
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     method = req.method
