@@ -100,6 +100,11 @@ export class TimevertComponent implements OnInit, OnDestroy, OnChanges {
         display: false,
       },
     },
+    animation: {
+      onComplete: (animation) => {
+        this.drawOuterBorders(animation.chart);
+      },
+    },
   };
 
   public barChartData: ChartData<'bar'> = {
@@ -279,5 +284,44 @@ export class TimevertComponent implements OnInit, OnDestroy, OnChanges {
       default:
         return category;
     }
+  }
+
+  drawOuterBorders(chart: Chart) {
+    const ctx = chart.ctx;
+    const meta = chart.getDatasetMeta(0); // Get meta for first dataset to get bar positions
+
+    if (!meta || !meta.data) return;
+
+    ctx.save();
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+
+    // For each bar (x-axis position)
+    meta.data.forEach((element: any, index: number) => {
+      if (!element) return;
+
+      const barX = element.x;
+      const barWidth = element.width;
+
+      // Calculate the total height by summing all datasets for this bar
+      let barTop = chart.chartArea.bottom;
+      let barBottom = chart.chartArea.bottom;
+
+      // Find the topmost point and bottom point across all datasets
+      chart.data.datasets?.forEach((dataset, datasetIndex) => {
+        const datasetMeta = chart.getDatasetMeta(datasetIndex);
+        if (datasetMeta.data[index]) {
+          const point = datasetMeta.data[index] as any;
+          if (point.y < barTop) {
+            barTop = point.y;
+          }
+        }
+      });
+
+      // Draw the outer border rectangle
+      ctx.strokeRect(barX - barWidth / 2, barTop, barWidth, barBottom - barTop);
+    });
+
+    ctx.restore();
   }
 }
