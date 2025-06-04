@@ -45,7 +45,6 @@ export class AnalyticsComponent implements AfterViewInit {
   nextSlide() {
     this.swiper?.slideNext();
   }
-
   onStartDateChange() {
     if (this.startDate > this.endDate) {
       this.endDate = this.startDate;
@@ -53,7 +52,9 @@ export class AnalyticsComponent implements AfterViewInit {
     if (this.startDate > this.today) {
       this.startDate = this.today;
     }
+    this.updateChartsWithNewDates();
   }
+
   onEndDateChange() {
     if (this.endDate < this.startDate) {
       this.startDate = this.endDate;
@@ -61,6 +62,12 @@ export class AnalyticsComponent implements AfterViewInit {
     if (this.endDate > this.today) {
       this.endDate = this.today;
     }
+    this.updateChartsWithNewDates();
+  }
+
+  private updateChartsWithNewDates() {
+    // This will trigger change detection for all chart components
+    // The timevert component will automatically update through its @Input properties
   }
 
   @HostListener('window:keydown', ['$event'])

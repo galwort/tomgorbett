@@ -1,4 +1,12 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -44,8 +52,10 @@ const categoryOrder = [
   templateUrl: './timevert.component.html',
   styleUrls: ['./timevert.component.scss'],
 })
-export class TimevertComponent implements OnInit, OnDestroy {
+export class TimevertComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  @Input() startDate!: string;
+  @Input() endDate!: string;
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -102,8 +112,18 @@ export class TimevertComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
-    this.loadLastSevenDays();
+    this.loadChartData();
     window.addEventListener('resize', this.onResize.bind(this));
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      (changes['startDate'] || changes['endDate']) &&
+      this.startDate &&
+      this.endDate
+    ) {
+      this.loadChartData();
+    }
   }
 
   ngOnDestroy() {
@@ -116,10 +136,13 @@ export class TimevertComponent implements OnInit, OnDestroy {
     }
   }
 
-  async loadLastSevenDays() {
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setDate(endDate.getDate() - 6); // Last 7 days including today
+  async loadChartData() {
+    if (!this.startDate || !this.endDate) {
+      return;
+    }
+
+    const startDate = new Date(this.startDate);
+    const endDate = new Date(this.endDate);
 
     const chartData = await this.fetchChartData(startDate, endDate);
     this.updateChartData(chartData);
@@ -139,17 +162,17 @@ export class TimevertComponent implements OnInit, OnDestroy {
     const days: string[] = [];
     const dayData = new Map<string, Map<string, number>>();
 
-    // Generate last 7 days
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(startDate);
-      date.setDate(startDate.getDate() + i);
-      const dayLabel = date.toLocaleDateString('en-US', {
+    // Generate all days in the range
+    const currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+      const dayLabel = currentDate.toLocaleDateString('en-US', {
         weekday: 'short',
         month: 'short',
         day: 'numeric',
       });
       days.push(dayLabel);
       dayData.set(dayLabel, new Map());
+      currentDate.setDate(currentDate.getDate() + 1);
     }
 
     // Fetch activity mapping
