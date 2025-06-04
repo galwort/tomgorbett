@@ -1,5 +1,6 @@
 import os, json, datetime as dt, tempfile
 import joblib, pandas as pd, numpy as np, azure.functions as func
+from zoneinfo import ZoneInfo
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from azure.storage.blob import BlobClient
@@ -29,6 +30,8 @@ productive_map = {
     doc.id: doc.to_dict().get("Productive", False) for doc in activity_docs
 }
 
+tz = ZoneInfo("America/New_York")
+
 
 def day_ids(date_obj: dt.date):
     return date_obj.strftime("%Y%m%d") + "0000", date_obj.strftime("%Y%m%d") + "2359"
@@ -40,7 +43,8 @@ def fetch_rows(start_id: str, end_id: str):
 
 
 def build_feature_row() -> pd.DataFrame:
-    today = dt.date.today()
+    local_now = dt.datetime.now(tz)
+    today = local_now.date()
     start_id, end_id = day_ids(today)
     rows = [{"doc_id": d.id, **d.to_dict()} for d in fetch_rows(start_id, end_id)]
     if not rows:
@@ -50,10 +54,9 @@ def build_feature_row() -> pd.DataFrame:
     df["productive"] = df["Activity"].map(productive_map).fillna(False)
     prod_so_far = df["productive"].sum() * 15
     act_pct = df.groupby("Activity").size() / len(df)
-
     seven_ago = today - dt.timedelta(days=7)
     start7, _ = day_ids(seven_ago)
-    now_id = dt.datetime.utcnow().strftime("%Y%m%d%H%M")
+    now_id = local_now.strftime("%Y%m%d%H%M")
     rows7 = [{"doc_id": d.id, **d.to_dict()} for d in fetch_rows(start7, now_id)]
     if rows7:
         df7 = pd.DataFrame(rows7)
@@ -61,7 +64,6 @@ def build_feature_row() -> pd.DataFrame:
         prod_7day_avg = df7["productive"].sum() * 15 / 7
     else:
         prod_7day_avg = prod_so_far
-
     X = pd.Series(0.0, index=feature_names)
     X["prod_so_far"] = prod_so_far
     X["prod_7day_avg"] = prod_7day_avg
