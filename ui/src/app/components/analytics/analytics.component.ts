@@ -65,11 +65,7 @@ export class AnalyticsComponent implements AfterViewInit {
     this.updateChartsWithNewDates();
   }
 
-  private updateChartsWithNewDates() {
-    // This will trigger change detection for all chart components
-    // The timevert component will automatically update through its @Input properties
-  }
-
+  private updateChartsWithNewDates() {}
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     if (event.key === 'ArrowLeft') {
@@ -78,6 +74,29 @@ export class AnalyticsComponent implements AfterViewInit {
     } else if (event.key === 'ArrowRight') {
       this.nextSlide();
       event.preventDefault();
+    } else if (event.key === 'ArrowUp') {
+      this.increaseStartDate();
+      event.preventDefault();
+    } else if (event.key === 'ArrowDown') {
+      this.decreaseStartDate();
+      event.preventDefault();
     }
+  }
+  private increaseStartDate() {
+    const currentDate = new Date(this.startDate + 'T00:00:00');
+    currentDate.setDate(currentDate.getDate() + 1);
+
+    const newDateString = currentDate.toISOString().split('T')[0];
+    if (newDateString <= this.today) {
+      this.startDate = newDateString;
+      this.onStartDateChange();
+    }
+  }
+
+  private decreaseStartDate() {
+    const currentDate = new Date(this.startDate + 'T00:00:00');
+    currentDate.setDate(currentDate.getDate() - 1);
+    this.startDate = currentDate.toISOString().split('T')[0];
+    this.onStartDateChange();
   }
 }
