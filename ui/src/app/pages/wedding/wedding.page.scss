@@ -169,3 +169,19 @@ ion-toolbar {
 .photo-item.tagged {
   outline: 3px solid lime;
 }
+
+ion-fab {
+  --ion-fab-button-width: 40px;
+  --ion-fab-button-height: 40px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+ion-fab-button {
+  filter: grayscale(100%);
+  --background: #222;
+  --background-activated: #555;
+  --background-focused: #555;
+  --background-hover: #555;
+  --color: #fff;
+}
