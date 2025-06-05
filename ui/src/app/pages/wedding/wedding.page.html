@@ -5,7 +5,6 @@
       [class.loaded]="photo.loaded"
       [class.portrait]="photo.isPortrait"
       *ngFor="let photo of photos; let i = index"
-      [hidden]="!isPhotoVisible(photo)"
       (dblclick)="openFullscreen(i)"
     >
       <img #imgRef [src]="photo.blobUrl" (load)="onImageLoad(i, imgRef)" />
@@ -32,7 +31,11 @@
       <ion-content>
         <ion-list>
           <ion-item *ngFor="let t of tagService.tags">
-            <ion-checkbox slot="start" [checked]="selectedTags.includes(t)" (ionChange)="toggleFilter(t)"></ion-checkbox>
+            <ion-checkbox
+              slot="start"
+              [checked]="selectedTags.includes(t)"
+              (ionChange)="toggleFilter(t)"
+            ></ion-checkbox>
             <ion-label>{{ t }}</ion-label>
           </ion-item>
         </ion-list>
